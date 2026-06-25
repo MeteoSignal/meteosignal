@@ -1,9 +1,17 @@
 const CONFIG = {
 
-city:"Toulouse",
+    appName: "MeteoSignal",
 
-refresh:600000,
+    version: "0.1.0",
 
-theme:"auto"
+    build: "2026-06-25",
+
+    copyright: "© 2026",
+
+    city: "Toulouse",
+
+    refresh: 600000,
+
+    theme: "auto"
 
 };
