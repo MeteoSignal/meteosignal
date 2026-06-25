@@ -1,3 +1,4 @@
+console.log("METEO DEMARRE");
 const latitude = 43.6045;
 const longitude = 1.4440;
 
