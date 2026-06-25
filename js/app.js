@@ -1,1 +1,1 @@
-console.log("MeteoSignal démarre");
+console.log("MeteoSignal OK");
