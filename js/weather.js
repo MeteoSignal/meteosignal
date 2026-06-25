@@ -1,4 +1,3 @@
-console.log("weather.js chargé");
 const latitude = 43.6045;
 const longitude = 1.4440;
 
