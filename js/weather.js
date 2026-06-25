@@ -29,7 +29,7 @@ await fetch(url.replace(/\s/g,""));
 const data =
 await response.json();
 
-
+console.log(data);
 
 document.querySelector("#temp")
 .textContent =
