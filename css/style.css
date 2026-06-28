@@ -278,7 +278,7 @@ header {
 
     padding:14px 18px;
 
-    border:none;
+    border:1px solid rgba(255,255,255,.10);
 
     border-radius:16px;
 
@@ -287,6 +287,18 @@ header {
     color:white;
 
     font-size:16px;
+
+    transition:.25s;
+
+}
+
+.search input:focus{
+
+    outline:none;
+
+    border-color:#4aa8ff;
+
+    box-shadow:0 0 15px rgba(74,168,255,.25);
 
 }
 
@@ -322,13 +334,17 @@ header {
 
     font-size:20px;
 
-    transition:.25s;
+    transition:all .25s ease;
 
 }
 
 .header-actions button:hover{
 
     transform:translateY(-2px);
+
+    background:#183555;
+
+    box-shadow:0 0 12px rgba(70,150,255,.35);
 
 }
 
