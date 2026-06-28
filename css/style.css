@@ -84,3 +84,77 @@ header {
     color: #9aa0a6;
     font-size: 12px;
 }
+
+/* ==========================
+   Header
+========================== */
+
+.topbar {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 20px 30px;
+
+    background: rgba(255,255,255,0.05);
+
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+
+}
+
+.logo {
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+}
+
+.location {
+
+    font-size: 18px;
+
+    color: #d6e4f2;
+
+}
+
+.actions {
+
+    display: flex;
+
+    gap: 12px;
+
+}
+
+.icon-button {
+
+    width: 44px;
+
+    height: 44px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition: 0.25s;
+
+}
+
+.icon-button:hover {
+
+    background: rgba(255,255,255,0.18);
+
+}
