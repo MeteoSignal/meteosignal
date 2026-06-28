@@ -238,3 +238,96 @@ header {
     background: rgba(255,255,255,0.18);
 
 }
+/* ===========================
+   Header v0.3
+=========================== */
+
+.topbar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:20px;
+
+    margin-bottom:30px;
+
+}
+
+.logo{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+}
+
+.search{
+
+    flex:1;
+
+}
+
+.search input{
+
+    width:100%;
+
+    padding:14px 18px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#10263f;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+.search input::placeholder{
+
+    color:#8fa8c5;
+
+}
+
+.header-actions{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.header-actions button{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#10263f;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:20px;
+
+    transition:.25s;
+
+}
+
+.header-actions button:hover{
+
+    transform:translateY(-2px);
+
+}
