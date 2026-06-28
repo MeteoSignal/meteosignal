@@ -347,14 +347,3 @@ header {
     box-shadow:0 0 12px rgba(70,150,255,.35);
 
 }
-
-.header-actions{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    border-left:1px solid rgba(255,255,255,.15);
-
-    padding-left:20px;
-    margin-left:20px;
-}
