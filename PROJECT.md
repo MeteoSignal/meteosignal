@@ -297,3 +297,60 @@ Auteur : **Yoann Bourillon**
 Accompagnement technique : **ChatGPT**
 
 Licence : **MIT**
+
+# 🎨 Référence graphique
+
+La maquette officielle validée est la référence graphique de MeteoSignal.
+
+Toutes les évolutions de l'interface doivent respecter cette maquette.
+
+En cas de doute, la maquette prévaut sur l'implémentation existante.
+
+# 🌦️ Modes d'affichage
+
+MeteoSignal proposera trois niveaux d'affichage.
+
+## ☀️ Essentiel
+
+Informations principales.
+
+## 🌤️ Complet
+
+Informations enrichies.
+
+## 👑 Expert
+
+Toutes les données météorologiques disponibles.
+
+Le mode Expert pourra évoluer vers une offre Premium lorsque le projet sera suffisamment mature.
+
+# 🚀 Publication
+
+Le développement suit le cycle suivant :
+
+feature/... → develop → main
+
+Les utilisateurs suivent les évolutions via les versions publiques.
+
+Seules les versions stables sont publiées sur la branche `main`.
+
+# 📦 Versions
+
+v0.x.x → Développement
+
+v1.0.0 → Première version officielle
+
+v2.x.x → Évolutions majeures
+
+# 🎯 Priorités
+
+L'ordre de développement est le suivant :
+
+1. Architecture
+2. Interface utilisateur
+3. Fonctionnalités
+4. Optimisations
+5. Monétisation
+
+La qualité prime toujours sur la rapidité.
+
