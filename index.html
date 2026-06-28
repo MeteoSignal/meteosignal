@@ -27,41 +27,70 @@
 
   
 <main class="dashboard">
-  
 
-<div id="clock">
---:--
-</div>
+    <!-- =========================
+         HERO - Conditions actuelles
+    ========================== -->
+    <section class="hero">
 
+        <div id="clock">--:--</div>
 
-<h1 id="city">
-MeteoSignal
-</h1>
+        <h1 id="city">MeteoSignal</h1>
 
+        <div id="icon">☀️</div>
 
-<div id="icon">
-☀️
-</div>
+        <div id="temp">--°</div>
 
+        <p id="description">Chargement...</p>
 
-<div id="temp">
---°
-</div>
+    </section>
 
+    <!-- =========================
+         WEATHER GRID
+    ========================== -->
+    <section class="weather-grid">
 
-<p>
-Vent :
-<span id="wind">--</span>
-</p>
+        <article class="card">
+            <h2>💨 Vent</h2>
+            <p><span id="wind">--</span></p>
+        </article>
 
+        <article class="card">
+            <h2>💧 Humidité</h2>
+            <p><span id="humidity">--</span></p>
+        </article>
 
-<p>
-Humidité :
-<span id="humidity">--</span>
-</p>
+        <article class="card">
+            <h2>🌡️ Pression</h2>
+            <p><span id="pressure">-- hPa</span></p>
+        </article>
 
+        <article class="card">
+            <h2>🌧️ Précipitations</h2>
+            <p><span id="precipitation">-- mm</span></p>
+        </article>
 
-<div id="forecast"></div>
+    </section>
+
+    <!-- =========================
+         HOURLY FORECAST
+    ========================== -->
+    <section class="hourly">
+
+        <h2>Prévisions horaires</h2>
+
+    </section>
+
+    <!-- =========================
+         WEEK FORECAST
+    ========================== -->
+    <section class="weekly">
+
+        <h2>Prévisions sur 7 jours</h2>
+
+        <div id="forecast"></div>
+
+    </section>
 
 </main>
 
