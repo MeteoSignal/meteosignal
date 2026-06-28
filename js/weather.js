@@ -54,9 +54,9 @@ data.current.relative_humidity_2m
 
 
 
-document.querySelector("#city")
-.textContent =
-"Toulouse";
+const city = "Toulouse";
+
+document.querySelector("#city").textContent = city;
 
 
 
