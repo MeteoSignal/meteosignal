@@ -3,60 +3,256 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<title>MeteoSignal</title>
+    <meta
+        name="description"
+        content="MeteoSignal - La météo, partout avec vous.">
 
-<link rel="stylesheet" href="css/style.css">
+    <meta
+        name="theme-color"
+        content="#0b1d33">
 
-<link rel="manifest" href="manifest.json">
-  
+    <title>MeteoSignal</title>
+
+    <link
+        rel="manifest"
+        href="manifest.json">
+
+    <link
+        rel="icon"
+        href="logo/logo.png">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
 </head>
-
 
 <body>
 
+<div class="app">
 
-<div class="dashboard">
+ <!-- =========================================
+     SIDEBAR (v0.3.0)
+========================================= -->
 
+<aside class="sidebar">
 
-<div id="clock">
---:--
+    <div class="sidebar-logo">
+
+        🌦️ <span>MeteoSignal</span>
+
+    </div>
+
+    <nav class="sidebar-menu">
+
+        <a href="#" class="active">🏠 Accueil</a>
+
+        <a href="#">⭐ Favoris</a>
+
+        <a href="#">🗺 Cartes météo</a>
+
+        <a href="#">🌧 Radar pluie</a>
+
+        <a href="#">⚠ Vigilance</a>
+
+        <a href="#">🍃 Qualité de l'air</a>
+
+        <a href="#">🕘 Historique</a>
+
+        <a href="#">⚙ Paramètres</a>
+
+    </nav>
+
+<div class="display-modes">
+
+    <h3>Mode d'affichage</h3>
+
+    <button class="mode active">
+        ☀️ Essentiel
+    </button>
+
+    <button class="mode">
+        🌍 Complet
+    </button>
+
+    <button class="mode">
+        📊 Expert
+    </button>
+
 </div>
 
+<div class="sidebar-version">
 
-<h1 id="city">
-MeteoSignal
-</h1>
+    <strong>MeteoSignal v0.3.0 Alpha</strong>
 
+    <p>
 
-<div id="icon">
-☀️
-</div>
+        🚧 Développement en cours
 
+    </p>
 
-<div id="temp">
---°
-</div>
+    <small>
 
+        Dernière mise à jour :
+        29 juin 2026
 
-<p>
-Vent :
-<span id="wind">--</span>
-</p>
-
-
-<p>
-Humidité :
-<span id="humidity">--</span>
-</p>
-
-
-<div id="forecast"></div>
+    </small>
 
 </div>
+
+</aside>
+
+<div class="main-content">   
+  
+<header class="topbar">
+
+    <div class="logo">
+        🌦️ MeteoSignal
+    </div>
+
+    <div class="search">
+
+        <input
+            type="text"
+            placeholder="Rechercher une ville..."
+        >
+
+    </div>
+
+    <div class="header-actions">
+
+        <button title="Favoris">⭐</button>
+
+        <button title="Paramètres">⚙️</button>
+
+    </div>
+
+</header>
+
+  
+<main class="dashboard">
+
+    <!-- =========================
+         HERO - Conditions actuelles
+    ========================== -->
+<section class="hero">
+
+    <div class="hero-top">
+
+        <div id="clock">--:--</div>
+
+        <div class="last-update">
+            Mise à jour automatique
+        </div>
+
+    </div>
+
+    <div id="icon">
+        ☀️
+    </div>
+
+    <h1 id="city">
+        MeteoSignal
+    </h1>
+
+    <div id="temp">
+        --°
+    </div>
+
+    <p id="description">
+        Chargement...
+    </p>
+
+    <div class="hero-details">
+
+        <div class="detail">
+
+            <span>🌡 Ressenti</span>
+
+            <strong id="feels-like">
+                --°
+            </strong>
+
+        </div>
+
+        <div class="detail">
+
+            <span>⬇ Min</span>
+
+            <strong id="temp-min">
+                --°
+            </strong>
+
+        </div>
+
+        <div class="detail">
+
+            <span>⬆ Max</span>
+
+            <strong id="temp-max">
+                --°
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- =========================
+         WEATHER GRID
+    ========================== -->
+    <section class="weather-grid">
+
+        <article class="card">
+            <h2>💨 Vent</h2>
+            <p><span id="wind">--</span></p>
+        </article>
+
+        <article class="card">
+            <h2>💧 Humidité</h2>
+            <p><span id="humidity">--</span></p>
+        </article>
+
+        <article class="card">
+            <h2>🌡️ Pression</h2>
+            <p><span id="pressure">-- hPa</span></p>
+        </article>
+
+        <article class="card">
+            <h2>🌧️ Précipitations</h2>
+            <p><span id="precipitation">-- mm</span></p>
+        </article>
+
+    </section>
+
+    <!-- =========================
+         HOURLY FORECAST
+    ========================== -->
+    <section class="hourly">
+
+        <h2>Prévisions horaires</h2>
+
+    </section>
+
+    <!-- =========================
+         WEEK FORECAST
+    ========================== -->
+    <section class="weekly">
+
+        <h2>Prévisions sur 7 jours</h2>
+
+        <div id="forecast"></div>
+
+    </section>
+
+</main>
 
 <footer id="version"></footer>
 
@@ -64,6 +260,10 @@ Humidité :
 <script src="js/clock.js"></script>
 <script src="js/weather.js"></script>
 <script src="js/app.js"></script>
+
+</div>
+
+</div>
 
 </body>
 </html>

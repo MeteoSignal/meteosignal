@@ -2,9 +2,9 @@ const CONFIG = {
 
     appName: "MeteoSignal",
 
-    version: "0.1.0",
+    version: "0.3.0 Alpha",
 
-    build: "2026-06-25",
+    build: "2026-06-29",
 
     copyright: "© 2026",
 
