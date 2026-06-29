@@ -422,3 +422,198 @@ header {
     box-shadow:0 0 12px rgba(70,150,255,.35);
 
 }
+
+/* =====================================================
+   SIDEBAR v0.3.0
+===================================================== */
+
+.app{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+.sidebar{
+
+    width:260px;
+
+    background:#08182b;
+
+    border-right:1px solid rgba(255,255,255,.08);
+
+    padding:30px 20px;
+
+}
+
+.sidebar-logo{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:white;
+
+}
+
+.main-content{
+
+    flex:1;
+
+}
+
+/* =====================================================
+   SIDEBAR MENU
+===================================================== */
+
+.sidebar-menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    margin-top:35px;
+
+}
+
+.sidebar-menu a.active{
+
+    background:#1f5eff;
+
+    color:white;
+
+    font-weight:bold;
+
+    box-shadow:0 8px 18px rgba(31,94,255,.35);
+
+}
+
+.sidebar-menu a{
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    transition:.25s;
+
+}
+
+.sidebar-menu a:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+/* =====================================================
+   DISPLAY MODES
+===================================================== */
+
+.display-modes{
+
+    margin-top:40px;
+
+}
+
+.display-modes h3{
+
+    font-size:14px;
+
+    color:#8fa8c5;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    margin-bottom:15px;
+
+}
+
+.mode{
+
+    width:100%;
+
+    margin-bottom:10px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#10263f;
+
+    color:white;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.mode:hover{
+
+    background:#183555;
+
+}
+
+.mode.active{
+
+    background:#1f5eff;
+
+    font-weight:bold;
+
+    box-shadow:0 8px 18px rgba(31,94,255,.35);
+
+}
+
+/* =====================================================
+   VERSION CARD
+===================================================== */
+
+.sidebar-version{
+
+    margin-top:40px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.sidebar-version strong{
+
+    display:block;
+
+    margin-bottom:10px;
+
+}
+
+.sidebar-version p{
+
+    margin:8px 0;
+
+    color:#ffd54f;
+
+    font-size:14px;
+
+}
+
+.sidebar-version small{
+
+    color:#9fb5ce;
+
+}
+
