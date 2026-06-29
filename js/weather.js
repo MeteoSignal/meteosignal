@@ -10,7 +10,7 @@ const url =
 `https://api.open-meteo.com/v1/forecast?
 latitude=${latitude}
 &longitude=${longitude}
-current=
+&current=
 temperature_2m,
 apparent_temperature,
 relative_humidity_2m,
