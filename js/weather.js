@@ -10,8 +10,9 @@ const url =
 `https://api.open-meteo.com/v1/forecast?
 latitude=${latitude}
 &longitude=${longitude}
-&current=
+current=
 temperature_2m,
+apparent_temperature,
 relative_humidity_2m,
 wind_speed_10m,
 weather_code
@@ -51,6 +52,14 @@ document.querySelector("#humidity")
 .textContent =
 data.current.relative_humidity_2m
 +" %";
+document.querySelector("#feels-like").textContent =
+Math.round(data.current.apparent_temperature) + "°";
+
+document.querySelector("#temp-min").textContent =
+Math.round(data.daily.temperature_2m_min[0]) + "°";
+
+document.querySelector("#temp-max").textContent =
+Math.round(data.daily.temperature_2m_max[0]) + "°";
 
 
 

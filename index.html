@@ -3,20 +3,39 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<title>MeteoSignal</title>
+    <meta
+        name="description"
+        content="MeteoSignal - La météo, partout avec vous.">
 
-<link rel="stylesheet" href="css/style.css">
+    <meta
+        name="theme-color"
+        content="#0b1d33">
 
-<link rel="manifest" href="manifest.json">
-  
+    <title>MeteoSignal</title>
+
+    <link
+        rel="manifest"
+        href="manifest.json">
+
+    <link
+        rel="icon"
+        href="logo/logo.png">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
 </head>
 
-
 <body>
+
+<div class="app">
 
   
 <header class="topbar">
@@ -50,19 +69,69 @@
     <!-- =========================
          HERO - Conditions actuelles
     ========================== -->
-    <section class="hero">
+<section class="hero">
+
+    <div class="hero-top">
 
         <div id="clock">--:--</div>
 
-        <h1 id="city">MeteoSignal</h1>
+        <div class="last-update">
+            Mise à jour automatique
+        </div>
 
-        <div id="icon">☀️</div>
+    </div>
 
-        <div id="temp">--°</div>
+    <div id="icon">
+        ☀️
+    </div>
 
-        <p id="description">Chargement...</p>
+    <h1 id="city">
+        MeteoSignal
+    </h1>
 
-    </section>
+    <div id="temp">
+        --°
+    </div>
+
+    <p id="description">
+        Chargement...
+    </p>
+
+    <div class="hero-details">
+
+        <div class="detail">
+
+            <span>🌡 Ressenti</span>
+
+            <strong id="feels-like">
+                --°
+            </strong>
+
+        </div>
+
+        <div class="detail">
+
+            <span>⬇ Min</span>
+
+            <strong id="temp-min">
+                --°
+            </strong>
+
+        </div>
+
+        <div class="detail">
+
+            <span>⬆ Max</span>
+
+            <strong id="temp-max">
+                --°
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
 
     <!-- =========================
          WEATHER GRID
