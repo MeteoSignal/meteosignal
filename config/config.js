@@ -1,9 +1,25 @@
-const CONFIG = {
+export const APP_CONFIG = {
     appName: "MeteoSignal",
     version: "1.0.0-dev",
     build: "2026-07-05",
     copyright: "© 2026",
-    city: "Toulouse",
     refresh: 600000,
-    theme: "auto"
+    theme: "auto",
+    weatherProvider: "openmeteo",
+    defaultLocation: {
+        id: "toulouse-fr",
+        name: "Toulouse",
+        country: "France",
+        countryCode: "FR",
+        latitude: 43.6045,
+        longitude: 1.444,
+        timezone: "Europe/Paris"
+    },
+    api: {
+        openMeteo: {
+            forecastUrl: "https://api.open-meteo.com/v1/forecast",
+            geocodingUrl: "https://geocoding-api.open-meteo.com/v1/search",
+            airQualityUrl: "https://air-quality-api.open-meteo.com/v1/air-quality"
+        }
+    }
 };

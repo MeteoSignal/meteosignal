@@ -41,6 +41,7 @@ meteosignal/
 │  │  ├─ formatters.js
 │  │  └─ weather-codes.js
 │  ├─ services/
+│  │  ├─ weather-provider.js
 │  │  ├─ openmeteo.service.js
 │  │  ├─ geocoding.service.js
 │  │  └─ air-quality.service.js
@@ -72,7 +73,7 @@ meteosignal/
 
 `js/core/` contient les outils internes indépendants de l'interface : état global, stockage local, formatage, traduction des codes météo.
 
-`js/services/` contient les appels aux APIs et la transformation des réponses externes en données utilisables par l'application.
+`js/services/` contient le registre de fournisseurs météo, les appels aux APIs et la transformation des réponses externes en données utilisables par l'application.
 
 `js/components/` contient les composants d'interface. Chaque composant reçoit des données propres et met à jour uniquement sa zone.
 
@@ -90,7 +91,7 @@ meteosignal/
 6. Les composants reçoivent ces données et mettent à jour l'interface.
 7. Les préférences utilisateur sont conservées localement.
 
-Les composants ne doivent pas appeler directement les APIs. Ils affichent des données préparées par les services.
+Les composants ne doivent pas appeler directement les APIs. Ils affichent des données préparées par les services et normalisées dans le modèle interne MeteoSignal.
 
 ## État applicatif
 

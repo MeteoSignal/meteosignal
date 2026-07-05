@@ -161,11 +161,15 @@
                             <dl class="astro-data">
                                 <div>
                                     <dt>Lever</dt>
-                                    <dd>--:--</dd>
+                                    <dd id="sunrise">--:--</dd>
                                 </div>
                                 <div>
                                     <dt>Coucher</dt>
-                                    <dd>--:--</dd>
+                                    <dd id="sunset">--:--</dd>
+                                </div>
+                                <div>
+                                    <dt>Durée</dt>
+                                    <dd id="daylight-duration">--</dd>
                                 </div>
                             </dl>
                         </div>
@@ -179,11 +183,11 @@
                             <dl class="astro-data">
                                 <div>
                                     <dt>Phase</dt>
-                                    <dd>--</dd>
+                                    <dd id="moon-phase">--</dd>
                                 </div>
                                 <div>
                                     <dt>Clarté</dt>
-                                    <dd>--%</dd>
+                                    <dd id="moon-light">--%</dd>
                                 </div>
                             </dl>
                         </div>
@@ -197,10 +201,8 @@
         </footer>
     </div>
 
-    <script src="config/config.js"></script>
     <script src="js/clock.js"></script>
-    <script src="js/weather.js"></script>
-    <script src="js/app.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 
 </html>

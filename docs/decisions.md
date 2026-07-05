@@ -96,3 +96,13 @@ Conséquence : la navigation officielle suit cette logique :
 - TV et très grands écrans : sidebar lisible, avec grands boutons et navigation clavier ou télécommande.
 
 L'ancienne sidebar alpha ne revient pas telle quelle. Ses fonctions sont réintégrées progressivement dans cette navigation adaptative, en affichant uniquement les sections réellement disponibles ou officiellement planifiées.
+
+## D012 - Modèle météo interne indépendant des fournisseurs
+
+Décision : les composants de MeteoSignal ne consomment jamais directement les réponses brutes des APIs météo.
+
+Raison : MeteoSignal doit pouvoir intégrer plus tard d'autres fournisseurs météo sans modifier l'interface.
+
+Conséquence : chaque fournisseur API doit transformer ses réponses en modèle interne normalisé avant que les données atteignent l'application. Les composants consomment uniquement ce modèle interne : localisation, météo actuelle, prévisions horaires, prévisions journalières, astronomie, qualité de l'air, date de mise à jour et erreurs éventuelles.
+
+Open-Meteo est le premier fournisseur officiel, mais il doit respecter le même contrat que les futurs fournisseurs.

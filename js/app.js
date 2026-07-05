@@ -1,4 +1,122 @@
-console.log(`${CONFIG.appName} v${CONFIG.version} démarré`);
+import { APP_CONFIG } from "../config/config.js";
+import { formatDuration, formatForecastDay, formatPrecipitation, formatPressure, formatSpeed, formatTemperature, formatTime, formatPercent } from "./core/formatters.js";
+import { getWeatherProvider } from "./services/weather-provider.js";
 
-document.getElementById("version").textContent =
-    `${CONFIG.appName} • v${CONFIG.version} • Build ${CONFIG.build} • ${CONFIG.copyright}`;
+const provider = getWeatherProvider();
+
+initApp();
+
+function initApp() {
+    console.log(`${APP_CONFIG.appName} v${APP_CONFIG.version} démarré`);
+    renderVersion();
+    loadWeatherDashboard();
+    setInterval(loadWeatherDashboard, APP_CONFIG.refresh);
+}
+
+async function loadWeatherDashboard() {
+    try {
+        setText("#description", "Chargement de la météo...");
+
+        const weather = await provider.getWeather(APP_CONFIG.defaultLocation);
+        renderWeatherDashboard(weather);
+    } catch (error) {
+        console.error(error);
+        setText("#description", "Données météo indisponibles.");
+    }
+}
+
+function renderWeatherDashboard(weather) {
+    renderCurrentWeather(weather);
+    renderWeatherCards(weather);
+    renderHourlyPreview(weather.hourly);
+    renderDailyForecast(weather.daily);
+    renderAstronomy(weather.astronomy);
+}
+
+function renderCurrentWeather(weather) {
+    const current = weather.current;
+    const today = weather.daily[0];
+
+    setText("#city", weather.location.name);
+    setText("#temp", formatTemperature(current.temperature));
+    setText("#description", current.condition.label);
+    setText("#icon", current.condition.icon);
+    setText("#feels-like", formatTemperature(current.apparentTemperature));
+    setText("#temp-min", formatTemperature(today?.temperatureMin));
+    setText("#temp-max", formatTemperature(today?.temperatureMax));
+}
+
+function renderWeatherCards(weather) {
+    const current = weather.current;
+
+    setText("#wind", formatSpeed(current.wind.speed));
+    setText("#humidity", formatPercent(current.humidity));
+    setText("#pressure", formatPressure(current.pressure));
+    setText("#precipitation", formatPrecipitation(current.precipitation));
+}
+
+function renderHourlyPreview(hourly) {
+    const container = document.querySelector(".hourly-strip");
+
+    if (!container || hourly.length === 0) {
+        return;
+    }
+
+    const previewHours = hourly.slice(0, 4);
+    container.innerHTML = "";
+
+    previewHours.forEach((hour) => {
+        const card = document.createElement("article");
+        card.innerHTML = `
+            <span>${formatTime(hour.time)}</span>
+            <strong>${formatTemperature(hour.temperature)}</strong>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function renderDailyForecast(daily) {
+    const container = document.querySelector("#forecast");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    daily.slice(0, 7).forEach((day) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <span>${formatForecastDay(day.date)}</span>
+            <strong>${day.condition.icon}</strong>
+            <span>${formatTemperature(day.temperatureMax)}</span>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function renderAstronomy(astronomy) {
+    if (!astronomy) {
+        return;
+    }
+
+    setText("#sunrise", formatTime(astronomy.sunrise));
+    setText("#sunset", formatTime(astronomy.sunset));
+    setText("#daylight-duration", formatDuration(astronomy.daylightDuration));
+}
+
+function renderVersion() {
+    setText(
+        "#version",
+        `${APP_CONFIG.appName} • v${APP_CONFIG.version} • Build ${APP_CONFIG.build} • ${APP_CONFIG.copyright}`
+    );
+}
+
+function setText(selector, value) {
+    const element = document.querySelector(selector);
+
+    if (element) {
+        element.textContent = value;
+    }
+}
