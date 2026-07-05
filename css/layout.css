@@ -1,0 +1,94 @@
+.app-shell {
+    width: min(100% - 2rem, var(--content-max));
+    margin: 0 auto;
+    padding: var(--space-5) 0 var(--space-8);
+}
+
+.site-header {
+    position: sticky;
+    top: var(--space-4);
+    z-index: 10;
+    display: grid;
+    grid-template-columns: auto minmax(16rem, 1fr) auto;
+    gap: var(--space-4);
+    align-items: center;
+    margin-bottom: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    background: rgba(7, 24, 44, 0.76);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(18px);
+}
+
+.dashboard {
+    display: grid;
+    gap: var(--space-5);
+}
+
+.hero-weather {
+    position: relative;
+    min-height: 31rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-strong);
+    box-shadow: var(--shadow-soft);
+}
+
+.hero-media {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(5, 16, 31, 0.86), rgba(5, 16, 31, 0.44) 52%, rgba(5, 16, 31, 0.76)),
+        linear-gradient(180deg, transparent, rgba(3, 16, 31, 0.76)),
+        url("../assets/backgrounds/clear.jpg");
+    background-position: center;
+    background-size: cover;
+    transform: scale(1.02);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 31rem;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: var(--space-8);
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.72fr);
+    gap: var(--space-5);
+    align-items: start;
+}
+
+.forecast-panel,
+.astronomy-panel {
+    min-width: 0;
+}
+
+.weekly {
+    grid-column: 1;
+}
+
+.astronomy-panel {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    gap: var(--space-5);
+}
+
+.site-footer {
+    margin-top: var(--space-6);
+    color: var(--color-subtle);
+    text-align: center;
+}
+
+.site-footer p {
+    margin: 0;
+    font-size: 0.875rem;
+}

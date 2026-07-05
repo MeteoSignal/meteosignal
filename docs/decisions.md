@@ -81,3 +81,18 @@ Décision : le service worker met en cache les fichiers statiques, mais les donn
 Raison : une application météo ne doit pas donner l'impression que des données anciennes sont actuelles.
 
 Conséquence : l'interface affichera l'heure de mise à jour et devra gérer proprement l'absence de réseau.
+
+## D011 - Navigation adaptative
+
+Décision : MeteoSignal v1.0 utilise une navigation adaptative plutôt qu'une sidebar permanente unique.
+
+Raison : l'application doit rester confortable sur mobile tout en exploitant correctement les grands écrans, les ordinateurs et les téléviseurs.
+
+Conséquence : la navigation officielle suit cette logique :
+
+- mobile : bouton menu ouvrant un panneau de navigation ;
+- tablette : navigation compacte, lisible et peu encombrante ;
+- desktop : sidebar élégante, repliable et non intrusive ;
+- TV et très grands écrans : sidebar lisible, avec grands boutons et navigation clavier ou télécommande.
+
+L'ancienne sidebar alpha ne revient pas telle quelle. Ses fonctions sont réintégrées progressivement dans cette navigation adaptative, en affichant uniquement les sections réellement disponibles ou officiellement planifiées.

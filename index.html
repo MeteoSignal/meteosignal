@@ -2,320 +2,205 @@
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <meta
-        name="description"
-        content="MeteoSignal - La météo, partout avec vous.">
-
-    <meta
-        name="theme-color"
-        content="#0b1d33">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MeteoSignal - La météo, partout avec vous.">
+    <meta name="theme-color" content="#07182c">
 
     <title>MeteoSignal</title>
 
-    <link
-        rel="manifest"
-        href="manifest.json">
-
-    <link
-        rel="icon"
-        href="logo/logo.png">
-
-    <link
-        rel="stylesheet"
-        href="css/style.css">
-
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="assets/logo/logo.png">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<div class="app">
+    <div class="app-shell">
+        <header class="site-header" aria-label="En-tête MeteoSignal">
+            <a class="brand" href="#" aria-label="MeteoSignal - Accueil">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span class="brand-text">
+                    <strong>MeteoSignal</strong>
+                    <small>La météo, partout avec vous</small>
+                </span>
+            </a>
 
- <!-- =========================================
-     SIDEBAR (v0.3.0)
-========================================= -->
+            <form class="search-panel" role="search" aria-label="Recherche de ville">
+                <label class="sr-only" for="city-search">Rechercher une ville</label>
+                <input
+                    id="city-search"
+                    name="city"
+                    type="search"
+                    autocomplete="off"
+                    placeholder="Rechercher une ville">
+                <button class="icon-action" type="submit" aria-label="Lancer la recherche">
+                    <span aria-hidden="true">⌕</span>
+                </button>
+            </form>
 
-<aside class="sidebar">
+            <nav class="header-actions" aria-label="Actions principales">
+                <button class="icon-action" type="button" aria-label="Utiliser ma position">
+                    <span aria-hidden="true">⌖</span>
+                </button>
+                <button class="icon-action" type="button" aria-label="Afficher les favoris">
+                    <span aria-hidden="true">★</span>
+                </button>
+            </nav>
+        </header>
 
-    <div class="sidebar-logo">
+        <main id="contenu" class="dashboard" tabindex="-1">
+            <section class="hero-weather" aria-labelledby="current-weather-title">
+                <div class="hero-media" aria-hidden="true"></div>
 
-        🌦️ <span>MeteoSignal</span>
-
-    </div>
-
-    <nav class="sidebar-menu">
-
-        <a href="#" class="active">🏠 Accueil</a>
-
-        <a href="#">⭐ Favoris</a>
-
-        <a href="#">🗺 Cartes météo</a>
-
-        <a href="#">🌧 Radar pluie</a>
-
-        <a href="#">⚠ Vigilance</a>
-
-        <a href="#">🍃 Qualité de l'air</a>
-
-        <a href="#">🕘 Historique</a>
-
-        <a href="#">⚙ Paramètres</a>
-
-    </nav>
-
-<div class="display-modes">
-
-    <h3>Mode d'affichage</h3>
-
-    <button class="mode active">
-        ☀️ Essentiel
-    </button>
-
-    <button class="mode">
-        🌍 Complet
-    </button>
-
-    <button class="mode">
-        📊 Expert
-    </button>
-
-</div>
-
-<div class="sidebar-version">
-
-    <strong>MeteoSignal v0.3.0 Alpha</strong>
-
-    <p>
-
-        🚧 Développement en cours
-
-    </p>
-
-    <small>
-
-        Dernière mise à jour :
-        29 juin 2026
-
-    </small>
-
-</div>
-
-</aside>
-
-<div class="main-content">   
-  
-<header class="topbar">
-
-    <div class="logo">
-        🌦️ MeteoSignal
-    </div>
-
-    <div class="search">
-
-        <input
-            type="text"
-            placeholder="Rechercher une ville..."
-        >
-
-    </div>
-
-    <div class="header-actions">
-
-        <button title="Favoris">⭐</button>
-
-        <button title="Paramètres">⚙️</button>
-
-    </div>
-
-</header>
-
-  
-<main class="dashboard">
-
-    <!-- =========================
-         HERO - Conditions actuelles
-    ========================== -->
-<section class="dashboard-top">
-
-    <section class="hero">
-
-        <div class="hero-overlay">
-
-            <div class="hero-header">
-
-                <div id="clock">
-                    --:--
-                </div>
-
-                <div class="hero-update">
-                    Mise à jour automatique
-                </div>
-
-            </div>
-
-            <div class="hero-body">
-
-                <div class="hero-icon">
-
-                    <div id="icon">
-                        ☀️
+                <div class="hero-content">
+                    <div class="hero-status">
+                        <span id="clock" class="time-chip">--:--</span>
+                        <span class="status-chip">Mise à jour automatique</span>
                     </div>
 
-                </div>
+                    <div class="current-weather">
+                        <div class="weather-symbol" id="icon" aria-hidden="true">☀️</div>
 
-                <div class="hero-main">
-
-                    <h1 id="city">
-                        Toulouse
-                    </h1>
-
-                    <div id="temp">
-                        --°
+                        <div class="weather-summary">
+                            <p class="eyebrow">Conditions actuelles</p>
+                            <h1 id="current-weather-title">
+                                <span id="city">Toulouse</span>
+                            </h1>
+                            <div class="temperature-line">
+                                <span id="temp">--°</span>
+                            </div>
+                            <p id="description" class="weather-description">Chargement de la météo...</p>
+                        </div>
                     </div>
 
-                    <div id="description">
-                        Chargement...
+                    <div class="hero-metrics" aria-label="Températures du jour">
+                        <article>
+                            <span>Minimum</span>
+                            <strong id="temp-min">--°</strong>
+                        </article>
+                        <article>
+                            <span>Ressenti</span>
+                            <strong id="feels-like">--°</strong>
+                        </article>
+                        <article>
+                            <span>Maximum</span>
+                            <strong id="temp-max">--°</strong>
+                        </article>
                     </div>
+                </div>
+            </section>
 
-                    <div class="hero-temperatures">
+            <section class="weather-grid" aria-label="Indicateurs météo">
+                <article class="metric-card">
+                    <span class="metric-label">Vent</span>
+                    <strong id="wind">--</strong>
+                    <small>Vitesse moyenne</small>
+                </article>
 
-                        <span id="temp-min">
-                            ↓ --
-                        </span>
+                <article class="metric-card">
+                    <span class="metric-label">Humidité</span>
+                    <strong id="humidity">--</strong>
+                    <small>Taux actuel</small>
+                </article>
 
-                        <span id="feels-like">
-                            Ressenti --
-                        </span>
+                <article class="metric-card">
+                    <span class="metric-label">Pression</span>
+                    <strong id="pressure">-- hPa</strong>
+                    <small>Atmosphère</small>
+                </article>
 
-                        <span id="temp-max">
-                            ↑ --
-                        </span>
+                <article class="metric-card">
+                    <span class="metric-label">Précipitations</span>
+                    <strong id="precipitation">-- mm</strong>
+                    <small>Cumul récent</small>
+                </article>
+            </section>
 
+            <section class="content-grid" aria-label="Prévisions et astronomie">
+                <section class="forecast-panel hourly" aria-labelledby="hourly-title">
+                    <div class="section-heading">
+                        <p class="eyebrow">Aujourd'hui</p>
+                        <h2 id="hourly-title">Prévisions horaires</h2>
                     </div>
+                    <div class="hourly-strip" aria-label="Aperçu horaire">
+                        <article>
+                            <span>Matin</span>
+                            <strong>--°</strong>
+                        </article>
+                        <article>
+                            <span>Midi</span>
+                            <strong>--°</strong>
+                        </article>
+                        <article>
+                            <span>Soir</span>
+                            <strong>--°</strong>
+                        </article>
+                        <article>
+                            <span>Nuit</span>
+                            <strong>--°</strong>
+                        </article>
+                    </div>
+                </section>
 
-                </div>
+                <section class="forecast-panel weekly" aria-labelledby="weekly-title">
+                    <div class="section-heading">
+                        <p class="eyebrow">Tendance</p>
+                        <h2 id="weekly-title">Prévisions sur 7 jours</h2>
+                    </div>
+                    <div id="forecast" class="forecast-list" aria-live="polite"></div>
+                </section>
 
-            </div>
+                <section class="astronomy-panel" aria-label="Soleil et lune">
+                    <article class="astro-card">
+                        <span class="astro-icon" aria-hidden="true">☀️</span>
+                        <div>
+                            <p class="eyebrow">Soleil</p>
+                            <h2>Cycle solaire</h2>
+                            <dl class="astro-data">
+                                <div>
+                                    <dt>Lever</dt>
+                                    <dd>--:--</dd>
+                                </div>
+                                <div>
+                                    <dt>Coucher</dt>
+                                    <dd>--:--</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
 
-            <div class="hero-footer">
+                    <article class="astro-card">
+                        <span class="astro-icon" aria-hidden="true">☾</span>
+                        <div>
+                            <p class="eyebrow">Lune</p>
+                            <h2>Phase lunaire</h2>
+                            <dl class="astro-data">
+                                <div>
+                                    <dt>Phase</dt>
+                                    <dd>--</dd>
+                                </div>
+                                <div>
+                                    <dt>Clarté</dt>
+                                    <dd>--%</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+                </section>
+            </section>
+        </main>
 
-                <div id="hero-date">
-                    Date
-                </div>
-
-                <div id="hero-time">
-                    Heure
-                </div>
-
-                <div id="hero-day">
-                    Jour
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
- <section class="astronomy">
-
-    <div class="astronomy-card">
-
-        <h2>
-            Soleil
-        </h2>
-
-        <div class="placeholder">
-
-            🌞
-
-        </div>
-
+        <footer class="site-footer">
+            <p id="version">MeteoSignal</p>
+        </footer>
     </div>
 
-    <div class="astronomy-card">
-
-        <h2>
-            Lune
-        </h2>
-
-        <div class="placeholder">
-
-            🌙
-
-        </div>
-
-    </div>
-
- </section>
-
-</section>
-
-    <!-- =========================
-         WEATHER GRID
-    ========================== -->
-    <section class="weather-grid">
-
-        <article class="card">
-            <h2>💨 Vent</h2>
-            <p><span id="wind">--</span></p>
-        </article>
-
-        <article class="card">
-            <h2>💧 Humidité</h2>
-            <p><span id="humidity">--</span></p>
-        </article>
-
-        <article class="card">
-            <h2>🌡️ Pression</h2>
-            <p><span id="pressure">-- hPa</span></p>
-        </article>
-
-        <article class="card">
-            <h2>🌧️ Précipitations</h2>
-            <p><span id="precipitation">-- mm</span></p>
-        </article>
-
-    </section>
-
-    <!-- =========================
-         HOURLY FORECAST
-    ========================== -->
-    <section class="hourly">
-
-        <h2>Prévisions horaires</h2>
-
-    </section>
-
-    <!-- =========================
-         WEEK FORECAST
-    ========================== -->
-    <section class="weekly">
-
-        <h2>Prévisions sur 7 jours</h2>
-
-        <div id="forecast"></div>
-
-    </section>
-
-</main>
-
-<footer id="version"></footer>
-
-<script src="config/config.js"></script>
-<script src="js/clock.js"></script>
-<script src="js/weather.js"></script>
-<script src="js/app.js"></script>
-
-</div>
-
-</div>
-
+    <script src="config/config.js"></script>
+    <script src="js/clock.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/app.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,108 @@
+@media (max-width: 980px) {
+    .site-header {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .search-panel {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .content-grid,
+    .astronomy-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .weekly,
+    .astronomy-panel {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .weather-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .app-shell {
+        width: min(100% - 1rem, var(--content-max));
+        padding-top: var(--space-3);
+    }
+
+    .site-header {
+        position: static;
+        gap: var(--space-3);
+    }
+
+    .brand-text small {
+        display: none;
+    }
+
+    .hero-weather,
+    .hero-content {
+        min-height: 0;
+    }
+
+    .hero-content {
+        gap: var(--space-6);
+        padding: var(--space-5);
+    }
+
+    .current-weather {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    .weather-symbol {
+        width: 6.25rem;
+        height: 6.25rem;
+        font-size: 3.6rem;
+    }
+
+    .weather-summary h1 {
+        font-size: 2rem;
+    }
+
+    .temperature-line {
+        font-size: 3.75rem;
+    }
+
+    .hero-metrics,
+    .weather-grid,
+    .hourly-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .forecast-list {
+        grid-template-columns: repeat(7, 6.5rem);
+    }
+}
+
+@media (max-width: 430px) {
+    .site-header {
+        grid-template-columns: 1fr;
+    }
+
+    .header-actions {
+        justify-content: stretch;
+    }
+
+    .header-actions .icon-action {
+        width: 100%;
+    }
+
+    .hero-status {
+        display: grid;
+    }
+
+    .temperature-line {
+        font-size: 3.2rem;
+    }
+}
+
+@media (min-width: 1360px) {
+    :root {
+        --content-max: 1280px;
+    }
+}
