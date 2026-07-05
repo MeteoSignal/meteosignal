@@ -1,5 +1,6 @@
 import { APP_CONFIG } from "../config/config.js";
 import { formatDuration, formatForecastDay, formatPrecipitation, formatPressure, formatSpeed, formatTemperature, formatTime, formatPercent } from "./core/formatters.js";
+import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js";
 import { getWeatherProvider } from "./services/weather-provider.js";
 
 const provider = getWeatherProvider();
@@ -15,13 +16,13 @@ function initApp() {
 
 async function loadWeatherDashboard() {
     try {
-        setText("#description", "Chargement de la météo...");
+        renderCurrentWeatherLoading();
 
         const weather = await provider.getWeather(APP_CONFIG.defaultLocation);
         renderWeatherDashboard(weather);
     } catch (error) {
         console.error(error);
-        setText("#description", "Données météo indisponibles.");
+        renderCurrentWeatherError("Données météo indisponibles.");
     }
 }
 
@@ -31,19 +32,6 @@ function renderWeatherDashboard(weather) {
     renderHourlyPreview(weather.hourly);
     renderDailyForecast(weather.daily);
     renderAstronomy(weather.astronomy);
-}
-
-function renderCurrentWeather(weather) {
-    const current = weather.current;
-    const today = weather.daily[0];
-
-    setText("#city", weather.location.name);
-    setText("#temp", formatTemperature(current.temperature));
-    setText("#description", current.condition.label);
-    setText("#icon", current.condition.icon);
-    setText("#feels-like", formatTemperature(current.apparentTemperature));
-    setText("#temp-min", formatTemperature(today?.temperatureMin));
-    setText("#temp-max", formatTemperature(today?.temperatureMax));
 }
 
 function renderWeatherCards(weather) {

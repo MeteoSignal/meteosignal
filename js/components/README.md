@@ -6,7 +6,7 @@ Modules prévus :
 
 - `header.js` ;
 - `search.js` ;
-- `current-weather.js` ;
+- `current-weather.js` : hero météo, état de chargement, erreur et ambiance météo ;
 - `weather-cards.js` ;
 - `hourly-forecast.js` ;
 - `daily-forecast.js` ;

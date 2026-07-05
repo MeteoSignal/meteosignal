@@ -51,13 +51,19 @@
         </header>
 
         <main id="contenu" class="dashboard" tabindex="-1">
-            <section class="hero-weather" aria-labelledby="current-weather-title">
+            <section
+                class="hero-weather"
+                aria-labelledby="current-weather-title"
+                data-weather-hero
+                data-weather-state="loading"
+                data-weather-tone="unknown">
                 <div class="hero-media" aria-hidden="true"></div>
 
                 <div class="hero-content">
                     <div class="hero-status">
                         <span id="clock" class="time-chip">--:--</span>
-                        <span class="status-chip">Mise à jour automatique</span>
+                        <span id="hero-status" class="status-chip">Chargement</span>
+                        <span id="updated-at" class="status-chip">Mise à jour --:--</span>
                     </div>
 
                     <div class="current-weather">

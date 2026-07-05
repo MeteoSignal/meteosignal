@@ -34,6 +34,10 @@
     border-radius: var(--radius-xl);
     background: var(--color-surface-strong);
     box-shadow: var(--shadow-soft);
+    transition:
+        border-color var(--transition-base),
+        background-color var(--transition-base),
+        opacity var(--transition-base);
 }
 
 .hero-media {
@@ -46,6 +50,59 @@
     background-position: center;
     background-size: cover;
     transform: scale(1.02);
+    transition: opacity var(--transition-base), filter var(--transition-base);
+}
+
+.hero-weather[data-weather-tone="clear"] .hero-media {
+    background:
+        linear-gradient(90deg, rgba(5, 16, 31, 0.78), rgba(5, 16, 31, 0.32) 52%, rgba(5, 16, 31, 0.7)),
+        linear-gradient(180deg, rgba(120, 198, 255, 0.14), rgba(3, 16, 31, 0.72)),
+        url("../assets/backgrounds/clear.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.hero-weather[data-weather-tone="cloudy"] .hero-media,
+.hero-weather[data-weather-tone="fog"] .hero-media {
+    background:
+        linear-gradient(90deg, rgba(5, 16, 31, 0.86), rgba(10, 32, 56, 0.52) 52%, rgba(5, 16, 31, 0.78)),
+        linear-gradient(180deg, rgba(171, 193, 216, 0.12), rgba(3, 16, 31, 0.78)),
+        url("../assets/backgrounds/clear.jpg");
+    background-position: center;
+    background-size: cover;
+    filter: saturate(0.82);
+}
+
+.hero-weather[data-weather-tone="rain"] .hero-media,
+.hero-weather[data-weather-tone="storm"] .hero-media {
+    background:
+        linear-gradient(90deg, rgba(3, 16, 31, 0.9), rgba(7, 24, 44, 0.62) 52%, rgba(3, 16, 31, 0.86)),
+        linear-gradient(180deg, rgba(124, 231, 225, 0.1), rgba(3, 16, 31, 0.84)),
+        url("../assets/backgrounds/night.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.hero-weather[data-weather-tone="snow"] .hero-media {
+    background:
+        linear-gradient(90deg, rgba(5, 16, 31, 0.82), rgba(14, 41, 71, 0.48) 52%, rgba(5, 16, 31, 0.78)),
+        linear-gradient(180deg, rgba(237, 246, 255, 0.16), rgba(3, 16, 31, 0.76)),
+        url("../assets/backgrounds/clear.jpg");
+    background-position: center;
+    background-size: cover;
+    filter: saturate(0.72) brightness(1.08);
+}
+
+.hero-weather[data-weather-tone="unknown"] .hero-media {
+    opacity: 0.82;
+}
+
+.hero-weather[data-weather-state="loading"] {
+    border-color: rgba(120, 198, 255, 0.18);
+}
+
+.hero-weather[data-weather-state="error"] {
+    border-color: rgba(255, 215, 106, 0.34);
 }
 
 .hero-content {
