@@ -1,0 +1,83 @@
+# Décisions techniques - MeteoSignal
+
+Ce document conserve les décisions importantes afin d'éviter de rediscuter les fondations à chaque étape.
+
+## D001 - HTML, CSS et JavaScript natif pour v1.0
+
+Décision : la version 1.0 n'utilise aucun framework JavaScript.
+
+Raison : le projet doit rester simple, rapide, compatible GitHub Pages et facile à maintenir.
+
+Conséquence : l'architecture repose sur des modules ES6, des composants légers et une séparation stricte entre services, état et interface.
+
+## D002 - Open-Meteo comme fournisseur principal
+
+Décision : Open-Meteo est l'API principale de la v1.0.
+
+Raison : elle couvre les besoins météo essentiels, fonctionne sans clé API pour les usages prévus et facilite la publication sur GitHub Pages.
+
+Conséquence : les services sont conçus pour permettre l'ajout futur d'autres fournisseurs sans modifier les composants.
+
+## D003 - Radar et vigilance après v1.0
+
+Décision : le radar météo et la vigilance sont préparés architecturalement, mais exclus du périmètre obligatoire v1.0.
+
+Raison : la Spécification officielle place ces fonctionnalités dans une version ultérieure. Les intégrer trop tôt augmenterait la complexité et le risque d'instabilité.
+
+Conséquence : aucun composant radar ou vigilance n'est développé avant que les fonctionnalités principales soient stables.
+
+## D004 - Interface premium mais sobre
+
+Décision : l'identité graphique utilise principalement le bleu nuit, le bleu clair, le blanc et le jaune météo.
+
+Raison : cette palette correspond à la vision premium du projet tout en assurant une bonne lisibilité.
+
+Conséquence : les effets lumineux, dégradés et glassmorphism restent subtils. Ils ne doivent jamais nuire aux performances ou à la clarté.
+
+## D005 - CSS découpé par responsabilité
+
+Décision : le CSS cible est séparé en tokens, base, layout, components et responsive.
+
+Raison : le fichier `style.css` actuel mélange plusieurs générations de styles. Le découpage rendra la v1.0 plus stable et plus facile à maintenir.
+
+Conséquence : la migration CSS sera progressive et contrôlée, sans casser l'interface existante.
+
+## D006 - Stockage local simple
+
+Décision : les favoris, la ville active et les préférences sont stockés dans `localStorage`.
+
+Raison : la v1.0 ne nécessite pas de compte utilisateur ni de synchronisation serveur.
+
+Conséquence : une abstraction `storage.js` évitera de disperser les accès directs à `localStorage`.
+
+## D007 - Composants indépendants
+
+Décision : chaque composant d'interface possède une responsabilité unique.
+
+Raison : cela permet de valider, corriger ou faire évoluer une partie sans reconstruire toute l'application.
+
+Conséquence : un composant validé n'est modifié ensuite que pour bug, optimisation ou fonctionnalité planifiée.
+
+## D008 - UTF-8 obligatoire
+
+Décision : tous les fichiers texte du projet doivent être enregistrés en UTF-8.
+
+Raison : plusieurs fichiers historiques affichent des caractères français abîmés. Une base propre évite les erreurs visuelles et les problèmes de maintenance.
+
+Conséquence : la Phase 1 inclut la remise au propre progressive des documents et fichiers affichés à l'utilisateur.
+
+## D009 - Développement hors branche main
+
+Décision : les évolutions se font sur `feature/*`, puis sont fusionnées vers `develop`, puis vers `main` pour publication stable.
+
+Raison : `main` doit rester publiable.
+
+Conséquence : la Phase 1 utilise une branche dédiée `feature/v1-foundation`.
+
+## D010 - Cache PWA prudent
+
+Décision : le service worker met en cache les fichiers statiques, mais les données météo doivent rester clairement datées.
+
+Raison : une application météo ne doit pas donner l'impression que des données anciennes sont actuelles.
+
+Conséquence : l'interface affichera l'heure de mise à jour et devra gérer proprement l'absence de réseau.
