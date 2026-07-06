@@ -1,6 +1,6 @@
 import { APP_CONFIG } from "../config/config.js";
-import { formatDuration, formatTime } from "./core/formatters.js";
 import { readActiveLocation, saveActiveLocation } from "./core/storage.js";
+import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js";
 import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js";
 import { initFavorites, renderFavoriteButton } from "./components/favorites.js";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js";
@@ -40,6 +40,7 @@ async function loadWeatherDashboard() {
         renderWeatherCardsLoading();
         renderHourlyForecastLoading();
         renderDailyForecastLoading();
+        renderAstronomyLoading();
 
         const [weather, airQuality] = await Promise.all([
             provider.getWeather(activeLocation),
@@ -58,6 +59,7 @@ async function loadWeatherDashboard() {
         renderWeatherCardsError();
         renderHourlyForecastError();
         renderDailyForecastError();
+        renderAstronomyError();
     }
 }
 
@@ -107,16 +109,6 @@ async function loadAirQuality(location) {
         console.warn(error);
         return null;
     }
-}
-
-function renderAstronomy(astronomy) {
-    if (!astronomy) {
-        return;
-    }
-
-    setText("#sunrise", formatTime(astronomy.sunrise));
-    setText("#sunset", formatTime(astronomy.sunset));
-    setText("#daylight-duration", formatDuration(astronomy.daylightDuration));
 }
 
 function renderVersion() {

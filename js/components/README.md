@@ -10,7 +10,7 @@ Modules prévus :
 - `weather-cards.js` : cartes vent, humidité, pression, précipitations, UV et qualité de l'air ;
 - `hourly-forecast.js` : prévisions horaires normalisées, état de chargement et erreur ;
 - `daily-forecast.js` : prévisions sur 7 jours normalisées, état de chargement et erreur ;
-- `astronomy.js` ;
+- `astronomy.js` : rendu Soleil/Lune, phase lunaire, chargement et erreur ;
 - `favorites.js` : ajout/retrait de la ville active dans les favoris.
 
 Chaque composant reçoit des données préparées et met à jour uniquement sa zone de l'interface.

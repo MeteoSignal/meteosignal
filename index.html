@@ -181,9 +181,9 @@
                     <div id="forecast" class="forecast-list" aria-live="polite" data-daily-forecast></div>
                 </section>
 
-                <section class="astronomy-panel" aria-label="Soleil et lune">
-                    <article class="astro-card">
-                        <span class="astro-icon" aria-hidden="true">☀️</span>
+                <section class="astronomy-panel" aria-label="Soleil et lune" data-astronomy data-astronomy-state="loading">
+                    <article class="astro-card" data-astronomy-card="sun">
+                        <span id="sun-icon" class="astro-icon" aria-hidden="true">☀️</span>
                         <div>
                             <p class="eyebrow">Soleil</p>
                             <h2>Cycle solaire</h2>
@@ -204,8 +204,8 @@
                         </div>
                     </article>
 
-                    <article class="astro-card">
-                        <span class="astro-icon" aria-hidden="true">☾</span>
+                    <article class="astro-card" data-astronomy-card="moon">
+                        <span id="moon-icon" class="astro-icon" aria-hidden="true">☾</span>
                         <div>
                             <p class="eyebrow">Lune</p>
                             <h2>Phase lunaire</h2>
@@ -216,7 +216,11 @@
                                 </div>
                                 <div>
                                     <dt>Clarté</dt>
-                                    <dd id="moon-light">--%</dd>
+                                    <dd id="moon-light">--</dd>
+                                </div>
+                                <div>
+                                    <dt>Âge</dt>
+                                    <dd id="moon-age">--</dd>
                                 </div>
                             </dl>
                         </div>

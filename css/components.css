@@ -445,6 +445,19 @@
     font-size: 2rem;
 }
 
+.astro-card[data-astronomy-card="moon"] .astro-icon {
+    background: rgba(120, 198, 255, 0.12);
+    color: var(--color-blue-300);
+}
+
+.astronomy-panel[data-astronomy-state="loading"] .astro-card {
+    opacity: 0.72;
+}
+
+.astronomy-panel[data-astronomy-state="error"] .astro-card {
+    border-color: rgba(255, 215, 106, 0.28);
+}
+
 .astro-data {
     display: grid;
     gap: var(--space-3);

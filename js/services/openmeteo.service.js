@@ -1,4 +1,5 @@
 import { APP_CONFIG } from "../../config/config.js";
+import { getMoonPhase } from "../core/moon.js";
 import { getWeatherCondition } from "../core/weather-codes.js";
 import { createWeatherState } from "../core/state.js";
 
@@ -191,9 +192,12 @@ function normalizeAstronomy(today) {
     }
 
     return {
-        sunrise: today.sunrise,
-        sunset: today.sunset,
-        daylightDuration: today.daylightDuration,
+        sun: {
+            sunrise: today.sunrise,
+            sunset: today.sunset,
+            daylightDuration: today.daylightDuration
+        },
+        moon: getMoonPhase(today.date),
         uvIndexMax: today.uvIndexMax
     };
 }
