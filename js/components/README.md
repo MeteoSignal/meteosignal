@@ -4,7 +4,7 @@ Ce dossier contiendra les composants d'interface de MeteoSignal.
 
 Modules prévus :
 
-- `header.js` ;
+- `navigation.js` : navigation adaptative mobile, tablette, desktop et TV ;
 - `search.js` : recherche de ville et sélection du meilleur résultat ;
 - `current-weather.js` : hero météo, état de chargement, erreur et ambiance météo ;
 - `weather-cards.js` : cartes vent, humidité, pression, précipitations, UV et qualité de l'air ;

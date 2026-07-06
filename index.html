@@ -15,12 +15,65 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body data-nav-open="false" data-nav-collapsed="false">
     <a class="skip-link" href="#contenu">Aller au contenu</a>
     <span id="app-status" class="sr-only" role="status" aria-live="polite"></span>
 
     <div class="app-shell">
+        <aside id="navigation-principale" class="adaptive-nav" aria-label="Navigation principale" data-navigation>
+            <div class="nav-heading">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span class="nav-title">MeteoSignal</span>
+            </div>
+
+            <nav class="nav-links" aria-label="Sections MeteoSignal">
+                <a class="nav-link" href="#contenu" data-nav-link>
+                    <span aria-hidden="true">⌂</span>
+                    <span class="nav-label">Accueil</span>
+                </a>
+                <a class="nav-link" href="#cartes-meteo" data-nav-link>
+                    <span aria-hidden="true">◫</span>
+                    <span class="nav-label">Cartes météo</span>
+                </a>
+                <a class="nav-link" href="#previsions-horaires" data-nav-link>
+                    <span aria-hidden="true">◷</span>
+                    <span class="nav-label">Horaire</span>
+                </a>
+                <a class="nav-link" href="#previsions-sept-jours" data-nav-link>
+                    <span aria-hidden="true">▦</span>
+                    <span class="nav-label">7 jours</span>
+                </a>
+                <a class="nav-link" href="#soleil-lune" data-nav-link>
+                    <span aria-hidden="true">☾</span>
+                    <span class="nav-label">Soleil & Lune</span>
+                </a>
+            </nav>
+
+            <button
+                class="nav-collapse"
+                type="button"
+                aria-label="Réduire la navigation"
+                aria-pressed="false"
+                data-nav-collapse>
+                <span aria-hidden="true">‹</span>
+                <span class="nav-label">Réduire</span>
+            </button>
+        </aside>
+
+        <button class="nav-overlay" type="button" aria-label="Fermer le menu" data-nav-overlay></button>
+
+        <div class="app-main">
         <header class="site-header" aria-label="En-tête MeteoSignal">
+            <button
+                class="icon-action nav-menu-button"
+                type="button"
+                aria-label="Ouvrir le menu"
+                aria-controls="navigation-principale"
+                aria-expanded="false"
+                data-nav-toggle>
+                <span aria-hidden="true">☰</span>
+            </button>
+
             <a class="brand" href="#contenu" aria-label="MeteoSignal - Accueil">
                 <span class="brand-mark" aria-hidden="true">M</span>
                 <span class="brand-text">
@@ -107,7 +160,7 @@
                 </div>
             </section>
 
-            <section class="weather-grid" aria-label="Indicateurs météo" aria-live="polite" data-weather-cards>
+            <section id="cartes-meteo" class="weather-grid" aria-label="Indicateurs météo" aria-live="polite" data-weather-cards>
                 <article class="metric-card" data-card-tone="wind">
                     <span class="metric-label">Vent</span>
                     <strong>--</strong>
@@ -146,7 +199,7 @@
             </section>
 
             <section class="content-grid" aria-label="Prévisions et astronomie">
-                <section class="forecast-panel hourly" aria-labelledby="hourly-title">
+                <section id="previsions-horaires" class="forecast-panel hourly" aria-labelledby="hourly-title">
                     <div class="section-heading">
                         <p class="eyebrow">Aujourd'hui</p>
                         <h2 id="hourly-title">Prévisions horaires</h2>
@@ -175,7 +228,7 @@
                     </div>
                 </section>
 
-                <section class="forecast-panel weekly" aria-labelledby="weekly-title">
+                <section id="previsions-sept-jours" class="forecast-panel weekly" aria-labelledby="weekly-title">
                     <div class="section-heading">
                         <p class="eyebrow">Tendance</p>
                         <h2 id="weekly-title">Prévisions sur 7 jours</h2>
@@ -184,6 +237,7 @@
                 </section>
 
                 <section
+                    id="soleil-lune"
                     class="astronomy-panel"
                     aria-label="Soleil et lune"
                     aria-live="polite"
@@ -239,6 +293,7 @@
         <footer class="site-footer">
             <p id="version">MeteoSignal</p>
         </footer>
+        </div>
     </div>
 
     <script src="js/clock.js"></script>

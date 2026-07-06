@@ -1,85 +1,73 @@
-# 🗺️ ROADMAP
+# ROADMAP
 
-## 🌦️ Vision
+MeteoSignal v1.0.0 constitue la première version stable publique du produit.
 
-**MeteoSignal** a pour ambition de devenir une application météo moderne, rapide et multiplateforme, capable de fonctionner aussi bien sur smartphone, tablette, ordinateur que télévision.
-
-Notre objectif est de proposer une expérience simple, fiable et agréable, tout en restant entièrement open source.
+La suite du projet doit continuer à respecter les principes fondateurs : simplicité, élégance, performance et évolutivité.
 
 ---
 
-# 🚀 Version 0.2.0 — Dashboard
+## Version 1.0.0 - Stable initiale
 
-Objectif : créer une interface moderne et responsive.
+Statut : terminée.
 
-* [ ] Nouveau tableau de bord
-* [ ] Date complète
-* [ ] Pression atmosphérique
-* [ ] Température ressentie
-* [ ] Indice UV
-* [ ] Lever / coucher du soleil
-* [ ] Amélioration du responsive
-
----
-
-# 📍 Version 0.3.0 — Localisation
-
-Objectif : personnaliser la météo.
-
-* [ ] Géolocalisation
-* [ ] Recherche de ville
-* [ ] Favoris
-
----
-
-# 🎨 Version 0.4.0 — Personnalisation
-
-Objectif : adapter l'application aux préférences de l'utilisateur.
-
-* [ ] Thème clair
-* [ ] Thème sombre
-* [ ] Paramètres
-* [ ] Plusieurs langues
+- [x] Architecture modulaire HTML/CSS/JavaScript sans framework.
+- [x] Modèle météo interne normalisé.
+- [x] Open-Meteo comme fournisseur principal.
+- [x] Recherche de ville.
+- [x] Ville active sauvegardée.
+- [x] Favoris.
+- [x] Géolocalisation.
+- [x] Météo actuelle.
+- [x] Prévisions horaires.
+- [x] Prévisions sur 7 jours.
+- [x] Soleil et Lune.
+- [x] Indice UV.
+- [x] Qualité de l'air.
+- [x] PWA installable.
+- [x] Navigation adaptative mobile, tablette, desktop et TV.
+- [x] Audit final et rapport de validation.
 
 ---
 
-# 🌍 Version 0.5.0 — Sources météo
+## Version 1.1 - Confort utilisateur
 
-Objectif : prendre en charge plusieurs fournisseurs.
+Objectif : améliorer les usages quotidiens sans complexifier l'interface.
 
-* [ ] Open-Meteo
-* [ ] Infoclimat
-* [ ] Autres fournisseurs si disponibles
-
----
-
-# 🛰️ Version 0.6.0 — Cartographie
-
-Objectif : enrichir les informations météo.
-
-* [ ] Radar pluie
-* [ ] Carte météo
-* [ ] Vigilance météo
-* [ ] Qualité de l'air
+- [ ] Vue complète des favoris.
+- [ ] Paramètres utilisateur simples.
+- [ ] Préférences d'unités.
+- [ ] Améliorations d'accessibilité après tests lecteurs d'écran.
+- [ ] Validation PWA post-publication sur GitHub Pages, Android et iOS.
 
 ---
 
-# 📺 Version 0.7.0 — Multiplateforme
+## Version 1.2 - Météo enrichie
 
-Objectif : optimiser l'expérience sur tous les appareils.
+Objectif : ajouter des informations utiles, uniquement lorsqu'elles apportent une vraie valeur.
 
-* [ ] Mode TV
-* [ ] Mode kiosque
-* [ ] Optimisations tablette
-* [ ] Optimisations PC
+- [ ] Radar météo.
+- [ ] Vigilance météo.
+- [ ] Cartes météo enrichies.
+- [ ] Meilleure gestion des indisponibilités API.
 
 ---
 
-# 🎉 Version 1.0.0 — Première version officielle
+## Version 1.3 - Multiplateforme avancé
 
-Objectif : publier une version stable, documentée et prête à être utilisée par le grand public.
+Objectif : renforcer l'expérience sur grands écrans et installations PWA.
 
-* [ ] Publication officielle
-* [ ] Domaine personnalisé
-* [ ] Publication Android
-* [ ] Documentation complète
+- [ ] Optimisations TV.
+- [ ] Mode kiosque.
+- [ ] Notifications météo optionnelles.
+- [ ] Widgets si la plateforme le permet.
+
+---
+
+## Version 2.0 - Mode Expert
+
+Objectif : proposer une couche avancée pour les passionnés météo, séparée de l'expérience simple par défaut.
+
+- [ ] Mode Expert.
+- [ ] Données météo détaillées.
+- [ ] Comparaison de fournisseurs.
+- [ ] Visualisations avancées.

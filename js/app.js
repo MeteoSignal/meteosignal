@@ -5,6 +5,7 @@ import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoadi
 import { initFavorites, renderFavoriteButton } from "./components/favorites.js";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js";
 import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js";
+import { initNavigation } from "./components/navigation.js";
 import { initSearch, updateSearchInput } from "./components/search.js";
 import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js";
 import { fetchAirQuality } from "./services/air-quality.service.js";
@@ -21,6 +22,7 @@ initApp();
 
 function initApp() {
     console.log(`${APP_CONFIG.appName} v${APP_CONFIG.version} démarré`);
+    initNavigation();
     initSearch({
         onLocationSelect: handleLocationSelect,
         onError: showInteractionError

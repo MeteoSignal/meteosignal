@@ -1,7 +1,49 @@
 .app-shell {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
     width: min(100% - 2rem, var(--content-max));
     margin: 0 auto;
     padding: var(--space-5) 0 var(--space-8);
+}
+
+.app-main {
+    min-width: 0;
+}
+
+.adaptive-nav {
+    position: fixed;
+    top: var(--space-4);
+    bottom: var(--space-4);
+    left: var(--space-4);
+    z-index: 30;
+    display: grid;
+    width: min(20rem, calc(100vw - 2rem));
+    min-width: 0;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: var(--space-5);
+    transform: translateX(calc(-100% - var(--space-5)));
+    transition: transform var(--transition-base), width var(--transition-base);
+}
+
+body[data-nav-open="true"] .adaptive-nav {
+    transform: translateX(0);
+}
+
+.nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    visibility: hidden;
+    border: 0;
+    background: rgba(3, 16, 31, 0.64);
+    opacity: 0;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+body[data-nav-open="true"] .nav-overlay {
+    visibility: visible;
+    opacity: 1;
 }
 
 .site-header {
@@ -9,7 +51,7 @@
     top: var(--space-4);
     z-index: 10;
     display: grid;
-    grid-template-columns: auto minmax(16rem, 1fr) auto;
+    grid-template-columns: auto auto minmax(12rem, 1fr) auto;
     gap: var(--space-4);
     align-items: center;
     margin-bottom: var(--space-6);

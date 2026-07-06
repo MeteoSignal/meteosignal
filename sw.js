@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = "v1.0.0-dev-phase-10-stability";
+const CACHE_VERSION = "v1.0.0";
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -27,6 +27,7 @@ const STATIC_ASSETS = [
     "./js/components/daily-forecast.js",
     "./js/components/favorites.js",
     "./js/components/hourly-forecast.js",
+    "./js/components/navigation.js",
     "./js/components/search.js",
     "./js/components/weather-cards.js",
     "./js/core/formatters.js",
