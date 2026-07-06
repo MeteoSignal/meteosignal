@@ -1,8 +1,10 @@
 import { APP_CONFIG } from "../config/config.js";
-import { formatDuration, formatForecastDay, formatTemperature, formatTime } from "./core/formatters.js";
+import { formatDuration, formatTime } from "./core/formatters.js";
 import { readActiveLocation, saveActiveLocation } from "./core/storage.js";
+import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js";
 import { initFavorites, renderFavoriteButton } from "./components/favorites.js";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js";
+import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js";
 import { initSearch, updateSearchInput } from "./components/search.js";
 import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js";
 import { fetchAirQuality } from "./services/air-quality.service.js";
@@ -36,6 +38,8 @@ async function loadWeatherDashboard() {
     try {
         renderCurrentWeatherLoading();
         renderWeatherCardsLoading();
+        renderHourlyForecastLoading();
+        renderDailyForecastLoading();
 
         const [weather, airQuality] = await Promise.all([
             provider.getWeather(activeLocation),
@@ -52,6 +56,8 @@ async function loadWeatherDashboard() {
         console.error(error);
         renderCurrentWeatherError("Données météo indisponibles.");
         renderWeatherCardsError();
+        renderHourlyForecastError();
+        renderDailyForecastError();
     }
 }
 
@@ -89,29 +95,9 @@ function bindGeolocationButton() {
 function renderWeatherDashboard(weather) {
     renderCurrentWeather(weather);
     renderWeatherCards(weather);
-    renderHourlyPreview(weather.hourly);
+    renderHourlyForecast(weather.hourly);
     renderDailyForecast(weather.daily);
     renderAstronomy(weather.astronomy);
-}
-
-function renderHourlyPreview(hourly) {
-    const container = document.querySelector(".hourly-strip");
-
-    if (!container || hourly.length === 0) {
-        return;
-    }
-
-    const previewHours = hourly.slice(0, 4);
-    container.innerHTML = "";
-
-    previewHours.forEach((hour) => {
-        const card = document.createElement("article");
-        card.innerHTML = `
-            <span>${formatTime(hour.time)}</span>
-            <strong>${formatTemperature(hour.temperature)}</strong>
-        `;
-        container.appendChild(card);
-    });
 }
 
 async function loadAirQuality(location) {
@@ -121,27 +107,6 @@ async function loadAirQuality(location) {
         console.warn(error);
         return null;
     }
-}
-
-function renderDailyForecast(daily) {
-    const container = document.querySelector("#forecast");
-
-    if (!container) {
-        return;
-    }
-
-    container.innerHTML = "";
-
-    daily.slice(0, 7).forEach((day) => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-            <span>${formatForecastDay(day.date)}</span>
-            <strong>${day.condition.icon}</strong>
-            <span>${formatTemperature(day.temperatureMax)}</span>
-        `;
-        container.appendChild(card);
-    });
 }
 
 function renderAstronomy(astronomy) {

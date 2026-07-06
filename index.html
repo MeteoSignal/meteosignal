@@ -149,22 +149,26 @@
                         <p class="eyebrow">Aujourd'hui</p>
                         <h2 id="hourly-title">Prévisions horaires</h2>
                     </div>
-                    <div class="hourly-strip" aria-label="Aperçu horaire">
-                        <article>
-                            <span>Matin</span>
-                            <strong>--°</strong>
+                    <div class="hourly-strip" aria-label="Aperçu horaire" aria-live="polite" data-hourly-forecast>
+                        <article class="hourly-card" data-forecast-state="loading">
+                            <span class="hourly-time">Maintenant</span>
+                            <span class="forecast-icon" aria-hidden="true">--</span>
+                            <strong class="hourly-temperature">--</strong>
                         </article>
-                        <article>
-                            <span>Midi</span>
-                            <strong>--°</strong>
+                        <article class="hourly-card" data-forecast-state="loading">
+                            <span class="hourly-time">--:--</span>
+                            <span class="forecast-icon" aria-hidden="true">--</span>
+                            <strong class="hourly-temperature">--</strong>
                         </article>
-                        <article>
-                            <span>Soir</span>
-                            <strong>--°</strong>
+                        <article class="hourly-card" data-forecast-state="loading">
+                            <span class="hourly-time">--:--</span>
+                            <span class="forecast-icon" aria-hidden="true">--</span>
+                            <strong class="hourly-temperature">--</strong>
                         </article>
-                        <article>
-                            <span>Nuit</span>
-                            <strong>--°</strong>
+                        <article class="hourly-card" data-forecast-state="loading">
+                            <span class="hourly-time">--:--</span>
+                            <span class="forecast-icon" aria-hidden="true">--</span>
+                            <strong class="hourly-temperature">--</strong>
                         </article>
                     </div>
                 </section>
@@ -174,7 +178,7 @@
                         <p class="eyebrow">Tendance</p>
                         <h2 id="weekly-title">Prévisions sur 7 jours</h2>
                     </div>
-                    <div id="forecast" class="forecast-list" aria-live="polite"></div>
+                    <div id="forecast" class="forecast-list" aria-live="polite" data-daily-forecast></div>
                 </section>
 
                 <section class="astronomy-panel" aria-label="Soleil et lune">

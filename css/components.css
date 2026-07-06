@@ -212,8 +212,8 @@
 .metric-card,
 .forecast-panel,
 .astro-card,
-#forecast .card,
-.hourly-strip article {
+.hourly-card,
+.forecast-day-card {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background:
@@ -229,7 +229,8 @@
 
 .hero-metrics span,
 .metric-label,
-.hourly-strip span {
+.hourly-time,
+.forecast-day-name {
     display: block;
     color: var(--color-muted);
     font-size: 0.82rem;
@@ -305,6 +306,7 @@
 }
 
 .forecast-panel {
+    overflow: hidden;
     padding: var(--space-5);
 }
 
@@ -322,35 +324,106 @@
 
 .hourly-strip {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(12, minmax(7.4rem, 1fr));
     gap: var(--space-3);
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    padding-bottom: var(--space-1);
+    scroll-snap-type: x proximity;
 }
 
-.hourly-strip article {
-    min-height: 6rem;
+.hourly-card {
+    display: grid;
+    min-height: 9rem;
+    align-content: space-between;
+    gap: var(--space-3);
     padding: var(--space-4);
+    scroll-snap-align: start;
 }
 
-.hourly-strip strong {
+.hourly-temperature {
     display: block;
-    margin-top: var(--space-2);
     color: var(--color-yellow-300);
     font-size: 1.55rem;
+    line-height: 1;
+}
+
+.forecast-icon {
+    display: block;
+    min-height: 2rem;
+    color: var(--color-white);
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+.forecast-meta {
+    display: grid;
+    gap: var(--space-1);
+    color: var(--color-subtle);
+    font-size: 0.78rem;
+    line-height: 1.25;
 }
 
 .forecast-list {
     display: grid;
-    grid-template-columns: repeat(7, minmax(5.8rem, 1fr));
+    grid-template-columns: repeat(7, minmax(8.5rem, 1fr));
     gap: var(--space-3);
+    max-width: 100%;
+    min-width: 0;
     overflow-x: auto;
     padding-bottom: var(--space-1);
+    scroll-snap-type: x proximity;
 }
 
-#forecast .card {
-    min-height: 8rem;
+.forecast-day-card {
+    display: grid;
+    min-height: 11rem;
+    align-content: space-between;
+    gap: var(--space-4);
     padding: var(--space-4);
     color: var(--color-text);
-    text-align: center;
+    scroll-snap-align: start;
+}
+
+.forecast-day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.forecast-temperature-range {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
+.forecast-temperature-range strong {
+    color: var(--color-yellow-300);
+    font-size: 1.55rem;
+    line-height: 1;
+}
+
+.forecast-temperature-range span {
+    color: var(--color-muted);
+    font-weight: 700;
+}
+
+.forecast-message {
+    grid-column: 1 / -1;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    background: rgba(12, 33, 57, 0.52);
+    color: var(--color-muted);
+}
+
+.hourly-card[data-forecast-state="loading"],
+.forecast-day-card[data-forecast-state="loading"] {
+    opacity: 0.72;
 }
 
 .astro-card {
