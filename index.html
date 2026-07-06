@@ -105,29 +105,41 @@
                 </div>
             </section>
 
-            <section class="weather-grid" aria-label="Indicateurs météo">
-                <article class="metric-card">
+            <section class="weather-grid" aria-label="Indicateurs météo" aria-live="polite" data-weather-cards>
+                <article class="metric-card" data-card-tone="wind">
                     <span class="metric-label">Vent</span>
-                    <strong id="wind">--</strong>
+                    <strong>--</strong>
                     <small>Vitesse moyenne</small>
                 </article>
 
-                <article class="metric-card">
+                <article class="metric-card" data-card-tone="humidity">
                     <span class="metric-label">Humidité</span>
-                    <strong id="humidity">--</strong>
+                    <strong>--</strong>
                     <small>Taux actuel</small>
                 </article>
 
-                <article class="metric-card">
+                <article class="metric-card" data-card-tone="pressure">
                     <span class="metric-label">Pression</span>
-                    <strong id="pressure">-- hPa</strong>
+                    <strong>-- hPa</strong>
                     <small>Atmosphère</small>
                 </article>
 
-                <article class="metric-card">
+                <article class="metric-card" data-card-tone="rain">
                     <span class="metric-label">Précipitations</span>
-                    <strong id="precipitation">-- mm</strong>
+                    <strong>-- mm</strong>
                     <small>Cumul récent</small>
+                </article>
+
+                <article class="metric-card" data-card-tone="uv">
+                    <span class="metric-label">Indice UV</span>
+                    <strong>--</strong>
+                    <small>Rayonnement</small>
+                </article>
+
+                <article class="metric-card" data-card-tone="air">
+                    <span class="metric-label">Qualité de l'air</span>
+                    <strong>--</strong>
+                    <small>Indice européen</small>
                 </article>
             </section>
 

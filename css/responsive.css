@@ -105,4 +105,8 @@
     :root {
         --content-max: 1280px;
     }
+
+    .weather-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
 }

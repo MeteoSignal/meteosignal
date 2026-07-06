@@ -1,9 +1,11 @@
 import { APP_CONFIG } from "../config/config.js";
-import { formatDuration, formatForecastDay, formatPrecipitation, formatPressure, formatSpeed, formatTemperature, formatTime, formatPercent } from "./core/formatters.js";
+import { formatDuration, formatForecastDay, formatTemperature, formatTime } from "./core/formatters.js";
 import { readActiveLocation, saveActiveLocation } from "./core/storage.js";
 import { initFavorites, renderFavoriteButton } from "./components/favorites.js";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js";
 import { initSearch, updateSearchInput } from "./components/search.js";
+import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js";
+import { fetchAirQuality } from "./services/air-quality.service.js";
 import { getCurrentPositionLocation } from "./services/geolocation.service.js";
 import { getWeatherProvider } from "./services/weather-provider.js";
 
@@ -33,13 +35,23 @@ function initApp() {
 async function loadWeatherDashboard() {
     try {
         renderCurrentWeatherLoading();
+        renderWeatherCardsLoading();
 
-        const weather = await provider.getWeather(activeLocation);
-        renderWeatherDashboard(weather);
+        const [weather, airQuality] = await Promise.all([
+            provider.getWeather(activeLocation),
+            loadAirQuality(activeLocation)
+        ]);
+        const weatherWithAirQuality = {
+            ...weather,
+            airQuality
+        };
+
+        renderWeatherDashboard(weatherWithAirQuality);
         renderFavoriteButton(activeLocation);
     } catch (error) {
         console.error(error);
         renderCurrentWeatherError("Données météo indisponibles.");
+        renderWeatherCardsError();
     }
 }
 
@@ -82,15 +94,6 @@ function renderWeatherDashboard(weather) {
     renderAstronomy(weather.astronomy);
 }
 
-function renderWeatherCards(weather) {
-    const current = weather.current;
-
-    setText("#wind", formatSpeed(current.wind.speed));
-    setText("#humidity", formatPercent(current.humidity));
-    setText("#pressure", formatPressure(current.pressure));
-    setText("#precipitation", formatPrecipitation(current.precipitation));
-}
-
 function renderHourlyPreview(hourly) {
     const container = document.querySelector(".hourly-strip");
 
@@ -109,6 +112,15 @@ function renderHourlyPreview(hourly) {
         `;
         container.appendChild(card);
     });
+}
+
+async function loadAirQuality(location) {
+    try {
+        return await fetchAirQuality(location);
+    } catch (error) {
+        console.warn(error);
+        return null;
+    }
 }
 
 function renderDailyForecast(daily) {

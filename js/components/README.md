@@ -7,7 +7,7 @@ Modules prévus :
 - `header.js` ;
 - `search.js` : recherche de ville et sélection du meilleur résultat ;
 - `current-weather.js` : hero météo, état de chargement, erreur et ambiance météo ;
-- `weather-cards.js` ;
+- `weather-cards.js` : cartes vent, humidité, pression, précipitations, UV et qualité de l'air ;
 - `hourly-forecast.js` ;
 - `daily-forecast.js` ;
 - `astronomy.js` ;

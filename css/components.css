@@ -244,13 +244,50 @@
 
 .weather-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
 }
 
 .metric-card {
+    position: relative;
+    display: flex;
+    overflow: hidden;
     min-height: 8.5rem;
+    flex-direction: column;
+    justify-content: space-between;
     padding: var(--space-5);
+}
+
+.metric-card::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    content: "";
+    background: rgba(120, 198, 255, 0.42);
+}
+
+.metric-card[data-card-tone="wind"]::before {
+    background: var(--color-cyan-300);
+}
+
+.metric-card[data-card-tone="humidity"]::before,
+.metric-card[data-card-tone="rain"]::before {
+    background: var(--color-blue-300);
+}
+
+.metric-card[data-card-tone="pressure"]::before,
+.metric-card[data-card-tone="air"]::before {
+    background: var(--color-mint-300);
+}
+
+.metric-card[data-card-tone="uv"]::before {
+    background: var(--color-yellow-300);
+}
+
+.metric-card[data-card-state="poor"]::before,
+.metric-card[data-card-state="bad"]::before,
+.metric-card[data-card-state="very-bad"]::before {
+    background: var(--color-yellow-300);
 }
 
 .metric-card strong {
@@ -262,7 +299,9 @@
 }
 
 .metric-card small {
+    display: block;
     color: var(--color-subtle);
+    line-height: 1.35;
 }
 
 .forecast-panel {
