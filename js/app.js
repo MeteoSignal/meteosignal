@@ -12,7 +12,10 @@ import { getCurrentPositionLocation } from "./services/geolocation.service.js";
 import { getWeatherProvider } from "./services/weather-provider.js";
 
 const provider = getWeatherProvider();
+const DASHBOARD_SELECTOR = "[data-dashboard]";
 let activeLocation = readActiveLocation(APP_CONFIG.defaultLocation);
+let dashboardRequestId = 0;
+let isDashboardLoading = false;
 
 initApp();
 
@@ -31,21 +34,35 @@ function initApp() {
     renderFavoriteButton(activeLocation);
     renderVersion();
     loadWeatherDashboard();
-    setInterval(loadWeatherDashboard, APP_CONFIG.refresh);
+    setInterval(() => loadWeatherDashboard({ showLoading: false }), APP_CONFIG.refresh);
 }
 
-async function loadWeatherDashboard() {
+async function loadWeatherDashboard({ showLoading = true } = {}) {
+    if (isDashboardLoading && !showLoading) {
+        return;
+    }
+
+    const requestId = dashboardRequestId + 1;
+    const requestedLocation = activeLocation;
+    dashboardRequestId = requestId;
+    isDashboardLoading = true;
+
     try {
-        renderCurrentWeatherLoading();
-        renderWeatherCardsLoading();
-        renderHourlyForecastLoading();
-        renderDailyForecastLoading();
-        renderAstronomyLoading();
+        if (showLoading) {
+            renderDashboardLoading();
+        } else {
+            setDashboardBusy(true, "Mise à jour météo en arrière-plan.");
+        }
 
         const [weather, airQuality] = await Promise.all([
-            provider.getWeather(activeLocation),
-            loadAirQuality(activeLocation)
+            provider.getWeather(requestedLocation),
+            loadAirQuality(requestedLocation)
         ]);
+
+        if (!isCurrentDashboardRequest(requestId, requestedLocation)) {
+            return;
+        }
+
         const weatherWithAirQuality = {
             ...weather,
             airQuality
@@ -53,13 +70,23 @@ async function loadWeatherDashboard() {
 
         renderWeatherDashboard(weatherWithAirQuality);
         renderFavoriteButton(activeLocation);
+        setDashboardBusy(false, `Météo mise à jour pour ${weather.location.name}.`);
     } catch (error) {
-        console.error(error);
-        renderCurrentWeatherError("Données météo indisponibles.");
-        renderWeatherCardsError();
-        renderHourlyForecastError();
-        renderDailyForecastError();
-        renderAstronomyError();
+        if (!isCurrentDashboardRequest(requestId, requestedLocation)) {
+            return;
+        }
+
+        console.warn(error);
+
+        if (showLoading) {
+            renderDashboardError("Données météo indisponibles.");
+        } else {
+            setDashboardBusy(false, "Mise à jour météo différée.");
+        }
+    } finally {
+        if (requestId === dashboardRequestId) {
+            isDashboardLoading = false;
+        }
     }
 }
 
@@ -102,6 +129,24 @@ function renderWeatherDashboard(weather) {
     renderAstronomy(weather.astronomy);
 }
 
+function renderDashboardLoading() {
+    setDashboardBusy(true, "Chargement de la météo.");
+    renderCurrentWeatherLoading();
+    renderWeatherCardsLoading();
+    renderHourlyForecastLoading();
+    renderDailyForecastLoading();
+    renderAstronomyLoading();
+}
+
+function renderDashboardError(message) {
+    setDashboardBusy(false, message);
+    renderCurrentWeatherError(message);
+    renderWeatherCardsError();
+    renderHourlyForecastError();
+    renderDailyForecastError();
+    renderAstronomyError();
+}
+
 async function loadAirQuality(location) {
     try {
         return await fetchAirQuality(location);
@@ -119,9 +164,10 @@ function renderVersion() {
 }
 
 function showInteractionError(error) {
-    console.error(error);
+    console.warn(error);
     setText("#hero-status", "Action indisponible");
     setText("#search-status", error.message ?? "Action indisponible.");
+    setText("#app-status", error.message ?? "Action indisponible.");
 }
 
 function setText(selector, value) {
@@ -130,4 +176,20 @@ function setText(selector, value) {
     if (element) {
         element.textContent = value;
     }
+}
+
+function setDashboardBusy(isBusy, statusMessage) {
+    const dashboard = document.querySelector(DASHBOARD_SELECTOR);
+
+    if (dashboard) {
+        dashboard.setAttribute("aria-busy", String(isBusy));
+    }
+
+    if (statusMessage) {
+        setText("#app-status", statusMessage);
+    }
+}
+
+function isCurrentDashboardRequest(requestId, location) {
+    return requestId === dashboardRequestId && location === activeLocation;
 }

@@ -9,6 +9,7 @@ import {
 const WEATHER_CARDS_SELECTOR = "[data-weather-cards]";
 
 export function renderWeatherCardsLoading() {
+    setWeatherCardsBusy(true);
     renderCards([
         createCard("Vent", "--", "Vitesse moyenne", "wind"),
         createCard("Humidité", "--", "Taux actuel", "humidity"),
@@ -24,6 +25,7 @@ export function renderWeatherCards(weather) {
     const today = weather.daily[0] ?? {};
     const airQuality = weather.airQuality;
 
+    setWeatherCardsBusy(false);
     renderCards([
         createCard(
             "Vent",
@@ -66,6 +68,7 @@ export function renderWeatherCards(weather) {
 }
 
 export function renderWeatherCardsError() {
+    setWeatherCardsBusy(false);
     renderCards([
         createCard("Vent", "--", "Indisponible", "wind"),
         createCard("Humidité", "--", "Indisponible", "humidity"),
@@ -74,6 +77,14 @@ export function renderWeatherCardsError() {
         createCard("Indice UV", "--", "Indisponible", "uv"),
         createCard("Qualité de l'air", "--", "Indisponible", "air", "unknown")
     ]);
+}
+
+function setWeatherCardsBusy(isBusy) {
+    const container = document.querySelector(WEATHER_CARDS_SELECTOR);
+
+    if (container) {
+        container.setAttribute("aria-busy", String(isBusy));
+    }
 }
 
 function renderCards(cards) {

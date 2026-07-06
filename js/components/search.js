@@ -17,6 +17,8 @@ export function initSearch({ onLocationSelect, onError } = {}) {
         await submitSearch({ form, input, onLocationSelect, onError });
     });
 
+    setSearchState(form, "idle");
+
     input.addEventListener("input", () => {
         input.setCustomValidity("");
         setSearchStatus("");
@@ -71,6 +73,13 @@ function reportInputError(input, message) {
 
 function setSearchState(form, state) {
     form.dataset.searchState = state;
+    form.setAttribute("aria-busy", state === "loading" ? "true" : "false");
+
+    const submitButton = form.querySelector("button[type='submit']");
+
+    if (submitButton) {
+        submitButton.disabled = state === "loading";
+    }
 }
 
 function setSearchStatus(message) {

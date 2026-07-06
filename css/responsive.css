@@ -87,6 +87,11 @@
         grid-template-columns: 1fr;
     }
 
+    .brand,
+    .search-panel {
+        width: 100%;
+    }
+
     .header-actions {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -108,6 +113,18 @@
     }
 }
 
+@media (max-width: 360px) {
+    .temperature-line {
+        font-size: 2.85rem;
+    }
+
+    .forecast-panel,
+    .astro-card,
+    .metric-card {
+        padding: var(--space-4);
+    }
+}
+
 @media (min-width: 1360px) {
     :root {
         --content-max: 1280px;
@@ -115,5 +132,19 @@
 
     .weather-grid {
         grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1600px) {
+    :root {
+        --content-max: 1440px;
+    }
+
+    .hero-content {
+        padding: var(--space-10);
+    }
+
+    .content-grid {
+        grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.62fr);
     }
 }

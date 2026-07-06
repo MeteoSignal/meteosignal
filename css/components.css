@@ -50,9 +50,15 @@
     background: rgba(255, 255, 255, 0.06);
 }
 
+.search-panel:focus-within {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-focus);
+}
+
 .search-panel input {
     width: 100%;
     min-width: 0;
+    min-height: 2.55rem;
     border: 0;
     background: transparent;
     color: var(--color-text);
@@ -72,6 +78,7 @@
 .icon-action {
     display: grid;
     width: 2.55rem;
+    min-width: 2.55rem;
     height: 2.55rem;
     flex: 0 0 auto;
     place-items: center;
@@ -329,8 +336,10 @@
     max-width: 100%;
     min-width: 0;
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
     padding-bottom: var(--space-1);
     scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
 }
 
 .hourly-card {
@@ -372,8 +381,10 @@
     max-width: 100%;
     min-width: 0;
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
     padding-bottom: var(--space-1);
     scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
 }
 
 .forecast-day-card {
@@ -480,4 +491,16 @@
     margin: 0;
     color: var(--color-white);
     font-weight: 700;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+    .hero-metrics article,
+    .metric-card,
+    .forecast-panel,
+    .astro-card,
+    .hourly-card,
+    .forecast-day-card,
+    .site-header {
+        background: rgba(12, 33, 57, 0.96);
+    }
 }

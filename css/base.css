@@ -6,12 +6,14 @@
 
 html {
     min-height: 100%;
+    overflow-x: clip;
     scroll-behavior: smooth;
 }
 
 body {
     min-height: 100%;
     margin: 0;
+    overflow-x: hidden;
     background:
         linear-gradient(145deg, rgba(3, 16, 31, 0.96), rgba(7, 24, 44, 0.96) 42%, rgba(10, 32, 56, 0.98)),
         var(--color-night-900);
@@ -54,6 +56,12 @@ button {
 :focus-visible {
     outline: none;
     box-shadow: var(--shadow-focus);
+}
+
+@supports not (overflow: clip) {
+    html {
+        overflow-x: hidden;
+    }
 }
 
 .skip-link {

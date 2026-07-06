@@ -17,10 +17,11 @@
 
 <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <span id="app-status" class="sr-only" role="status" aria-live="polite"></span>
 
     <div class="app-shell">
         <header class="site-header" aria-label="En-tête MeteoSignal">
-            <a class="brand" href="#" aria-label="MeteoSignal - Accueil">
+            <a class="brand" href="#contenu" aria-label="MeteoSignal - Accueil">
                 <span class="brand-mark" aria-hidden="true">M</span>
                 <span class="brand-text">
                     <strong>MeteoSignal</strong>
@@ -58,7 +59,7 @@
             </nav>
         </header>
 
-        <main id="contenu" class="dashboard" tabindex="-1">
+        <main id="contenu" class="dashboard" tabindex="-1" data-dashboard aria-busy="true">
             <section
                 class="hero-weather"
                 aria-labelledby="current-weather-title"
@@ -182,7 +183,12 @@
                     <div id="forecast" class="forecast-list" aria-live="polite" data-daily-forecast></div>
                 </section>
 
-                <section class="astronomy-panel" aria-label="Soleil et lune" data-astronomy data-astronomy-state="loading">
+                <section
+                    class="astronomy-panel"
+                    aria-label="Soleil et lune"
+                    aria-live="polite"
+                    data-astronomy
+                    data-astronomy-state="loading">
                     <article class="astro-card" data-astronomy-card="sun">
                         <span id="sun-icon" class="astro-icon" aria-hidden="true">☀️</span>
                         <div>
