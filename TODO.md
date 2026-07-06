@@ -1,59 +1,19 @@
+# TODO
 
-# ✅ TODO
+## Version 1.0.0
 
-## 🎯 Sprint 1 — Dashboard (v0.2.0)
+- [x] Audit final du projet.
+- [x] Navigation adaptative officielle.
+- [x] Nettoyage des fichiers inutilisés.
+- [x] Remplacement des ressources météo provisoires.
+- [x] Version finale `1.0.0`.
+- [x] Mise à jour du changelog.
+- [x] Mise à jour de la roadmap.
+- [x] Rapport final de validation.
 
-### Interface
+## Après publication
 
-* [ ] Refonte complète du tableau de bord
-* [ ] Ajout de la date complète
-* [ ] Affichage de la pression atmosphérique
-* [ ] Affichage de la température ressentie
-* [ ] Affichage de l'indice UV
-* [ ] Affichage du lever et coucher du soleil
-* [ ] Amélioration du responsive (smartphone, tablette, PC, TV)
-
----
-
-## 🚀 Sprint 2 — Localisation
-
-* [ ] Géolocalisation
-* [ ] Recherche de ville
-* [ ] Gestion des favoris
-
----
-
-## 🌍 Sprint 3 — Personnalisation
-
-* [ ] Thème clair
-* [ ] Thème sombre
-* [ ] Paramètres utilisateur
-* [ ] Langues
-
----
-
-## 🛰️ Sprint 4 — Météo avancée
-
-* [ ] Plusieurs fournisseurs météo
-* [ ] Radar météo
-* [ ] Vigilance météo
-* [ ] Qualité de l'air
-
----
-
-## 📺 Sprint 5 — Plateformes
-
-* [ ] Optimisation Android
-* [ ] Optimisation TV
-* [ ] Optimisation PC
-* [ ] Publication Play Store
-
----
-
-## 💡 Idées
-
-* [ ] Widget Android
-* [ ] Widget Windows
-* [ ] Notifications météo
-* [ ] Animations météo
-* [ ] Cartes interactives
+- [ ] Vérifier l'installation PWA depuis GitHub Pages dans Chrome/Edge.
+- [ ] Vérifier l'ajout à l'écran d'accueil sur Android et iOS.
+- [ ] Tester l'interface sur un vrai téléviseur ou écran très large.
+- [ ] Préparer la version 1.1 selon `ROADMAP.md`.

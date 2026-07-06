@@ -1,356 +1,120 @@
-# 🌦️ PROJECT.md
-
 # MeteoSignal
 
-> **La météo, partout avec vous.**
+> La météo, partout avec vous.
 
----
+MeteoSignal est une Progressive Web App météo moderne, élégante, rapide et intuitive.
 
-# 📖 À propos
+Le projet est conçu comme un véritable produit logiciel : simple à utiliser, agréable à consulter, maintenable dans le temps et capable d'évoluer vers des fonctionnalités plus avancées sans reconstruire ses fondations.
 
-PROJECT.md est le document de référence de MeteoSignal.
+## Référence officielle
 
-Il décrit la vision du projet, ses objectifs, ses règles de développement, les décisions importantes et la manière dont le projet est conduit.
+Ce fichier résume la vision du projet. Les documents techniques de référence sont :
 
-Avant chaque reprise du développement, ce document doit être relu en priorité.
+- [Architecture](docs/architecture.md)
+- [Décisions techniques](docs/decisions.md)
+- [Feuille de route v1.0](docs/roadmap-v1.md)
 
----
+Ces documents doivent être consultés avant chaque évolution importante.
 
-# 🌦️ Pourquoi MeteoSignal ?
+## Vision
 
-MeteoSignal est né d'une ambition simple :
+MeteoSignal doit donner immédiatement l'impression d'une application météo premium :
 
-Créer une application météo moderne, élégante, rapide et riche en informations, capable de fonctionner sur smartphone, tablette, ordinateur et télévision.
+- interface moderne et lisible ;
+- expérience fluide sur mobile, tablette et ordinateur ;
+- informations météo utiles, bien hiérarchisées ;
+- design cohérent, principalement bleu, avec une identité propre ;
+- performance et simplicité comme priorités permanentes.
 
-Le projet est développé comme un logiciel à long terme.
+MeteoSignal ne copie pas une application existante. Le projet s'inspire des meilleurs standards des applications météo modernes tout en construisant sa propre identité graphique.
 
-Chaque version doit améliorer l'expérience utilisateur tout en conservant une architecture simple, documentée et évolutive.
+## Principes
 
----
+Le développement suit quatre principes :
 
-# 🎯 Vision
+- simplicité ;
+- élégance ;
+- performance ;
+- évolutivité.
 
-MeteoSignal n'a pas pour objectif de reproduire une application météo existante.
+Une fonctionnalité est ajoutée uniquement si elle améliore clairement l'expérience utilisateur.
 
-L'objectif est de créer une identité propre, reconnaissable et capable d'évoluer pendant de nombreuses années.
+## Technologies
 
-Le projet s'adresse aussi bien au grand public qu'aux passionnés de météorologie.
+Version 1.0 :
 
----
+- HTML5 ;
+- CSS3 ;
+- JavaScript ES6 natif ;
+- Progressive Web App ;
+- Git, GitHub, GitHub Pages ;
+- Open-Meteo comme fournisseur principal.
 
-# 🌍 Plateformes
+Aucun framework JavaScript n'est utilisé pour la version 1.0.
 
-* 📱 Smartphone
-* 📟 Tablette
-* 💻 PC
-* 📺 Télévision
-* 🤖 Android (Play Store)
+## Périmètre de la version 1.0
 
-À terme, MeteoSignal pourra également être utilisé avec un domaine personnalisé et être déployé sur d'autres plateformes.
+La version 1.0 doit proposer une expérience complète, stable et simple :
 
----
+- météo actuelle ;
+- recherche de ville ;
+- géolocalisation ;
+- favoris ;
+- prévisions horaires ;
+- prévisions sur 7 jours ;
+- soleil et lune ;
+- indice UV ;
+- qualité de l'air ;
+- pression, humidité, vent, précipitations ;
+- PWA installable ;
+- mode sombre automatique ;
+- responsive mobile, tablette, ordinateur et grands écrans.
 
-# 💙 Notre devise
+## Versions ultérieures
 
-> **La météo, partout avec vous.**
+Les fonctionnalités suivantes sont préparées architecturalement, mais ne sont pas prioritaires pour la v1.0 :
 
----
+- mode Expert ;
+- radar météo ;
+- vigilance météo ;
+- widgets ;
+- notifications ;
+- publications plateforme avancées.
 
-# 🧭 Notre philosophie
+## Méthode de développement
 
-Nous développons aujourd'hui ce que nous serons fiers de maintenir demain.
+Chaque composant suit le cycle suivant :
 
-Chaque décision doit rendre MeteoSignal :
+1. Conception
+2. Architecture
+3. HTML
+4. CSS
+5. JavaScript
+6. Responsive
+7. Tests
+8. Validation
+9. Commit
+10. Push
+11. Merge
+12. Publication
 
-* plus simple ;
-* plus lisible ;
-* plus fiable ;
-* plus évolutif.
+Un composant validé reste stable. Il n'est modifié ensuite que pour corriger un bug, optimiser le fonctionnement ou ajouter une fonctionnalité prévue.
 
-La qualité est considérée comme une fonctionnalité.
+## Organisation Git
 
----
+- `main` : version publique stable ;
+- `develop` : préparation de la prochaine version ;
+- `feature/*` : développement d'une évolution précise.
 
-# 🤝 Notre méthode
+Le développement ne se fait pas directement sur `main`.
 
-Chaque évolution suit toujours le même cycle :
+## Qualité
 
-Idée
+MeteoSignal privilégie toujours :
 
-↓
+- la qualité à la quantité ;
+- la stabilité aux nouveautés inutiles ;
+- la lisibilité à la complexité ;
+- l'expérience utilisateur aux effets décoratifs.
 
-Discussion
-
-↓
-
-Conception
-
-↓
-
-Maquette
-
-↓
-
-Développement
-
-↓
-
-Tests
-
-↓
-
-Documentation
-
-↓
-
-Commit
-
-↓
-
-Version
-
----
-
-# 🌳 Organisation Git
-
-## main
-
-Contient uniquement les versions stables.
-
-## develop
-
-Contient le développement en cours.
-
-## feature/...
-
-Contient une fonctionnalité en cours de développement.
-
----
-
-# 📚 Documentation officielle
-
-* PROJECT.md → Mémoire du projet
-* README.md → Présentation publique
-* CHANGELOG.md → Historique des versions
-* ROADMAP.md → Vision à moyen et long terme
-* TODO.md → Travail en cours
-
----
-
-# 🏗️ Architecture
-
-Technologies principales :
-
-* HTML5
-* CSS3
-* JavaScript (ES6+)
-* Progressive Web App (PWA)
-
-Le projet est conçu pour permettre le remplacement ou l'ajout de plusieurs fournisseurs météo sans modifier l'architecture générale.
-
----
-
-# 📌 Principes de développement
-
-* Une fonctionnalité à la fois.
-* Une responsabilité par fichier.
-* Toujours documenter les décisions importantes.
-* Toujours tester avant validation.
-* Toujours privilégier la qualité à la rapidité.
-* La branche `main` reste toujours stable.
-* Le projet est plus important que nos habitudes.
-
----
-
-# 🌦️ Vision fonctionnelle
-
-MeteoSignal devra proposer une météo riche en informations tout en restant agréable à consulter.
-
-Les informations prévues comprennent notamment :
-
-## Conditions actuelles
-
-* Température
-* Température ressentie
-* Description météo
-* Humidité
-* Pression atmosphérique
-* Vent
-* Direction du vent
-* Rafales
-* Précipitations
-* Probabilité de pluie
-* Point de rosée
-* Visibilité
-* Couverture nuageuse
-* Indice UV
-
-## Soleil
-
-* Lever
-* Coucher
-* Durée du jour
-
-## Lune
-
-* Lever
-* Coucher
-* Phase lunaire
-* Illumination
-
-## Prévisions
-
-* Prévisions horaires
-* Prévisions sur 7 jours
-
-## Cartographie (versions futures)
-
-* Radar des précipitations
-* Images satellite
-* Carte des vents
-* Vigilance météo
-
----
-
-# 🧩 Architecture du Dashboard
-
-Le tableau de bord sera construit sous forme de modules indépendants.
-
-Modules principaux :
-
-* Header
-* Conditions actuelles
-* Atmosphère
-* Vent
-* Soleil
-* Lune
-* Prévisions horaires
-* Prévisions à 7 jours
-* Graphiques
-* Cartographie
-* Footer
-
-Cette architecture permettra d'ajouter facilement de nouvelles fonctionnalités sans remettre en cause l'ensemble de l'application.
-
----
-
-# 📌 Décisions validées
-
-* MeteoSignal possède sa propre identité graphique.
-* Le projet ne sera pas une copie d'une autre application météo.
-* Le Dashboard sera composé de cartes indépendantes.
-* L'application fonctionnera sur smartphone, tablette, PC et TV.
-* Le projet évoluera progressivement afin de garantir sa qualité.
-* Les décisions importantes seront toujours documentées.
-
----
-
-# 🤝 Notre engagement
-
-Nous développons MeteoSignal dans un esprit de collaboration.
-
-Chaque idée peut être discutée.
-
-Chaque décision est prise dans l'intérêt du projet.
-
-La communication est considérée comme une partie essentielle du développement.
-
----
-
-# ▶️ Reprise du projet
-
-En cas d'interruption du développement :
-
-1. Lire PROJECT.md.
-2. Vérifier ROADMAP.md.
-3. Consulter TODO.md.
-4. Identifier le sprint en cours.
-5. Continuer exactement là où le projet s'est arrêté.
-
----
-
-# 📔 Journal du projet
-
-## 26 juin 2026
-
-* Naissance de MeteoSignal.
-* Création du dépôt GitHub.
-* Publication sur GitHub Pages.
-* Mise en place de la structure du projet.
-* Création de la branche `develop`.
-* Création de la documentation officielle.
-* Conception des premières maquettes.
-* Début du Sprint 1.
-
----
-
-# 💬 Notre phrase
-
-> **Construire aujourd'hui ce que nous serons fiers de maintenir demain.**
-
----
-
-Début du projet : **2026**
-
-Auteur : **Yoann Bourillon**
-
-Accompagnement technique : **ChatGPT**
-
-Licence : **MIT**
-
-# 🎨 Référence graphique
-
-La maquette officielle validée est la référence graphique de MeteoSignal.
-
-Toutes les évolutions de l'interface doivent respecter cette maquette.
-
-En cas de doute, la maquette prévaut sur l'implémentation existante.
-
-# 🌦️ Modes d'affichage
-
-MeteoSignal proposera trois niveaux d'affichage.
-
-## ☀️ Essentiel
-
-Informations principales.
-
-## 🌤️ Complet
-
-Informations enrichies.
-
-## 👑 Expert
-
-Toutes les données météorologiques disponibles.
-
-Le mode Expert pourra évoluer vers une offre Premium lorsque le projet sera suffisamment mature.
-
-# 🚀 Publication
-
-Le développement suit le cycle suivant :
-
-feature/... → develop → main
-
-Les utilisateurs suivent les évolutions via les versions publiques.
-
-Seules les versions stables sont publiées sur la branche `main`.
-
-# 📦 Versions
-
-v0.x.x → Développement
-
-v1.0.0 → Première version officielle
-
-v2.x.x → Évolutions majeures
-
-# 🎯 Priorités
-
-L'ordre de développement est le suivant :
-
-1. Architecture
-2. Interface utilisateur
-3. Fonctionnalités
-4. Optimisations
-5. Monétisation
-
-La qualité prime toujours sur la rapidité.
-
+Objectif final : construire une application météo dont l'architecture, l'interface et la qualité pourront rester solides pendant plusieurs années.
