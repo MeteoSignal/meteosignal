@@ -44,6 +44,7 @@ meteosignal/
 │  │  ├─ weather-provider.js
 │  │  ├─ openmeteo.service.js
 │  │  ├─ geocoding.service.js
+│  │  ├─ geolocation.service.js
 │  │  └─ air-quality.service.js
 │  ├─ components/
 │  │  ├─ header.js

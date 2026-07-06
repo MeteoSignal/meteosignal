@@ -9,11 +9,13 @@ export const APP_CONFIG = {
     defaultLocation: {
         id: "toulouse-fr",
         name: "Toulouse",
+        label: "Toulouse, France",
         country: "France",
         countryCode: "FR",
         latitude: 43.6045,
         longitude: 1.444,
-        timezone: "Europe/Paris"
+        timezone: "Europe/Paris",
+        source: "default"
     },
     api: {
         openMeteo: {

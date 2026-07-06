@@ -34,6 +34,7 @@ export function normalizeGeocodingResults(results) {
         longitude: result.longitude,
         timezone: result.timezone,
         population: result.population ?? null,
+        source: "search",
         label: buildLocationLabel(result)
     }));
 }

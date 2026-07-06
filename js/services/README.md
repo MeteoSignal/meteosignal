@@ -7,6 +7,7 @@ Modules prévus :
 - `weather-provider.js` : registre des fournisseurs météo actifs ;
 - `openmeteo.service.js` : météo actuelle et prévisions ;
 - `geocoding.service.js` : recherche de ville ;
+- `geolocation.service.js` : position actuelle du navigateur ;
 - `air-quality.service.js` : qualité de l'air.
 
 Les services appellent les APIs, normalisent les réponses et renvoient des données stables aux composants.

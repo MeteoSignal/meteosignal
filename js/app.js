@@ -1,14 +1,30 @@
 import { APP_CONFIG } from "../config/config.js";
 import { formatDuration, formatForecastDay, formatPrecipitation, formatPressure, formatSpeed, formatTemperature, formatTime, formatPercent } from "./core/formatters.js";
+import { readActiveLocation, saveActiveLocation } from "./core/storage.js";
+import { initFavorites, renderFavoriteButton } from "./components/favorites.js";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js";
+import { initSearch, updateSearchInput } from "./components/search.js";
+import { getCurrentPositionLocation } from "./services/geolocation.service.js";
 import { getWeatherProvider } from "./services/weather-provider.js";
 
 const provider = getWeatherProvider();
+let activeLocation = readActiveLocation(APP_CONFIG.defaultLocation);
 
 initApp();
 
 function initApp() {
     console.log(`${APP_CONFIG.appName} v${APP_CONFIG.version} démarré`);
+    initSearch({
+        onLocationSelect: handleLocationSelect,
+        onError: showInteractionError
+    });
+    initFavorites({
+        getActiveLocation: () => activeLocation,
+        onError: showInteractionError
+    });
+    bindGeolocationButton();
+    updateSearchInput(activeLocation);
+    renderFavoriteButton(activeLocation);
     renderVersion();
     loadWeatherDashboard();
     setInterval(loadWeatherDashboard, APP_CONFIG.refresh);
@@ -18,12 +34,44 @@ async function loadWeatherDashboard() {
     try {
         renderCurrentWeatherLoading();
 
-        const weather = await provider.getWeather(APP_CONFIG.defaultLocation);
+        const weather = await provider.getWeather(activeLocation);
         renderWeatherDashboard(weather);
+        renderFavoriteButton(activeLocation);
     } catch (error) {
         console.error(error);
         renderCurrentWeatherError("Données météo indisponibles.");
     }
+}
+
+async function handleLocationSelect(location) {
+    setActiveLocation(location);
+    await loadWeatherDashboard();
+}
+
+function setActiveLocation(location) {
+    activeLocation = saveActiveLocation(location) ?? location;
+    updateSearchInput(activeLocation);
+    renderFavoriteButton(activeLocation);
+}
+
+function bindGeolocationButton() {
+    const button = document.querySelector("#geolocation-button");
+
+    if (!button) {
+        return;
+    }
+
+    button.addEventListener("click", async () => {
+        try {
+            button.disabled = true;
+            const location = await getCurrentPositionLocation();
+            await handleLocationSelect(location);
+        } catch (error) {
+            showInteractionError(error);
+        } finally {
+            button.disabled = false;
+        }
+    });
 }
 
 function renderWeatherDashboard(weather) {
@@ -99,6 +147,12 @@ function renderVersion() {
         "#version",
         `${APP_CONFIG.appName} • v${APP_CONFIG.version} • Build ${APP_CONFIG.build} • ${APP_CONFIG.copyright}`
     );
+}
+
+function showInteractionError(error) {
+    console.error(error);
+    setText("#hero-status", "Action indisponible");
+    setText("#search-status", error.message ?? "Action indisponible.");
 }
 
 function setText(selector, value) {

@@ -99,11 +99,14 @@ function normalizeLocation(rawData, location) {
     return {
         id: location.id ?? null,
         name: location.name ?? "Position actuelle",
+        label: location.label ?? buildLocationLabel(location),
         country: location.country ?? null,
         countryCode: location.countryCode ?? null,
+        admin1: location.admin1 ?? null,
         latitude: Number(rawData.latitude ?? location.latitude),
         longitude: Number(rawData.longitude ?? location.longitude),
-        timezone: rawData.timezone ?? location.timezone ?? "auto"
+        timezone: rawData.timezone ?? location.timezone ?? "auto",
+        source: location.source ?? "provider"
     };
 }
 
@@ -228,4 +231,10 @@ function numberOrNull(value) {
 
     const number = Number(value);
     return Number.isFinite(number) ? number : null;
+}
+
+function buildLocationLabel(location) {
+    return [location.name, location.admin1, location.country]
+        .filter(Boolean)
+        .join(", ");
 }

@@ -27,24 +27,31 @@
                 </span>
             </a>
 
-            <form class="search-panel" role="search" aria-label="Recherche de ville">
+            <form class="search-panel" role="search" aria-label="Recherche de ville" data-search-form>
                 <label class="sr-only" for="city-search">Rechercher une ville</label>
                 <input
                     id="city-search"
                     name="city"
                     type="search"
                     autocomplete="off"
+                    aria-describedby="search-status"
                     placeholder="Rechercher une ville">
                 <button class="icon-action" type="submit" aria-label="Lancer la recherche">
                     <span aria-hidden="true">⌕</span>
                 </button>
+                <span id="search-status" class="sr-only" aria-live="polite"></span>
             </form>
 
             <nav class="header-actions" aria-label="Actions principales">
-                <button class="icon-action" type="button" aria-label="Utiliser ma position">
+                <button id="geolocation-button" class="icon-action" type="button" aria-label="Utiliser ma position">
                     <span aria-hidden="true">⌖</span>
                 </button>
-                <button class="icon-action" type="button" aria-label="Afficher les favoris">
+                <button
+                    id="favorite-button"
+                    class="icon-action"
+                    type="button"
+                    aria-label="Ajouter cette ville aux favoris"
+                    aria-pressed="false">
                     <span aria-hidden="true">★</span>
                 </button>
             </nav>
