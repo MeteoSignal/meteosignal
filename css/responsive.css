@@ -52,7 +52,8 @@
     }
 
     .weekly,
-    .astronomy-panel {
+    .astronomy-panel,
+    .alerts-panel {
         grid-column: auto;
         grid-row: auto;
     }
@@ -86,6 +87,37 @@
 
     .brand-text small {
         display: none;
+    }
+
+    .brand-mark {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .brand-lockup-header {
+        min-width: 0;
+        gap: var(--space-2);
+    }
+
+    .brand-lockup-header .brand-mark {
+        width: 3.1rem;
+        height: 3.1rem;
+    }
+
+    .brand-lockup-header .brand-official-wordmark {
+        width: 9.6rem;
+        max-width: 100%;
+        min-width: 0;
+        height: 1.12rem;
+    }
+
+    .brand-lockup-header .brand-text strong {
+        font-size: 0.86rem;
+    }
+
+    .brand-lockup-nav .brand-mark {
+        width: 3.35rem;
+        height: 3.35rem;
     }
 
     .hero-weather,
@@ -161,9 +193,39 @@
     .temperature-line {
         font-size: 3.2rem;
     }
+
+    .brand-lockup-header .brand-mark {
+        width: 2.95rem;
+        height: 2.95rem;
+    }
+
+    .brand-lockup-header .brand-official-wordmark {
+        width: 8.45rem;
+        max-width: 100%;
+        height: 1rem;
+    }
+
+    .development-status {
+        padding: var(--space-3) var(--space-4);
+        font-size: 0.82rem;
+    }
+
+    .development-status strong {
+        font-size: 0.88rem;
+    }
 }
 
 @media (max-width: 360px) {
+    .brand-lockup-header .brand-official-wordmark {
+        width: 7.75rem;
+        max-width: 100%;
+        height: 0.95rem;
+    }
+
+    .brand-lockup-header .brand-text strong {
+        font-size: 0.8rem;
+    }
+
     .temperature-line {
         font-size: 2.85rem;
     }
@@ -176,13 +238,18 @@
 }
 
 @media (min-width: 1180px) {
+    :root {
+        --content-max: 1440px;
+    }
+
     .app-shell {
-        grid-template-columns: 15.25rem minmax(0, 1fr);
+        grid-template-columns: 16.25rem minmax(0, 1fr);
         align-items: start;
+        gap: var(--space-6);
     }
 
     body[data-nav-collapsed="true"] .app-shell {
-        grid-template-columns: 4.9rem minmax(0, 1fr);
+        grid-template-columns: 5.2rem minmax(0, 1fr);
     }
 
     .adaptive-nav {
@@ -207,7 +274,12 @@
     }
 
     body[data-nav-collapsed="true"] .adaptive-nav {
-        width: 4.9rem;
+        width: 5.2rem;
+    }
+
+    body[data-nav-collapsed="true"] .brand-lockup-nav .brand-mark {
+        width: 3.05rem;
+        height: 3.05rem;
     }
 
     body[data-nav-collapsed="true"] .nav-heading,
@@ -217,6 +289,7 @@
     }
 
     body[data-nav-collapsed="true"] .nav-title,
+    body[data-nav-collapsed="true"] .brand-lockup-nav .brand-copy,
     body[data-nav-collapsed="true"] .nav-label {
         position: absolute;
         width: 1px;
@@ -228,33 +301,121 @@
         border: 0;
         padding: 0;
     }
-}
 
-@media (min-width: 1360px) {
-    :root {
-        --content-max: 1280px;
-    }
-
-    .weather-grid {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
-}
-
-@media (min-width: 1600px) {
-    :root {
-        --content-max: 1440px;
+    .hero-weather,
+    .hero-content {
+        min-height: 35rem;
     }
 
     .hero-content {
         padding: var(--space-10);
     }
 
+    .current-weather {
+        gap: var(--space-8);
+    }
+
+    .weather-symbol {
+        width: 10.3rem;
+        height: 10.3rem;
+        font-size: 5.75rem;
+    }
+
+    .weather-summary h1 {
+        font-size: 3.1rem;
+    }
+
+    .temperature-line {
+        font-size: 6.25rem;
+    }
+
+    .weather-description {
+        max-width: 42rem;
+    }
+
     .content-grid {
-        grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.62fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hourly,
+    .weekly {
+        grid-column: 1 / -1;
+    }
+
+    .astronomy-panel {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .alerts-panel {
+        grid-column: 2;
+    }
+
+    .hourly-strip {
+        grid-template-columns: repeat(12, minmax(5rem, 1fr));
+        gap: var(--space-2);
+        overflow-x: auto;
+    }
+
+    .hourly-card {
+        min-height: 8.6rem;
+        padding: var(--space-3);
+    }
+
+    .forecast-list {
+        grid-template-columns: repeat(7, minmax(7.2rem, 1fr));
+        gap: var(--space-2);
+        overflow-x: auto;
+    }
+
+    .forecast-day-card {
+        min-height: 10.4rem;
+        padding: var(--space-3);
+    }
+}
+
+@media (min-width: 1360px) {
+    :root {
+        --content-max: 1560px;
+    }
+
+    .weather-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .hero-weather,
+    .hero-content {
+        min-height: 36.5rem;
+    }
+
+    .temperature-line {
+        font-size: 6.55rem;
+    }
+
+    .hourly-strip {
+        overflow-x: visible;
+    }
+
+    .forecast-list {
+        overflow-x: visible;
+    }
+}
+
+@media (min-width: 1600px) {
+    .hero-content {
+        padding: var(--space-10);
+    }
+
+    :root {
+        --content-max: 1640px;
+    }
+
+    .content-grid {
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
     }
 
     .app-shell {
-        grid-template-columns: 16.5rem minmax(0, 1fr);
+        grid-template-columns: 17rem minmax(0, 1fr);
     }
 
     body[data-nav-collapsed="true"] .app-shell {

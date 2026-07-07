@@ -34,7 +34,7 @@ function initApp() {
     bindGeolocationButton();
     updateSearchInput(activeLocation);
     renderFavoriteButton(activeLocation);
-    renderVersion();
+    renderProjectStatus();
     loadWeatherDashboard();
     setInterval(() => loadWeatherDashboard({ showLoading: false }), APP_CONFIG.refresh);
 }
@@ -158,11 +158,26 @@ async function loadAirQuality(location) {
     }
 }
 
-function renderVersion() {
-    setText(
-        "#version",
-        `${APP_CONFIG.appName} • v${APP_CONFIG.version} • Build ${APP_CONFIG.build} • ${APP_CONFIG.copyright}`
-    );
+function renderProjectStatus() {
+    setText("#project-status-version", `Version : v${APP_CONFIG.version}`);
+    setText("#project-status-build", `Build : ${APP_CONFIG.build}`);
+    setText("#project-status-updated", `Dernière mise à jour : ${formatBuildDate(APP_CONFIG.build)}`);
+    setText("#project-status-copyright", `${APP_CONFIG.appName} ${APP_CONFIG.copyright}`);
+}
+
+function formatBuildDate(buildDate) {
+    const [year, month, day] = String(buildDate).split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+
+    if (!year || !month || !day || Number.isNaN(date.getTime())) {
+        return "07 juillet 2026";
+    }
+
+    return new Intl.DateTimeFormat("fr-FR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    }).format(date);
 }
 
 function showInteractionError(error) {

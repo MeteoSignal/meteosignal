@@ -106,3 +106,20 @@ Raison : MeteoSignal doit pouvoir intégrer plus tard d'autres fournisseurs mét
 Conséquence : chaque fournisseur API doit transformer ses réponses en modèle interne normalisé avant que les données atteignent l'application. Les composants consomment uniquement ce modèle interne : localisation, météo actuelle, prévisions horaires, prévisions journalières, astronomie, qualité de l'air, date de mise à jour et erreurs éventuelles.
 
 Open-Meteo est le premier fournisseur officiel, mais il doit respecter le même contrat que les futurs fournisseurs.
+
+## D013 - Logo officiel comme référence visuelle
+
+Décision : à partir de MeteoSignal v1.1.1, l'identité visuelle principale doit s'appuyer sur les fichiers officiels du logo MeteoSignal.
+
+Raison : le logo validé devient la référence graphique du produit : globe lumineux, soleil, nuage, éclairs, ondes cyan, texte MeteoSignal et slogan "Prévisions et alertes météo".
+
+Conséquence : les fichiers officiels attendus sont préparés dans `assets/logo/` :
+
+- `logo-meteosignal-complet.png` ;
+- `logo-meteosignal-sans-slogan.png` ;
+- `icon-512.png` ;
+- `icon-192.png` ;
+- `favicon-32.png` ;
+- `favicon-16.png`.
+
+Le CSS peut enrichir l'interface avec halos, bordures cyan, fonds atmosphériques et effets premium, mais il ne doit pas remplacer définitivement le logo officiel par une imitation HTML/CSS. Tant que les fichiers officiels ne sont pas présents, l'application conserve un fallback temporaire.
