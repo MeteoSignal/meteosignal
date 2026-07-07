@@ -15,8 +15,17 @@ body {
     margin: 0;
     overflow-x: hidden;
     background:
-        linear-gradient(145deg, rgba(3, 16, 31, 0.96), rgba(7, 24, 44, 0.96) 42%, rgba(10, 32, 56, 0.98)),
+        radial-gradient(ellipse at 50% 44%, rgba(1, 8, 24, 0.86) 0 24rem, rgba(2, 18, 48, 0.62) 37rem, rgba(1, 10, 26, 0.13) 64rem, transparent 82rem),
+        linear-gradient(90deg, rgba(1, 8, 24, 0.12) 0%, rgba(2, 15, 42, 0.5) 29%, rgba(1, 8, 24, 0.74) 50%, rgba(2, 15, 42, 0.5) 71%, rgba(1, 8, 24, 0.12) 100%),
+        radial-gradient(circle at 8% 20%, rgba(47, 247, 255, 0.32), rgba(18, 109, 255, 0.14) 16rem, transparent 37rem),
+        radial-gradient(circle at 92% 20%, rgba(47, 247, 255, 0.3), rgba(18, 109, 255, 0.14) 16rem, transparent 39rem),
+        linear-gradient(180deg, rgba(1, 7, 22, 0.28), rgba(1, 11, 31, 0.68)),
+        url("../assets/backgrounds/meteosignal-lightning-bg.webp"),
+        linear-gradient(140deg, #010716 0%, #02163f 52%, #020c22 100%),
         var(--color-night-900);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
     color: var(--color-text);
     font-family: var(--font-main);
     line-height: 1.5;
@@ -29,8 +38,35 @@ body::before {
     z-index: -1;
     content: "";
     background:
-        linear-gradient(90deg, rgba(120, 198, 255, 0.05), transparent 28%, rgba(255, 215, 106, 0.04) 72%, transparent),
-        linear-gradient(180deg, transparent, rgba(3, 16, 31, 0.72));
+        radial-gradient(ellipse at 50% 42%, rgba(1, 8, 24, 0.58) 0 24rem, rgba(1, 11, 31, 0.4) 38rem, transparent 62rem),
+        linear-gradient(90deg, rgba(47, 247, 255, 0.13), transparent 17%, transparent 83%, rgba(47, 247, 255, 0.13)),
+        radial-gradient(circle at 7% 20%, rgba(149, 251, 255, 0.21), transparent 31rem),
+        radial-gradient(circle at 93% 20%, rgba(149, 251, 255, 0.2), transparent 32rem),
+        repeating-linear-gradient(102deg, transparent 0 5.6rem, rgba(149, 251, 255, 0.02) 5.64rem 5.72rem, transparent 5.82rem 10.8rem),
+        linear-gradient(180deg, rgba(1, 8, 24, 0.05), rgba(1, 11, 31, 0.58));
+    background-position: center;
+    background-size: cover;
+    opacity: 0.82;
+    pointer-events: none;
+}
+
+body::after {
+    position: fixed;
+    inset: auto -18vw -42rem auto;
+    z-index: -1;
+    width: min(112rem, 118vw);
+    height: 76rem;
+    content: "";
+    border: 1px solid rgba(47, 247, 255, 0.16);
+    border-radius: 50% 50% 0 0;
+    background:
+        radial-gradient(ellipse at 50% 100%, rgba(47, 247, 255, 0.12), rgba(47, 247, 255, 0.05) 34%, transparent 68%),
+        radial-gradient(ellipse at 44% 92%, rgba(18, 109, 255, 0.13), transparent 64%),
+        conic-gradient(from 210deg at 50% 100%, transparent 0 33deg, rgba(47, 247, 255, 0.08) 34deg 35deg, transparent 36deg 72deg, rgba(36, 162, 255, 0.07) 73deg 74deg, transparent 75deg 360deg),
+        linear-gradient(125deg, transparent 0 39%, rgba(149, 251, 255, 0.06) 40%, transparent 41% 54%, rgba(36, 162, 255, 0.05) 55%, transparent 56%),
+        repeating-radial-gradient(ellipse at 50% 100%, transparent 0 5.2rem, rgba(149, 251, 255, 0.055) 5.28rem 5.4rem, transparent 5.56rem 10.5rem);
+    box-shadow: 0 -2rem 8rem rgba(47, 247, 255, 0.06), inset 0 1.5rem 5rem rgba(47, 247, 255, 0.04);
+    opacity: 0.62;
     pointer-events: none;
 }
 

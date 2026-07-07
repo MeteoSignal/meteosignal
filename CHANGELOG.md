@@ -6,6 +6,47 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.1.1] - 2026-07-07
+
+### Amélioré
+
+- Mise à niveau visuelle officielle inspirée du logo MeteoSignal validé.
+- Préparation des chemins d'assets officiels dans `assets/logo/`.
+- Fallback temporaire du logo tant que les fichiers PNG officiels ne sont pas déposés.
+- Sidebar plus premium : fond bleu nuit, glow cyan discret et icônes plus lumineuses.
+- Header harmonisé avec champ de recherche et boutons plus cohérents.
+- Carte météo principale renforcée avec halo cyan, effet atmosphère/globe et température plus spectaculaire.
+- Cartes météo, prévisions horaires, prévisions sur 7 jours et Soleil/Lune harmonisés avec fond verre sombre, bordures cyan fines et glow discret.
+- Style préparatoire pour un futur bloc Alertes, sans nouvelle logique météo active.
+- Finition de l'identité officielle : logo agrandi dans la sidebar et le header, favicon et icônes PWA alignés sur `assets/logo/`.
+- Ajout d'un bloc discret indiquant le développement actif, la version publiée et la date de dernière mise à jour.
+- Correction colorimétrique : palette bleu nuit plus riche, cyan/bleu électrique plus présents, surfaces moins ternes et jaune soleil plus lumineux.
+- Optimisation desktop : layout élargi, hero météo plus présent et meilleure occupation de l'espace sur grands écrans.
+- Footer simplifié : les informations version, build et copyright sont intégrées au bloc de développement actif, sans ligne redondante.
+- Fond général enrichi en CSS : halo atmosphérique, globe subtil et courbes lumineuses discrètes inspirées de l'identité MeteoSignal.
+- Fond d'écran MeteoSignal renforcé : ciel bleu nuit plus lumineux, grand halo cyan plus visible, globe atmosphérique plus marqué et lignes de signal fines.
+- Équilibrage final v1.1.1 : fond MeteoSignal moins dominant, dashboard desktop élargi, logo officiel légèrement agrandi et bloc visuel Alertes météo ajouté sans logique active.
+- Ambiance finale orage/foudre : fond bleu nuit plus dramatique, éclairs latéraux intégrés en CSS, centre assombri pour préserver la lisibilité du dashboard.
+- Fond orage/foudre naturel : utilisation de `assets/backgrounds/meteosignal-lightning-bg.webp` comme image principale, avec overlays bleu nuit/cyan pour conserver la lisibilité.
+- Micro-ajustement final du fond : éclairs et nuages latéraux plus visibles, centre du dashboard toujours protégé.
+
+### Technique
+
+- Version applicative passée à `1.1.1`.
+- Cache PWA passé à `v1.1.1-official-visual-identity-lightning-presence-polish` pour forcer le rafraîchissement des assets visuels.
+- Feuilles CSS versionnées avec `v=1.1.1-lightning-presence-polish` pour éviter l'affichage persistant d'anciens styles après publication.
+
+### Assets officiels attendus
+
+- `assets/logo/logo-meteosignal-complet.png`
+- `assets/logo/logo-meteosignal-sans-slogan.png`
+- `assets/logo/icon-512.png`
+- `assets/logo/icon-192.png`
+- `assets/logo/favicon-32.png`
+- `assets/logo/favicon-16.png`
+
+---
+
 ## [1.0.0] - 2026-07-06
 
 ### Ajouté

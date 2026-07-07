@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = "v1.0.0";
+const CACHE_VERSION = "v1.1.1-official-visual-identity-lightning-presence-polish";
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -15,11 +15,17 @@ const STATIC_ASSETS = [
     "./pwa.js",
     "./config/config.js",
     "./css/style.css",
+    "./css/style.css?v=1.1.1-lightning-presence-polish",
     "./css/tokens.css",
+    "./css/tokens.css?v=1.1.1-lightning-presence-polish",
     "./css/base.css",
+    "./css/base.css?v=1.1.1-lightning-presence-polish",
     "./css/layout.css",
+    "./css/layout.css?v=1.1.1-lightning-presence-polish",
     "./css/components.css",
+    "./css/components.css?v=1.1.1-lightning-presence-polish",
     "./css/responsive.css",
+    "./css/responsive.css?v=1.1.1-lightning-presence-polish",
     "./js/clock.js",
     "./js/app.js",
     "./js/components/astronomy.js",
@@ -41,11 +47,17 @@ const STATIC_ASSETS = [
     "./js/services/openmeteo.service.js",
     "./js/services/weather-provider.js",
     "./assets/backgrounds/clear.jpg",
+    "./assets/backgrounds/meteosignal-lightning-bg.webp",
     "./assets/backgrounds/night.jpg",
     "./assets/icons/icon-192.png",
     "./assets/icons/icon-512.png",
     "./assets/icons/maskable-512.png",
-    "./assets/icons/sun.svg"
+    "./assets/icons/sun.svg",
+    "./assets/logo/icon-192.png",
+    "./assets/logo/icon-512.png",
+    "./assets/logo/favicon-32.png",
+    "./assets/logo/favicon-16.png",
+    "./assets/logo/logo-meteosignal-sans-slogan.png"
 ];
 
 self.addEventListener("install", (event) => {
