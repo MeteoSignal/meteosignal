@@ -162,6 +162,7 @@
         linear-gradient(180deg, rgba(36, 162, 255, 0.12), transparent 36%),
         rgba(3, 22, 58, 0.95);
     box-shadow: var(--shadow-soft), var(--shadow-cyan), 0 0 0 1px rgba(255, 255, 255, 0.025) inset;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
 }
 
@@ -350,6 +351,7 @@
     color: var(--color-silver);
     font-size: 0.875rem;
     box-shadow: 0 0 22px rgba(47, 247, 255, 0.12);
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
 }
 
@@ -382,6 +384,7 @@
         0 0 22px rgba(255, 255, 255, 0.48),
         0 0 38px rgba(47, 247, 255, 0.5),
         0 0 58px rgba(255, 225, 109, 0.22);
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     transition:
         transform var(--transition-base),
@@ -481,6 +484,7 @@
         linear-gradient(180deg, rgba(36, 162, 255, 0.14), rgba(47, 247, 255, 0.055)),
         var(--color-surface);
     box-shadow: var(--shadow-card), 0 0 0 1px rgba(255, 255, 255, 0.035) inset;
+    -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
 }
 
@@ -632,6 +636,29 @@
     padding-bottom: var(--space-1);
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
+}
+
+.hourly-strip,
+.forecast-list {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(47, 247, 255, 0.34) transparent;
+}
+
+.hourly-strip::-webkit-scrollbar,
+.forecast-list::-webkit-scrollbar {
+    height: 0.38rem;
+}
+
+.hourly-strip::-webkit-scrollbar-track,
+.forecast-list::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: rgba(4, 33, 76, 0.2);
+}
+
+.hourly-strip::-webkit-scrollbar-thumb,
+.forecast-list::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(47, 247, 255, 0.2), rgba(149, 251, 255, 0.46));
 }
 
 .hourly-card {
@@ -889,6 +916,7 @@
     color: var(--color-muted);
     font-size: 0.84rem;
     line-height: 1.4;
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
 }
 
@@ -915,7 +943,7 @@
     opacity: 0.72;
 }
 
-@supports not (backdrop-filter: blur(1px)) {
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
     .hero-metrics article,
     .metric-card,
     .forecast-panel,
