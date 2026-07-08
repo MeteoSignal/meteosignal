@@ -32,7 +32,7 @@ const WEATHER_CODES = new Map([
 const NIGHT_ICONS = new Map([
     [0, "🌙"],
     [1, "🌙"],
-    [2, "☁️"]
+    [2, "🌙☁️"]
 ]);
 
 export function getWeatherCondition(code, isDay = true) {

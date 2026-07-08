@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.2-mobile-ui-refinement-compact-nav";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.3-mobile-forecast-icons";
 import { openMeteoProvider } from "./openmeteo.service.js";
 
 const WEATHER_PROVIDERS = {

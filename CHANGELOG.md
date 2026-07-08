@@ -6,6 +6,36 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.1.3] - 2026-07-08
+
+### Ajouté
+
+- Bottom navigation smartphone uniquement avec accès direct à Accueil, Cartes, Horaire, 7 jours et Soleil/Lune.
+- État actif cyan sur la navigation mobile, synchronisé au clic, au hash et au scroll.
+
+### Amélioré
+
+- Expérience mobile rapprochée d'une application smartphone, sans modification de la logique météo.
+- Header smartphone plus discret avec suppression de la navigation haute redondante sur mobile.
+- Padding bas mobile ajouté pour éviter que la bottom navigation masque le contenu ou le footer.
+- Finition mobile 360 px : hero météo plus compact, badges plus discrets et réserve basse renforcée pour éviter tout recouvrement par la bottom navigation.
+- Zone de contenu mobile transformée en surface scrollable au-dessus de la bottom navigation, pour éviter que la barre fixe masque les cartes ou les titres.
+- Libellé mobile `Soleil/Lune` remplacé par `Astres` pour améliorer la lisibilité de la bottom navigation.
+- Hero mobile `Conditions actuelles` redessiné avec barre d'état plus fine, cœur météo plus intégré et bandeau unique Minimum/Ressenti/Maximum.
+- Cartes de prévisions horaires et 7 jours élargies sur smartphone, avec lignes pluie/vent stabilisées pour éviter les retours à la ligne maladroits.
+- Correction du rognage visuel des cartes horaires et 7 jours au tap/focus mobile.
+- Icônes horaires adaptées au cycle jour/nuit à partir des heures de lever et coucher du soleil déjà normalisées.
+- Identité v1.1.2 conservée : logo officiel, fond orage/foudre, palette bleu nuit/cyan/jaune et cartes verre sombre.
+
+### Technique
+
+- Version applicative passée à `1.1.3`.
+- Build conservé au `2026-07-08`.
+- Cache PWA passé à `v1.1.3-mobile-forecast-icons`.
+- Feuilles CSS, module principal, configuration applicative et navigation mobile versionnés avec `v=1.1.3-mobile-forecast-icons`.
+
+---
+
 ## [1.1.2] - 2026-07-08
 
 ### Amélioré

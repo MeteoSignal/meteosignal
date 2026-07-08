@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.2-mobile-ui-refinement-compact-nav";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.3-mobile-forecast-icons";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",

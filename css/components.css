@@ -240,6 +240,59 @@
     cursor: pointer;
 }
 
+.mobile-bottom-nav {
+    display: none;
+}
+
+.mobile-bottom-link {
+    display: grid;
+    min-width: 0;
+    min-height: 3.15rem;
+    place-items: center;
+    gap: 0.12rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    color: var(--color-muted);
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    transition:
+        border-color var(--transition-base),
+        background-color var(--transition-base),
+        color var(--transition-base),
+        transform var(--transition-base);
+}
+
+.mobile-bottom-link span[aria-hidden="true"] {
+    display: block;
+    color: var(--color-cyan-400);
+    font-size: 1.06rem;
+    line-height: 1;
+    text-shadow: 0 0 14px rgba(47, 247, 255, 0.42);
+}
+
+.mobile-bottom-label {
+    overflow: hidden;
+    max-width: 100%;
+    color: inherit;
+    font-size: 0.68rem;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mobile-bottom-link:hover,
+.mobile-bottom-link:focus-visible,
+.mobile-bottom-link.is-active,
+.mobile-bottom-link[aria-current="location"] {
+    border-color: rgba(47, 247, 255, 0.42);
+    background:
+        radial-gradient(circle at 50% 0%, rgba(47, 247, 255, 0.2), transparent 64%),
+        rgba(47, 247, 255, 0.1);
+    color: var(--color-white);
+    box-shadow: 0 0 20px rgba(47, 247, 255, 0.18);
+}
+
 .search-panel {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -633,7 +686,8 @@
     min-width: 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    padding-bottom: var(--space-1);
+    padding-top: 0.38rem;
+    padding-bottom: 0.58rem;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
 }
@@ -716,7 +770,8 @@
     min-width: 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    padding-bottom: var(--space-1);
+    padding-top: 0.38rem;
+    padding-bottom: 0.58rem;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
 }

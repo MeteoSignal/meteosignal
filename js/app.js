@@ -1,11 +1,11 @@
-import { APP_CONFIG } from "../config/config.js?v=1.1.2-mobile-ui-refinement-compact-nav";
+import { APP_CONFIG } from "../config/config.js?v=1.1.3-mobile-forecast-icons";
 import { readActiveLocation, saveActiveLocation } from "./core/storage.js";
 import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js";
 import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js";
 import { initFavorites, renderFavoriteButton } from "./components/favorites.js";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js";
 import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js";
-import { initNavigation } from "./components/navigation.js";
+import { initNavigation } from "./components/navigation.js?v=1.1.3-mobile-forecast-icons";
 import { initSearch, updateSearchInput } from "./components/search.js";
 import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js";
 import { fetchAirQuality } from "./services/air-quality.service.js";
