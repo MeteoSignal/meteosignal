@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.2-mobile-ui-refinement";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.2-mobile-ui-refinement-compact-nav";
 import { getMoonPhase } from "../core/moon.js";
 import { getWeatherCondition } from "../core/weather-codes.js";
 import { createWeatherState } from "../core/state.js";

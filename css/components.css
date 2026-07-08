@@ -641,24 +641,24 @@
 .hourly-strip,
 .forecast-list {
     scrollbar-width: thin;
-    scrollbar-color: rgba(47, 247, 255, 0.34) transparent;
+    scrollbar-color: rgba(47, 247, 255, 0.24) transparent;
 }
 
 .hourly-strip::-webkit-scrollbar,
 .forecast-list::-webkit-scrollbar {
-    height: 0.38rem;
+    height: 0.28rem;
 }
 
 .hourly-strip::-webkit-scrollbar-track,
 .forecast-list::-webkit-scrollbar-track {
     border-radius: 999px;
-    background: rgba(4, 33, 76, 0.2);
+    background: transparent;
 }
 
 .hourly-strip::-webkit-scrollbar-thumb,
 .forecast-list::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    background: linear-gradient(90deg, rgba(47, 247, 255, 0.2), rgba(149, 251, 255, 0.46));
+    background: linear-gradient(90deg, rgba(47, 247, 255, 0.16), rgba(149, 251, 255, 0.32));
 }
 
 .hourly-card {

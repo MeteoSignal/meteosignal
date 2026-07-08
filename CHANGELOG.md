@@ -6,7 +6,7 @@ Le projet suit le versionnement sémantique.
 
 ---
 
-## [1.1.2] - 2026-07-07
+## [1.1.2] - 2026-07-08
 
 ### Amélioré
 
@@ -15,16 +15,19 @@ Le projet suit le versionnement sémantique.
 - Header mobile allégé avec logo officiel conservé, actions plus compactes et recherche mieux intégrée.
 - Prévisions horaires et prévisions sur 7 jours plus fluides sur mobile, avec cartes légèrement resserrées et barre de scroll plus discrète.
 - Hiérarchie visuelle mobile optimisée pour afficher plus rapidement la ville, la météo actuelle, les indicateurs et les prévisions.
+- Finition smartphone : header encore plus compact, effet de double header réduit, cartes météo légèrement resserrées et prévisions horizontales plus naturelles.
+- Libellés de navigation raccourcis pour éviter les textes tronqués sur mobile et tablette.
 
 ### Technique
 
 - Version applicative passée à `1.1.2`.
-- Cache PWA passé à `v1.1.2-mobile-ui-refinement`.
-- Feuilles CSS versionnées avec `v=1.1.2-mobile-ui-refinement`.
+- Build mis à jour au `2026-07-08`.
+- Cache PWA finalisé en `v1.1.2-mobile-ui-refinement-compact-nav`.
+- Feuilles CSS versionnées avec `v=1.1.2-mobile-ui-refinement-compact-nav`.
 - Configuration applicative importée avec un cache-buster v1.1.2 pour éviter l'affichage temporaire de l'ancienne version après publication.
 - Module principal `js/app.js` appelé avec le cache-buster v1.1.2 pour fiabiliser le rafraîchissement PWA.
 - Compatibilité Safari/iPhone améliorée avec `-webkit-backdrop-filter` sur les effets de verre.
-- Cache PWA finalisé en `v1.1.2-mobile-ui-refinement-safari` et feuilles CSS versionnées avec `v=1.1.2-mobile-ui-refinement-safari`.
+- Module principal et configuration applicative appelés avec le cache-buster `v=1.1.2-mobile-ui-refinement-compact-nav`.
 
 ---
 
