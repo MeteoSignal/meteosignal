@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = "v1.1.1-official-visual-identity-lightning-presence-polish";
+const CACHE_VERSION = "v1.1.2-mobile-ui-refinement-safari";
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -14,20 +14,22 @@ const STATIC_ASSETS = [
     "./manifest.json",
     "./pwa.js",
     "./config/config.js",
+    "./config/config.js?v=1.1.2-mobile-ui-refinement",
     "./css/style.css",
-    "./css/style.css?v=1.1.1-lightning-presence-polish",
+    "./css/style.css?v=1.1.2-mobile-ui-refinement-safari",
     "./css/tokens.css",
-    "./css/tokens.css?v=1.1.1-lightning-presence-polish",
+    "./css/tokens.css?v=1.1.2-mobile-ui-refinement-safari",
     "./css/base.css",
-    "./css/base.css?v=1.1.1-lightning-presence-polish",
+    "./css/base.css?v=1.1.2-mobile-ui-refinement-safari",
     "./css/layout.css",
-    "./css/layout.css?v=1.1.1-lightning-presence-polish",
+    "./css/layout.css?v=1.1.2-mobile-ui-refinement-safari",
     "./css/components.css",
-    "./css/components.css?v=1.1.1-lightning-presence-polish",
+    "./css/components.css?v=1.1.2-mobile-ui-refinement-safari",
     "./css/responsive.css",
-    "./css/responsive.css?v=1.1.1-lightning-presence-polish",
+    "./css/responsive.css?v=1.1.2-mobile-ui-refinement-safari",
     "./js/clock.js",
     "./js/app.js",
+    "./js/app.js?v=1.1.2-mobile-ui-refinement",
     "./js/components/astronomy.js",
     "./js/components/current-weather.js",
     "./js/components/daily-forecast.js",

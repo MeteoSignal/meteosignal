@@ -6,6 +6,28 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.1.2] - 2026-07-07
+
+### Amélioré
+
+- Raffinement de l'interface mobile sans modification de la logique météo.
+- Cartes météo compactées sur smartphone : hauteur, padding et textes secondaires ajustés pour réduire la place verticale.
+- Header mobile allégé avec logo officiel conservé, actions plus compactes et recherche mieux intégrée.
+- Prévisions horaires et prévisions sur 7 jours plus fluides sur mobile, avec cartes légèrement resserrées et barre de scroll plus discrète.
+- Hiérarchie visuelle mobile optimisée pour afficher plus rapidement la ville, la météo actuelle, les indicateurs et les prévisions.
+
+### Technique
+
+- Version applicative passée à `1.1.2`.
+- Cache PWA passé à `v1.1.2-mobile-ui-refinement`.
+- Feuilles CSS versionnées avec `v=1.1.2-mobile-ui-refinement`.
+- Configuration applicative importée avec un cache-buster v1.1.2 pour éviter l'affichage temporaire de l'ancienne version après publication.
+- Module principal `js/app.js` appelé avec le cache-buster v1.1.2 pour fiabiliser le rafraîchissement PWA.
+- Compatibilité Safari/iPhone améliorée avec `-webkit-backdrop-filter` sur les effets de verre.
+- Cache PWA finalisé en `v1.1.2-mobile-ui-refinement-safari` et feuilles CSS versionnées avec `v=1.1.2-mobile-ui-refinement-safari`.
+
+---
+
 ## [1.1.1] - 2026-07-07
 
 ### Amélioré

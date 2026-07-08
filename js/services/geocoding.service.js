@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.2-mobile-ui-refinement";
 
 export async function searchLocations(query, options = {}) {
     const normalizedQuery = query.trim();

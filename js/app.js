@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../config/config.js";
+import { APP_CONFIG } from "../config/config.js?v=1.1.2-mobile-ui-refinement";
 import { readActiveLocation, saveActiveLocation } from "./core/storage.js";
 import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js";
 import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js";
