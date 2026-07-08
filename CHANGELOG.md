@@ -30,9 +30,11 @@ Le projet suit le versionnement sémantique.
 ### Technique
 
 - Version applicative passée à `1.1.3`.
-- Build conservé au `2026-07-08`.
-- Cache PWA passé à `v1.1.3-mobile-forecast-icons`.
-- Feuilles CSS, module principal, configuration applicative et navigation mobile versionnés avec `v=1.1.3-mobile-forecast-icons`.
+- Build actualisé au `2026-07-09`.
+- Cache PWA passé à `v1.1.3-build-date-automation`.
+- Feuilles CSS, module principal, configuration applicative et navigation mobile versionnés avec `v=1.1.3-build-date-automation`.
+- Script local `scripts/update-build-date.js` ajouté pour actualiser `build` et `lastUpdated` dans `config/config.js` avant un commit.
+- Alternative Windows `scripts/update-build-date.ps1` ajoutée pour actualiser `build` et `lastUpdated` sans dépendre de Node.js.
 
 ---
 

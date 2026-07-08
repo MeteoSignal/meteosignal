@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.3-mobile-forecast-icons";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.3-build-date-automation";
 
 export async function searchLocations(query, options = {}) {
     const normalizedQuery = query.trim();

@@ -1,6 +1,6 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.3-mobile-forecast-icons";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.3-build-date-automation";
 import { getMoonPhase } from "../core/moon.js";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.3-mobile-forecast-icons";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.3-build-date-automation";
 import { createWeatherState } from "../core/state.js";
 
 const CURRENT_VARIABLES = [
