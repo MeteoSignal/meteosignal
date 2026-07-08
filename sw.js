@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = "v1.1.2-mobile-ui-refinement-safari";
+const CACHE_VERSION = "v1.1.2-mobile-ui-refinement-compact-nav";
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -14,22 +14,22 @@ const STATIC_ASSETS = [
     "./manifest.json",
     "./pwa.js",
     "./config/config.js",
-    "./config/config.js?v=1.1.2-mobile-ui-refinement",
+    "./config/config.js?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./css/style.css",
-    "./css/style.css?v=1.1.2-mobile-ui-refinement-safari",
+    "./css/style.css?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./css/tokens.css",
-    "./css/tokens.css?v=1.1.2-mobile-ui-refinement-safari",
+    "./css/tokens.css?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./css/base.css",
-    "./css/base.css?v=1.1.2-mobile-ui-refinement-safari",
+    "./css/base.css?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./css/layout.css",
-    "./css/layout.css?v=1.1.2-mobile-ui-refinement-safari",
+    "./css/layout.css?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./css/components.css",
-    "./css/components.css?v=1.1.2-mobile-ui-refinement-safari",
+    "./css/components.css?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./css/responsive.css",
-    "./css/responsive.css?v=1.1.2-mobile-ui-refinement-safari",
+    "./css/responsive.css?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./js/clock.js",
     "./js/app.js",
-    "./js/app.js?v=1.1.2-mobile-ui-refinement",
+    "./js/app.js?v=1.1.2-mobile-ui-refinement-compact-nav",
     "./js/components/astronomy.js",
     "./js/components/current-weather.js",
     "./js/components/daily-forecast.js",

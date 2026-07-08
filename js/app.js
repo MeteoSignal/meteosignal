@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../config/config.js?v=1.1.2-mobile-ui-refinement";
+import { APP_CONFIG } from "../config/config.js?v=1.1.2-mobile-ui-refinement-compact-nav";
 import { readActiveLocation, saveActiveLocation } from "./core/storage.js";
 import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js";
 import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js";
@@ -170,7 +170,7 @@ function formatBuildDate(buildDate) {
     const date = new Date(year, month - 1, day);
 
     if (!year || !month || !day || Number.isNaN(date.getTime())) {
-        return "07 juillet 2026";
+        return "08 juillet 2026";
     }
 
     return new Intl.DateTimeFormat("fr-FR", {
