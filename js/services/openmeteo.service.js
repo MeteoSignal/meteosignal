@@ -1,6 +1,6 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.2-mobile-ui-refinement-compact-nav";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.3-build-date-automation";
 import { getMoonPhase } from "../core/moon.js";
-import { getWeatherCondition } from "../core/weather-codes.js";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.3-build-date-automation";
 import { createWeatherState } from "../core/state.js";
 
 const CURRENT_VARIABLES = [
@@ -88,7 +88,7 @@ export function normalizeOpenMeteoForecast(rawData, location = {}) {
         provider: openMeteoProvider.id,
         location: normalizeLocation(rawData, location),
         current: normalizeCurrentWeather(current),
-        hourly: normalizeHourlyForecast(rawData.hourly, current.time),
+        hourly: normalizeHourlyForecast(rawData.hourly, current.time, daily),
         daily,
         astronomy: normalizeAstronomy(daily[0]),
         updatedAt: current.time ?? new Date().toISOString(),
@@ -134,17 +134,19 @@ function normalizeCurrentWeather(current) {
     };
 }
 
-function normalizeHourlyForecast(hourly = {}, currentTime = null) {
+function normalizeHourlyForecast(hourly = {}, currentTime = null, daily = []) {
     const times = hourly.time ?? [];
     const startIndex = findForecastStartIndex(times, currentTime);
     const endIndex = Math.min(startIndex + 24, times.length);
     const hours = [];
 
     for (let index = startIndex; index < endIndex; index += 1) {
+        const time = times[index];
         const code = hourly.weather_code?.[index];
+        const isDay = isDayAtTime(time, daily);
 
         hours.push({
-            time: times[index],
+            time,
             temperature: numberOrNull(hourly.temperature_2m?.[index]),
             apparentTemperature: numberOrNull(hourly.apparent_temperature?.[index]),
             precipitationProbability: numberOrNull(hourly.precipitation_probability?.[index]),
@@ -152,11 +154,47 @@ function normalizeHourlyForecast(hourly = {}, currentTime = null) {
             uvIndex: numberOrNull(hourly.uv_index?.[index]),
             windSpeed: numberOrNull(hourly.wind_speed_10m?.[index]),
             weatherCode: numberOrNull(code),
-            condition: getWeatherCondition(code)
+            condition: getWeatherCondition(code, isDay),
+            isDay
         });
     }
 
     return hours;
+}
+
+function isDayAtTime(time, daily = []) {
+    if (!time) {
+        return true;
+    }
+
+    const timestamp = new Date(time).getTime();
+
+    if (!Number.isFinite(timestamp)) {
+        return true;
+    }
+
+    const matchingDay = daily.find((day) => {
+        if (!day?.date) {
+            return false;
+        }
+
+        return String(time).startsWith(day.date);
+    });
+
+    if (!matchingDay?.sunrise || !matchingDay?.sunset) {
+        const hour = new Date(time).getHours();
+
+        return hour >= 7 && hour < 20;
+    }
+
+    const sunrise = new Date(matchingDay.sunrise).getTime();
+    const sunset = new Date(matchingDay.sunset).getTime();
+
+    if (!Number.isFinite(sunrise) || !Number.isFinite(sunset)) {
+        return true;
+    }
+
+    return timestamp >= sunrise && timestamp < sunset;
 }
 
 function normalizeDailyForecast(daily = {}, currentIsDay = true) {
