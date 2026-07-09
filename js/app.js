@@ -1,16 +1,16 @@
-import { APP_CONFIG } from "../config/config.js?v=1.1.5-hourly-72h";
-import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.1.5-hourly-72h";
-import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.1.5-hourly-72h";
-import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.1.5-hourly-72h";
-import { initFavorites, renderFavoriteButton } from "./components/favorites.js?v=1.1.5-hourly-72h";
-import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.1.5-hourly-72h";
-import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.1.5-hourly-72h";
-import { initNavigation } from "./components/navigation.js?v=1.1.5-hourly-72h";
-import { initSearch, updateSearchInput } from "./components/search.js?v=1.1.5-hourly-72h";
-import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.1.5-hourly-72h";
-import { fetchAirQuality } from "./services/air-quality.service.js?v=1.1.5-hourly-72h";
-import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.1.5-hourly-72h";
-import { getWeatherProvider } from "./services/weather-provider.js?v=1.1.5-hourly-72h";
+import { APP_CONFIG } from "../config/config.js?v=1.1.6-stabilization-final";
+import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.1.6-stabilization-final";
+import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.1.6-stabilization-final";
+import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.1.6-stabilization-final";
+import { initFavorites, renderFavoriteButton } from "./components/favorites.js?v=1.1.6-stabilization-final";
+import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.1.6-stabilization-final";
+import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.1.6-stabilization-final";
+import { initNavigation } from "./components/navigation.js?v=1.1.6-stabilization-final";
+import { initSearch, updateSearchInput } from "./components/search.js?v=1.1.6-stabilization-final";
+import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.1.6-stabilization-final";
+import { fetchAirQuality } from "./services/air-quality.service.js?v=1.1.6-stabilization-final";
+import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.1.6-stabilization-final";
+import { getWeatherProvider } from "./services/weather-provider.js?v=1.1.6-stabilization-final";
 
 const provider = getWeatherProvider();
 const DASHBOARD_SELECTOR = "[data-dashboard]";
@@ -51,7 +51,7 @@ async function loadWeatherDashboard({ showLoading = true } = {}) {
 
     try {
         if (showLoading) {
-            renderDashboardLoading();
+            renderDashboardLoading(requestedLocation);
         } else {
             setDashboardBusy(true, "Mise à jour météo en arrière-plan.");
         }
@@ -81,7 +81,7 @@ async function loadWeatherDashboard({ showLoading = true } = {}) {
         console.warn(error);
 
         if (showLoading) {
-            renderDashboardError("Données météo indisponibles.");
+            renderDashboardError("Données météo indisponibles.", requestedLocation);
         } else {
             setDashboardBusy(false, "Mise à jour météo différée.");
         }
@@ -131,18 +131,18 @@ function renderWeatherDashboard(weather) {
     renderAstronomy(weather.astronomy);
 }
 
-function renderDashboardLoading() {
+function renderDashboardLoading(location) {
     setDashboardBusy(true, "Chargement de la météo.");
-    renderCurrentWeatherLoading();
+    renderCurrentWeatherLoading(location);
     renderWeatherCardsLoading();
     renderHourlyForecastLoading();
     renderDailyForecastLoading();
     renderAstronomyLoading();
 }
 
-function renderDashboardError(message) {
+function renderDashboardError(message, location) {
     setDashboardBusy(false, message);
-    renderCurrentWeatherError(message);
+    renderCurrentWeatherError(message, location);
     renderWeatherCardsError();
     renderHourlyForecastError();
     renderDailyForecastError();

@@ -1,4 +1,4 @@
-import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.1.5-hourly-72h";
+import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.1.6-stabilization-final";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 

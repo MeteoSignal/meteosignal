@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatTemperature,
     formatSpeed
-} from "../core/formatters.js?v=1.1.5-hourly-72h";
+} from "../core/formatters.js?v=1.1.6-stabilization-final";
 
 const DAILY_SELECTOR = "[data-daily-forecast]";
 const DAILY_LIMIT = 7;

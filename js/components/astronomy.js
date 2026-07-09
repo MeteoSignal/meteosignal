@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.1.5-hourly-72h";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.1.6-stabilization-final";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";

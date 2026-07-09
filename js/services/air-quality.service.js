@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.5-hourly-72h";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",
