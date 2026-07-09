@@ -1,5 +1,5 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.4-weather-icons-phase1-final";
-import { openMeteoProvider } from "./openmeteo.service.js?v=1.1.4-weather-icons-phase1-final";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.5-hourly-72h";
+import { openMeteoProvider } from "./openmeteo.service.js?v=1.1.5-hourly-72h";
 
 const WEATHER_PROVIDERS = {
     [openMeteoProvider.id]: openMeteoProvider

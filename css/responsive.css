@@ -487,8 +487,18 @@
         font-size: 1.08rem;
     }
 
+    .hourly-range-tabs {
+        width: 100%;
+        margin-bottom: var(--space-3);
+    }
+
+    .hourly-range-button {
+        padding: 0.48rem 0.42rem;
+        font-size: 0.68rem;
+    }
+
     .hourly-strip {
-        grid-template-columns: repeat(12, 6.05rem);
+        grid-template-columns: repeat(var(--hourly-card-count, 12), 6.05rem);
         gap: var(--space-2);
         padding-top: 0.38rem;
         padding-bottom: 0.68rem;
@@ -632,7 +642,7 @@
     }
 
     .hourly-strip {
-        grid-template-columns: repeat(12, 5.95rem);
+        grid-template-columns: repeat(var(--hourly-card-count, 12), 5.95rem);
     }
 
     .forecast-list {
@@ -760,7 +770,7 @@
     }
 
     .hourly-strip {
-        grid-template-columns: repeat(12, 5.85rem);
+        grid-template-columns: repeat(var(--hourly-card-count, 12), 5.85rem);
     }
 
     .forecast-list {
@@ -907,7 +917,7 @@
     }
 
     .hourly-strip {
-        grid-template-columns: repeat(12, minmax(5rem, 1fr));
+        grid-template-columns: repeat(var(--hourly-card-count, 12), minmax(5rem, 1fr));
         gap: var(--space-2);
         overflow-x: auto;
     }
@@ -948,7 +958,7 @@
     }
 
     .hourly-strip {
-        overflow-x: visible;
+        overflow-x: auto;
     }
 
     .forecast-list {

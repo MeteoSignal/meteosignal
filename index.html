@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
     <link rel="apple-touch-icon" href="assets/logo/icon-192.png">
-    <link rel="stylesheet" href="css/style.css?v=1.1.4-weather-icons-phase1-final">
+    <link rel="stylesheet" href="css/style.css?v=1.1.5-hourly-72h">
 </head>
 
 <body data-nav-open="false" data-nav-collapsed="false">
@@ -218,6 +218,17 @@
                         <p class="eyebrow">Aujourd'hui</p>
                         <h2 id="hourly-title">Prévisions horaires</h2>
                     </div>
+                    <div class="hourly-range-tabs" role="group" aria-label="Plage des prévisions horaires">
+                        <button class="hourly-range-button is-active" type="button" data-hourly-range="0" aria-pressed="true">
+                            0–24 h
+                        </button>
+                        <button class="hourly-range-button" type="button" data-hourly-range="1" aria-pressed="false">
+                            24–48 h
+                        </button>
+                        <button class="hourly-range-button" type="button" data-hourly-range="2" aria-pressed="false">
+                            48–72 h
+                        </button>
+                    </div>
                     <div class="hourly-strip" aria-label="Aperçu horaire" aria-live="polite" data-hourly-forecast>
                         <article class="hourly-card" data-forecast-state="loading">
                             <span class="hourly-time">Maintenant</span>
@@ -356,9 +367,9 @@
         </a>
     </nav>
 
-    <script src="js/clock.js?v=1.1.4-weather-icons-phase1-final"></script>
-    <script src="pwa.js?v=1.1.4-weather-icons-phase1-final" defer></script>
-    <script type="module" src="js/app.js?v=1.1.4-weather-icons-phase1-final"></script>
+    <script src="js/clock.js?v=1.1.5-hourly-72h"></script>
+    <script src="pwa.js?v=1.1.5-hourly-72h" defer></script>
+    <script type="module" src="js/app.js?v=1.1.5-hourly-72h"></script>
 </body>
 
 </html>

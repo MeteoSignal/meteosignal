@@ -720,9 +720,70 @@
     text-shadow: 0 0 20px rgba(47, 247, 255, 0.24);
 }
 
+.hourly-range-tabs {
+    display: inline-grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.22rem;
+    width: min(100%, 24rem);
+    margin: 0 0 var(--space-4);
+    border: 1px solid rgba(47, 247, 255, 0.24);
+    border-radius: var(--radius-md);
+    padding: 0.22rem;
+    background:
+        radial-gradient(circle at 16% 0%, rgba(47, 247, 255, 0.12), transparent 44%),
+        rgba(3, 24, 62, 0.44);
+    box-shadow:
+        0 0 18px rgba(47, 247, 255, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.025) inset;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+
+.hourly-range-button {
+    min-width: 0;
+    border: 0;
+    border-radius: calc(var(--radius-md) - 0.22rem);
+    padding: 0.52rem 0.62rem;
+    background: transparent;
+    color: rgba(228, 247, 255, 0.76);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+        color var(--transition-base),
+        background-color var(--transition-base),
+        box-shadow var(--transition-base),
+        opacity var(--transition-base);
+}
+
+.hourly-range-button:hover,
+.hourly-range-button:focus-visible {
+    color: var(--color-white);
+    background: rgba(47, 247, 255, 0.1);
+    outline: none;
+}
+
+.hourly-range-button.is-active {
+    background:
+        linear-gradient(135deg, rgba(47, 247, 255, 0.22), rgba(54, 126, 255, 0.18));
+    color: var(--color-white);
+    box-shadow:
+        0 0 16px rgba(47, 247, 255, 0.16),
+        0 0 0 1px rgba(149, 251, 255, 0.22) inset;
+}
+
+.hourly-range-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+}
+
 .hourly-strip {
     display: grid;
-    grid-template-columns: repeat(12, minmax(7.4rem, 1fr));
+    grid-template-columns: repeat(var(--hourly-card-count, 12), minmax(7.4rem, 1fr));
     gap: var(--space-3);
     max-width: 100%;
     min-width: 0;

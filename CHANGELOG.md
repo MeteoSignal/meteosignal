@@ -6,6 +6,28 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.1.5] - 2026-07-09
+
+### Ajouté
+
+- Prévisions horaires étendues jusqu'à 72 heures via `forecast_hours=72` avec Open-Meteo.
+- Contrôle segmenté `0–24 h`, `24–48 h` et `48–72 h` dans la section des prévisions horaires.
+
+### Amélioré
+
+- Affichage limité à 24 cartes horaires par plage pour préserver la lisibilité et le scroll horizontal.
+- Plages horaires indisponibles désactivées automatiquement lorsque les données retournées sont insuffisantes.
+- Compatibilité conservée avec la logique jour/nuit et les icônes SVG MeteoSignal.
+
+### Technique
+
+- Version applicative passée à `1.1.5`.
+- Cache PWA passé à `v1.1.5-hourly-72h`.
+- Cache-busters CSS/JS/SVG alignés sur `v1.1.5-hourly-72h`.
+- Configuration Open-Meteo enrichie avec `forecastDays: 7` et `forecastHours: 72`.
+
+---
+
 ## [1.1.4] - 2026-07-09
 
 ### Ajouté

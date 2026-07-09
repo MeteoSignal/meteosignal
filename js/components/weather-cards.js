@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatPressure,
     formatSpeed
-} from "../core/formatters.js?v=1.1.4-weather-icons-phase1-final";
+} from "../core/formatters.js?v=1.1.5-hourly-72h";
 
 const WEATHER_CARDS_SELECTOR = "[data-weather-cards]";
 

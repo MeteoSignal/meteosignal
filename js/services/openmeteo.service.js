@@ -1,7 +1,7 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.4-weather-icons-phase1-final";
-import { getMoonPhase } from "../core/moon.js?v=1.1.4-weather-icons-phase1-final";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.4-weather-icons-phase1-final";
-import { createWeatherState } from "../core/state.js?v=1.1.4-weather-icons-phase1-final";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.5-hourly-72h";
+import { getMoonPhase } from "../core/moon.js?v=1.1.5-hourly-72h";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.5-hourly-72h";
+import { createWeatherState } from "../core/state.js?v=1.1.5-hourly-72h";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",
@@ -66,7 +66,8 @@ export async function fetchOpenMeteoForecast(location, options = {}) {
 export function buildForecastUrl(location, options = {}) {
     const url = new URL(APP_CONFIG.api.openMeteo.forecastUrl);
     const timezone = location.timezone ?? "auto";
-    const forecastDays = options.forecastDays ?? 7;
+    const forecastDays = options.forecastDays ?? APP_CONFIG.api.openMeteo.forecastDays ?? 7;
+    const forecastHours = options.forecastHours ?? APP_CONFIG.api.openMeteo.forecastHours ?? 72;
 
     url.searchParams.set("latitude", location.latitude);
     url.searchParams.set("longitude", location.longitude);
@@ -74,6 +75,7 @@ export function buildForecastUrl(location, options = {}) {
     url.searchParams.set("hourly", HOURLY_VARIABLES.join(","));
     url.searchParams.set("daily", DAILY_VARIABLES.join(","));
     url.searchParams.set("forecast_days", forecastDays);
+    url.searchParams.set("forecast_hours", forecastHours);
     url.searchParams.set("timezone", timezone);
 
     return url;
@@ -137,7 +139,8 @@ function normalizeCurrentWeather(current) {
 function normalizeHourlyForecast(hourly = {}, currentTime = null, daily = []) {
     const times = hourly.time ?? [];
     const startIndex = findForecastStartIndex(times, currentTime);
-    const endIndex = Math.min(startIndex + 24, times.length);
+    const forecastHours = APP_CONFIG.api.openMeteo.forecastHours ?? 72;
+    const endIndex = Math.min(startIndex + forecastHours, times.length);
     const hours = [];
 
     for (let index = startIndex; index < endIndex; index += 1) {
