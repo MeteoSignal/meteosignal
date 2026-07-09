@@ -1,4 +1,5 @@
-import { formatTemperature, formatTime } from "../core/formatters.js";
+import { formatTemperature, formatTime } from "../core/formatters.js?v=1.1.4-weather-icons-phase1-final";
+import { renderWeatherIcon } from "../core/weather-icons.js?v=1.1.4-weather-icons-phase1-final";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";
@@ -8,6 +9,7 @@ export function renderCurrentWeatherLoading() {
     setText("#description", "Chargement de la météo...");
     setText("#hero-status", "Chargement");
     setText("#updated-at", "Mise à jour --:--");
+    renderWeatherIcon("#icon", null, "--", "weather-icon-img weather-icon-img--hero");
 }
 
 export function renderCurrentWeather(weather) {
@@ -19,7 +21,7 @@ export function renderCurrentWeather(weather) {
     setText("#city", weather.location.name);
     setText("#temp", formatTemperature(current.temperature));
     setText("#description", condition.label);
-    setText("#icon", condition.icon);
+    renderWeatherIcon("#icon", condition.iconId, condition.icon, "weather-icon-img weather-icon-img--hero");
     setText("#feels-like", formatTemperature(current.apparentTemperature));
     setText("#temp-min", formatTemperature(today?.temperatureMin));
     setText("#temp-max", formatTemperature(today?.temperatureMax));
@@ -31,6 +33,7 @@ export function renderCurrentWeatherError(message = "Données météo indisponib
     setHeroState("error", "unknown");
     setText("#description", message);
     setText("#hero-status", "Indisponible");
+    renderWeatherIcon("#icon", null, "--", "weather-icon-img weather-icon-img--hero");
 }
 
 function setHeroState(state, tone) {

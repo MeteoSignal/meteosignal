@@ -1,7 +1,7 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.3-build-date-automation";
-import { getMoonPhase } from "../core/moon.js";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.3-build-date-automation";
-import { createWeatherState } from "../core/state.js";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.4-weather-icons-phase1-final";
+import { getMoonPhase } from "../core/moon.js?v=1.1.4-weather-icons-phase1-final";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.4-weather-icons-phase1-final";
+import { createWeatherState } from "../core/state.js?v=1.1.4-weather-icons-phase1-final";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",

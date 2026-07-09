@@ -6,6 +6,32 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.1.4] - 2026-07-09
+
+### Ajouté
+
+- Mini-pack SVG premium MeteoSignal pour les conditions `clear-day`, `clear-night`, `partly-cloudy-day`, `partly-cloudy-night`, `cloudy`, `light-rain-day`, `storm-day` et `fog-day`.
+- Registre interne `js/core/weather-icons.js` pour centraliser les chemins et fallbacks des icônes météo.
+
+### Amélioré
+
+- Carte `Conditions actuelles` migrée vers les nouvelles icônes SVG, avec fallback emoji conservé.
+- Prévisions horaires migrées vers les nouvelles icônes SVG, sans modification des données météo.
+- Icônes horaires rendues plus lisibles avec une pastille lumineuse MeteoSignal et un glow plus discret.
+- Fond orage/foudre renforcé par CSS : côtés plus visibles, centre maintenu plus sombre pour la lisibilité.
+- Aperçu temporaire des 8 icônes Phase 1 retiré de l'interface publique après validation technique.
+- Rendu des SVG affiné : contours plus nets, flous internes réduits et auréoles visuelles mieux contrôlées.
+- Modèle météo enrichi avec un identifiant interne `iconId` tout en conservant `icon` pour les zones non migrées.
+
+### Technique
+
+- Version applicative passée à `1.1.4`.
+- Cache PWA passé à `v1.1.4-weather-icons-phase1-final`.
+- Cache-busters CSS/JS alignés sur `v1.1.4-weather-icons-phase1-final` pour éviter le chargement d'anciens modules v1.1.3.
+- Assets SVG météo ajoutés au cache statique PWA.
+
+---
+
 ## [1.1.3] - 2026-07-08
 
 ### Ajouté

@@ -1,4 +1,4 @@
-import { searchLocations } from "../services/geocoding.service.js";
+import { searchLocations } from "../services/geocoding.service.js?v=1.1.4-weather-icons-phase1-final";
 
 const SEARCH_FORM_SELECTOR = "[data-search-form]";
 const SEARCH_INPUT_SELECTOR = "#city-search";

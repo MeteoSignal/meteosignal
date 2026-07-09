@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title" shape-rendering="geometricPrecision">
+  <title id="title">Partly cloudy night</title>
+  <defs>
+    <linearGradient id="moon" x1="26" x2="58" y1="14" y2="58">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".58" stop-color="#bdefff"/>
+      <stop offset="1" stop-color="#5bc9ff"/>
+    </linearGradient>
+    <linearGradient id="cloud" x1="22" x2="80" y1="48" y2="72">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".58" stop-color="#d7f7ff"/>
+      <stop offset="1" stop-color="#8adfff"/>
+    </linearGradient>
+  </defs>
+  <circle cx="46" cy="47" r="33" fill="#2ff7ff" opacity=".07"/>
+  <path d="M55 14c-12 4-20 15-20 28 0 10 6 20 16 25-17 0-31-13-31-30 0-16 13-30 30-30 2 0 4 .2 5 .5Z" fill="url(#moon)" stroke="#eafcff" stroke-width=".9"/>
+  <circle cx="70" cy="28" r="2" fill="#dff9ff"/>
+  <path d="M29 72h38c9 0 16-6 16-14 0-7-7-13-16-13h-2c-3-8-11-14-21-14-12 0-21 8-23 18-7 2-11 6-11 12 0 6 6 11 19 11Z" fill="url(#cloud)" stroke="#eafcff" stroke-width="1"/>
+  <path d="M28 72h42" fill="none" stroke="#2ff7ff" stroke-linecap="round" stroke-width="1.8" opacity=".42"/>
+</svg>
