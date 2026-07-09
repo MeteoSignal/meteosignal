@@ -6,6 +6,23 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.2.1] - 2026-07-09
+
+### Amélioré
+
+- Polish du module Alertes météo avec un wording plus pédagogique et moins anxiogène.
+- Badges d'alertes locales harmonisés autour de `Signal local`, `À surveiller` et `Seuil notable`.
+- Détails enrichis avec les seuils MeteoSignal utilisés pour les signaux chaleur, vent, pluie, UV et qualité de l'air.
+- Note de contexte ajoutée : les alertes MeteoSignal sont locales, indicatives et non officielles.
+
+### Technique
+
+- Version applicative passée à `1.2.1`.
+- Cache PWA passé à `v1.2.1-weather-alerts-polish`.
+- Seuils d'alertes v1.2.0 conservés sans modification.
+
+---
+
 ## [1.2.0] - 2026-07-09
 
 ### Ajouté

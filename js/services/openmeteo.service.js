@@ -1,7 +1,7 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.2.0-weather-alerts";
-import { getMoonPhase } from "../core/moon.js?v=1.2.0-weather-alerts";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.2.0-weather-alerts";
-import { createWeatherState } from "../core/state.js?v=1.2.0-weather-alerts";
+import { APP_CONFIG } from "../../config/config.js?v=1.2.1-weather-alerts-polish";
+import { getMoonPhase } from "../core/moon.js?v=1.2.1-weather-alerts-polish";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.2.1-weather-alerts-polish";
+import { createWeatherState } from "../core/state.js?v=1.2.1-weather-alerts-polish";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",

@@ -1137,6 +1137,14 @@
     text-align: center;
 }
 
+.alerts-context {
+    margin: var(--space-3) 0 0;
+    color: var(--color-subtle);
+    font-size: 0.78rem;
+    line-height: 1.35;
+    text-align: center;
+}
+
 .development-status {
     display: grid;
     width: min(100%, 34rem);
