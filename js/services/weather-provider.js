@@ -1,5 +1,5 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.2.1-weather-alerts-polish";
-import { openMeteoProvider } from "./openmeteo.service.js?v=1.2.1-weather-alerts-polish";
+import { APP_CONFIG } from "../../config/config.js?v=1.3.0-favorites-polish";
+import { openMeteoProvider } from "./openmeteo.service.js?v=1.3.0-favorites-polish";
 
 const WEATHER_PROVIDERS = {
     [openMeteoProvider.id]: openMeteoProvider

@@ -6,6 +6,28 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.3.0] - 2026-07-09
+
+### Ajouté
+
+- Bloc compact `Villes enregistrées` pour afficher les favoris directement dans l'interface.
+- Sélection rapide d'une ville favorite pour recharger immédiatement la météo associée.
+- Suppression visible d'une ville enregistrée sans changer la météo actuellement affichée.
+
+### Amélioré
+
+- Bouton favori connecté à la liste visible : ajout et retrait mettent l'interface à jour immédiatement.
+- Déduplication renforcée dans le stockage local des favoris.
+- État vide ajouté : `Aucune ville enregistrée pour le moment.`
+
+### Technique
+
+- Version applicative passée à `1.3.0`.
+- Cache PWA passé à `v1.3.0-favorites`.
+- Conservation de `storage.js` comme couche unique d'accès à `localStorage`.
+
+---
+
 ## [1.2.1] - 2026-07-09
 
 ### Amélioré

@@ -1,17 +1,17 @@
-import { APP_CONFIG } from "../config/config.js?v=1.2.1-weather-alerts-polish";
-import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.2.1-weather-alerts-polish";
-import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.2.1-weather-alerts-polish";
-import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.2.1-weather-alerts-polish";
-import { initFavorites, renderFavoriteButton } from "./components/favorites.js?v=1.2.1-weather-alerts-polish";
-import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.2.1-weather-alerts-polish";
-import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.2.1-weather-alerts-polish";
-import { initNavigation } from "./components/navigation.js?v=1.2.1-weather-alerts-polish";
-import { initSearch, updateSearchInput } from "./components/search.js?v=1.2.1-weather-alerts-polish";
-import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.2.1-weather-alerts-polish";
-import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.2.1-weather-alerts-polish";
-import { fetchAirQuality } from "./services/air-quality.service.js?v=1.2.1-weather-alerts-polish";
-import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.2.1-weather-alerts-polish";
-import { getWeatherProvider } from "./services/weather-provider.js?v=1.2.1-weather-alerts-polish";
+import { APP_CONFIG } from "../config/config.js?v=1.3.0-favorites-polish";
+import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.3.0-favorites-polish";
+import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.3.0-favorites-polish";
+import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.3.0-favorites-polish";
+import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.3.0-favorites-polish";
+import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.3.0-favorites-polish";
+import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.3.0-favorites-polish";
+import { initNavigation } from "./components/navigation.js?v=1.3.0-favorites-polish";
+import { initSearch, updateSearchInput } from "./components/search.js?v=1.3.0-favorites-polish";
+import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.3.0-favorites-polish";
+import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.3.0-favorites-polish";
+import { fetchAirQuality } from "./services/air-quality.service.js?v=1.3.0-favorites-polish";
+import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.3.0-favorites-polish";
+import { getWeatherProvider } from "./services/weather-provider.js?v=1.3.0-favorites-polish";
 
 const provider = getWeatherProvider();
 const DASHBOARD_SELECTOR = "[data-dashboard]";
@@ -30,11 +30,15 @@ function initApp() {
     });
     initFavorites({
         getActiveLocation: () => activeLocation,
+        onLocationSelect: handleFavoriteLocationSelect,
+        onToggle: handleFavoriteToggle,
+        onRemove: handleFavoriteRemove,
         onError: showInteractionError
     });
     bindGeolocationButton();
     updateSearchInput(activeLocation);
     renderFavoriteButton(activeLocation);
+    renderFavoritesList(activeLocation);
     renderProjectStatus();
     loadWeatherDashboard();
     setInterval(() => loadWeatherDashboard({ showLoading: false }), APP_CONFIG.refresh);
@@ -73,6 +77,7 @@ async function loadWeatherDashboard({ showLoading = true } = {}) {
 
         renderWeatherDashboard(weatherWithAirQuality);
         renderFavoriteButton(activeLocation);
+        renderFavoritesList(activeLocation);
         setDashboardBusy(false, `Météo mise à jour pour ${weather.location.name}.`);
     } catch (error) {
         if (!isCurrentDashboardRequest(requestId, requestedLocation)) {
@@ -98,10 +103,27 @@ async function handleLocationSelect(location) {
     await loadWeatherDashboard();
 }
 
+async function handleFavoriteLocationSelect(location) {
+    setActiveLocation(location);
+    setText("#app-status", `${location.name} sélectionnée depuis les villes enregistrées.`);
+    await loadWeatherDashboard();
+}
+
+function handleFavoriteToggle({ isFavorite, location }) {
+    const action = isFavorite ? "ajoutée aux villes enregistrées" : "retirée des villes enregistrées";
+    setText("#app-status", `${location.name} ${action}.`);
+}
+
+function handleFavoriteRemove({ location, removedActiveLocation }) {
+    const suffix = removedActiveLocation ? " La ville affichée reste active." : "";
+    setText("#app-status", `${location.name} supprimée des villes enregistrées.${suffix}`);
+}
+
 function setActiveLocation(location) {
     activeLocation = saveActiveLocation(location) ?? location;
     updateSearchInput(activeLocation);
     renderFavoriteButton(activeLocation);
+    renderFavoritesList(activeLocation);
 }
 
 function bindGeolocationButton() {

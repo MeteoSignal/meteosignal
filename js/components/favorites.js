@@ -1,25 +1,77 @@
-import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.2.1-weather-alerts-polish";
+import {
+    getLocationKey,
+    isFavoriteLocation,
+    readFavorites,
+    removeFavoriteLocation,
+    toggleFavoriteLocation
+} from "../core/storage.js?v=1.3.0-favorites-polish";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
+const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";
+const FAVORITES_COUNT_SELECTOR = "[data-favorites-count]";
+const FAVORITE_SELECT_SELECTOR = "[data-favorite-select]";
+const FAVORITE_REMOVE_SELECTOR = "[data-favorite-remove]";
 
-export function initFavorites({ getActiveLocation, onToggle, onError } = {}) {
+let favoriteOptions = {};
+
+export function initFavorites(options = {}) {
+    favoriteOptions = options;
     const button = document.querySelector(FAVORITE_BUTTON_SELECTOR);
+    const list = document.querySelector(FAVORITES_LIST_SELECTOR);
 
-    if (!button) {
+    if (button) {
+        button.addEventListener("click", () => {
+            const location = favoriteOptions.getActiveLocation?.();
+
+            if (!location) {
+                favoriteOptions.onError?.(new Error("Aucune ville active à ajouter aux favoris."));
+                return;
+            }
+
+            const result = toggleFavoriteLocation(location);
+            renderFavoriteButton(location);
+            renderFavoritesList(location);
+            favoriteOptions.onToggle?.({
+                ...result,
+                location
+            });
+        });
+    }
+
+    if (list) {
+        list.addEventListener("click", handleFavoritesListClick);
+    }
+
+    renderFavoritesList(favoriteOptions.getActiveLocation?.());
+}
+
+export function renderFavoritesList(activeLocation = null) {
+    const list = document.querySelector(FAVORITES_LIST_SELECTOR);
+    const count = document.querySelector(FAVORITES_COUNT_SELECTOR);
+
+    if (!list) {
         return;
     }
 
-    button.addEventListener("click", () => {
-        const location = getActiveLocation?.();
+    const favorites = readFavorites();
+    const activeLocationKey = getLocationKey(activeLocation);
 
-        if (!location) {
-            onError?.(new Error("Aucune ville active à ajouter aux favoris."));
-            return;
-        }
+    list.innerHTML = "";
 
-        const result = toggleFavoriteLocation(location);
-        renderFavoriteButton(location);
-        onToggle?.(result);
+    if (count) {
+        count.textContent = formatFavoritesCount(favorites.length);
+    }
+
+    if (favorites.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "favorites-empty";
+        empty.textContent = "Aucune ville enregistrée pour le moment.";
+        list.appendChild(empty);
+        return;
+    }
+
+    favorites.forEach((favorite) => {
+        list.appendChild(buildFavoriteItem(favorite, getLocationKey(favorite) === activeLocationKey));
     });
 }
 
@@ -38,4 +90,105 @@ export function renderFavoriteButton(location) {
         "aria-label",
         isFavorite ? "Retirer cette ville des favoris" : "Ajouter cette ville aux favoris"
     );
+}
+
+async function handleFavoritesListClick(event) {
+    const target = event.target instanceof Element ? event.target : null;
+
+    if (!target) {
+        return;
+    }
+
+    const removeButton = target.closest(FAVORITE_REMOVE_SELECTOR);
+    const selectButton = target.closest(FAVORITE_SELECT_SELECTOR);
+
+    if (removeButton) {
+        const location = getFavoriteByKey(removeButton.dataset.favoriteKey);
+
+        if (!location) {
+            return;
+        }
+
+        const favorites = removeFavoriteLocation(location);
+        const activeLocation = favoriteOptions.getActiveLocation?.();
+        renderFavoriteButton(activeLocation);
+        renderFavoritesList(activeLocation);
+        favoriteOptions.onRemove?.({
+            location,
+            favorites,
+            removedActiveLocation: getLocationKey(location) === getLocationKey(activeLocation)
+        });
+        return;
+    }
+
+    if (selectButton) {
+        const location = getFavoriteByKey(selectButton.dataset.favoriteKey);
+
+        if (!location) {
+            return;
+        }
+
+        try {
+            await favoriteOptions.onLocationSelect?.(location);
+        } catch (error) {
+            favoriteOptions.onError?.(error);
+        }
+    }
+}
+
+function buildFavoriteItem(location, isActive) {
+    const item = document.createElement("div");
+    const locationKey = getLocationKey(location);
+    item.className = "favorite-item";
+    item.dataset.favoriteKey = locationKey;
+    item.setAttribute("role", "listitem");
+
+    if (isActive) {
+        item.dataset.favoriteActive = "true";
+    }
+
+    const selectButton = document.createElement("button");
+    selectButton.className = "favorite-select";
+    selectButton.type = "button";
+    selectButton.dataset.favoriteSelect = "true";
+    selectButton.dataset.favoriteKey = locationKey;
+    selectButton.setAttribute("aria-label", `Afficher la météo de ${location.label ?? location.name}`);
+    selectButton.setAttribute("aria-pressed", String(isActive));
+
+    const name = document.createElement("span");
+    name.className = "favorite-name";
+    name.textContent = location.name;
+
+    const meta = document.createElement("span");
+    meta.className = "favorite-meta";
+    meta.textContent = formatFavoriteMeta(location);
+
+    const removeButton = document.createElement("button");
+    removeButton.className = "favorite-remove";
+    removeButton.type = "button";
+    removeButton.dataset.favoriteRemove = "true";
+    removeButton.dataset.favoriteKey = locationKey;
+    removeButton.setAttribute("aria-label", `Supprimer ${location.name} des villes enregistrées`);
+    removeButton.innerHTML = '<span aria-hidden="true">×</span>';
+
+    selectButton.appendChild(name);
+    selectButton.appendChild(meta);
+    item.appendChild(selectButton);
+    item.appendChild(removeButton);
+
+    return item;
+}
+
+function getFavoriteByKey(locationKey) {
+    return readFavorites().find((favorite) => getLocationKey(favorite) === locationKey) ?? null;
+}
+
+function formatFavoritesCount(count) {
+    return count <= 1 ? `${count} ville` : `${count} villes`;
+}
+
+function formatFavoriteMeta(location) {
+    return [location.admin1, location.country]
+        .filter(Boolean)
+        .join(", ") || location.label || "Ville enregistrée";
 }

@@ -1,4 +1,4 @@
-import { searchLocations } from "../services/geocoding.service.js?v=1.2.1-weather-alerts-polish";
+import { searchLocations } from "../services/geocoding.service.js?v=1.3.0-favorites-polish";
 
 const SEARCH_FORM_SELECTOR = "[data-search-form]";
 const SEARCH_INPUT_SELECTOR = "#city-search";
