@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.2.1-weather-alerts-polish";
+import { APP_CONFIG } from "../../config/config.js?v=1.3.0-favorites-polish";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",

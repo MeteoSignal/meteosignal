@@ -28,9 +28,19 @@ export function readFavorites() {
 }
 
 export function saveFavorites(favorites) {
-    const normalizedFavorites = favorites
-        .map(normalizeLocation)
-        .filter(Boolean);
+    const seenKeys = new Set();
+    const normalizedFavorites = favorites.reduce((items, favorite) => {
+        const normalizedFavorite = normalizeLocation(favorite);
+        const locationKey = getLocationKey(normalizedFavorite);
+
+        if (!normalizedFavorite || !locationKey || seenKeys.has(locationKey)) {
+            return items;
+        }
+
+        seenKeys.add(locationKey);
+        items.push(normalizedFavorite);
+        return items;
+    }, []);
 
     writeJson(STORAGE_KEYS.favorites, normalizedFavorites);
     return normalizedFavorites;
@@ -63,6 +73,19 @@ export function toggleFavoriteLocation(location) {
         favorites: saveFavorites(nextFavorites),
         isFavorite: !isAlreadyFavorite
     };
+}
+
+export function removeFavoriteLocation(location) {
+    const locationKey = getLocationKey(location);
+
+    if (!locationKey) {
+        return readFavorites();
+    }
+
+    const nextFavorites = readFavorites()
+        .filter((favorite) => getLocationKey(favorite) !== locationKey);
+
+    return saveFavorites(nextFavorites);
 }
 
 export function getLocationKey(location) {

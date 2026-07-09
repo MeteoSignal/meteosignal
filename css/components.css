@@ -379,6 +379,162 @@
     box-shadow: var(--shadow-sun);
 }
 
+.favorites-panel {
+    display: grid;
+    gap: var(--space-3);
+    margin: calc(-1 * var(--space-3)) 0 var(--space-5);
+    border: 1px solid rgba(47, 247, 255, 0.28);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    background:
+        radial-gradient(circle at 12% 0%, rgba(47, 247, 255, 0.16), transparent 34%),
+        linear-gradient(135deg, rgba(36, 162, 255, 0.09), transparent 46%),
+        rgba(4, 33, 76, 0.68);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+        0 0 26px rgba(47, 247, 255, 0.12);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+}
+
+.favorites-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.favorites-heading h2 {
+    margin: 0;
+    color: var(--color-white);
+    font-size: 1.02rem;
+    line-height: 1.2;
+    text-shadow: 0 0 18px rgba(47, 247, 255, 0.22);
+}
+
+.favorites-count {
+    flex: 0 0 auto;
+    border: 1px solid rgba(47, 247, 255, 0.24);
+    border-radius: 999px;
+    padding: 0.28rem 0.62rem;
+    background: rgba(47, 247, 255, 0.1);
+    color: var(--color-cyan-300);
+    font-size: 0.74rem;
+    font-weight: 800;
+}
+
+.favorites-list {
+    display: flex;
+    gap: var(--space-2);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.12rem;
+    scroll-padding-inline: var(--space-2);
+    scrollbar-color: rgba(47, 247, 255, 0.34) transparent;
+    scrollbar-width: thin;
+}
+
+.favorites-list::-webkit-scrollbar {
+    height: 0.42rem;
+}
+
+.favorites-list::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(47, 247, 255, 0.28);
+}
+
+.favorites-empty {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+}
+
+.favorite-item {
+    display: grid;
+    min-width: min(18rem, 70vw);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    overflow: hidden;
+    border: 1px solid rgba(149, 251, 255, 0.16);
+    border-radius: var(--radius-md);
+    background:
+        linear-gradient(135deg, rgba(47, 247, 255, 0.08), transparent 54%),
+        rgba(5, 35, 78, 0.58);
+    transition:
+        border-color var(--transition-base),
+        box-shadow var(--transition-base),
+        transform var(--transition-base);
+}
+
+.favorite-item[data-favorite-active="true"] {
+    border-color: rgba(255, 225, 109, 0.48);
+    box-shadow: 0 0 22px rgba(255, 225, 109, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+
+.favorite-item:hover,
+.favorite-item:focus-within {
+    border-color: rgba(47, 247, 255, 0.46);
+    box-shadow: 0 0 22px rgba(47, 247, 255, 0.14);
+    transform: translateY(-1px);
+}
+
+.favorite-select,
+.favorite-remove {
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+}
+
+.favorite-select {
+    display: grid;
+    min-width: 0;
+    gap: 0.14rem;
+    padding: 0.68rem 0.74rem;
+    background: transparent;
+    text-align: left;
+}
+
+.favorite-name {
+    overflow: hidden;
+    color: var(--color-white);
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.12;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.favorite-meta {
+    overflow: hidden;
+    color: var(--color-subtle);
+    font-size: 0.72rem;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.favorite-remove {
+    display: grid;
+    width: 2.25rem;
+    min-width: 2.25rem;
+    place-items: center;
+    border-left: 1px solid rgba(149, 251, 255, 0.12);
+    background: rgba(3, 22, 58, 0.3);
+    color: var(--color-muted);
+    font-size: 1.15rem;
+    line-height: 1;
+    transition:
+        background-color var(--transition-base),
+        color var(--transition-base);
+}
+
+.favorite-remove:hover,
+.favorite-remove:focus-visible {
+    background: rgba(255, 225, 109, 0.14);
+    color: var(--color-yellow-300);
+}
+
 .search-panel[data-search-state="loading"] .icon-action {
     opacity: 0.7;
 }
@@ -459,8 +615,8 @@
     object-fit: contain;
     image-rendering: auto;
     filter:
-        drop-shadow(0 1px 2px rgba(255, 255, 255, 0.16))
-        drop-shadow(0 0 7px rgba(47, 247, 255, 0.16));
+        drop-shadow(0 1px 1px rgba(255, 255, 255, 0.12))
+        drop-shadow(0 0 4px rgba(47, 247, 255, 0.1));
 }
 
 .weather-icon-img--hero {
@@ -473,11 +629,11 @@
 }
 
 .weather-icon-img--forecast {
-    width: 2.9rem;
-    height: 2.9rem;
+    width: 3.1rem;
+    height: 3.1rem;
     filter:
-        drop-shadow(0 1px 2px rgba(255, 255, 255, 0.15))
-        drop-shadow(0 0 5px rgba(47, 247, 255, 0.12));
+        drop-shadow(0 1px 1px rgba(255, 255, 255, 0.12))
+        drop-shadow(0 0 3px rgba(47, 247, 255, 0.08));
 }
 
 .weather-icon-fallback {
@@ -537,7 +693,7 @@
     color: var(--color-white);
     font-size: 2.85rem;
     line-height: 1.08;
-    text-shadow: 0 0 28px rgba(47, 247, 255, 0.26);
+    text-shadow: 0 0 16px rgba(47, 247, 255, 0.2);
 }
 
 .temperature-line {
@@ -556,7 +712,7 @@
 .weather-description {
     max-width: 34rem;
     margin: 0;
-    color: var(--color-muted);
+    color: var(--color-silver);
     font-size: 1.05rem;
 }
 
@@ -592,8 +748,9 @@
 .hourly-time,
 .forecast-day-name {
     display: block;
-    color: var(--color-muted);
+    color: var(--color-silver);
     font-size: 0.82rem;
+    font-weight: 800;
 }
 
 .hero-metrics strong {
@@ -601,7 +758,7 @@
     margin-top: var(--space-1);
     color: var(--color-white);
     font-size: 1.45rem;
-    text-shadow: 0 0 18px rgba(47, 247, 255, 0.26);
+    text-shadow: 0 0 12px rgba(47, 247, 255, 0.2);
 }
 
 .weather-grid {
@@ -684,12 +841,12 @@
     color: var(--color-white);
     font-size: 1.75rem;
     line-height: 1.15;
-    text-shadow: 0 0 20px rgba(47, 247, 255, 0.3);
+    text-shadow: 0 0 12px rgba(47, 247, 255, 0.22);
 }
 
 .metric-card small {
     display: block;
-    color: var(--color-subtle);
+    color: var(--color-muted);
     line-height: 1.35;
 }
 
@@ -717,35 +874,35 @@
     color: var(--color-white);
     font-size: 1.2rem;
     line-height: 1.25;
-    text-shadow: 0 0 20px rgba(47, 247, 255, 0.24);
+    text-shadow: 0 0 12px rgba(47, 247, 255, 0.18);
 }
 
 .hourly-range-tabs {
     display: inline-grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.22rem;
-    width: min(100%, 24rem);
+    gap: 0.32rem;
+    width: min(100%, 26rem);
     margin: 0 0 var(--space-4);
-    border: 1px solid rgba(47, 247, 255, 0.24);
+    border: 1px solid rgba(47, 247, 255, 0.34);
     border-radius: var(--radius-md);
-    padding: 0.22rem;
+    padding: 0.28rem;
     background:
-        radial-gradient(circle at 16% 0%, rgba(47, 247, 255, 0.12), transparent 44%),
-        rgba(3, 24, 62, 0.44);
+        linear-gradient(135deg, rgba(47, 247, 255, 0.08), rgba(18, 109, 255, 0.05)),
+        rgba(3, 27, 68, 0.78);
     box-shadow:
-        0 0 18px rgba(47, 247, 255, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.025) inset;
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
+        0 0 12px rgba(47, 247, 255, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.035) inset;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .hourly-range-button {
     min-width: 0;
     border: 0;
     border-radius: calc(var(--radius-md) - 0.22rem);
-    padding: 0.52rem 0.62rem;
-    background: transparent;
-    color: rgba(228, 247, 255, 0.76);
+    padding: 0.62rem 0.72rem;
+    background: rgba(6, 40, 88, 0.72);
+    color: rgba(243, 249, 255, 0.9);
     cursor: pointer;
     font: inherit;
     font-size: 0.76rem;
@@ -753,6 +910,7 @@
     letter-spacing: 0;
     line-height: 1;
     white-space: nowrap;
+    box-shadow: 0 0 0 1px rgba(149, 251, 255, 0.08) inset;
     transition:
         color var(--transition-base),
         background-color var(--transition-base),
@@ -763,17 +921,18 @@
 .hourly-range-button:hover,
 .hourly-range-button:focus-visible {
     color: var(--color-white);
-    background: rgba(47, 247, 255, 0.1);
+    background: rgba(47, 247, 255, 0.16);
     outline: none;
 }
 
 .hourly-range-button.is-active {
     background:
-        linear-gradient(135deg, rgba(47, 247, 255, 0.22), rgba(54, 126, 255, 0.18));
+        linear-gradient(135deg, rgba(47, 247, 255, 0.32), rgba(54, 126, 255, 0.26)),
+        rgba(8, 51, 105, 0.92);
     color: var(--color-white);
     box-shadow:
-        0 0 16px rgba(47, 247, 255, 0.16),
-        0 0 0 1px rgba(149, 251, 255, 0.22) inset;
+        0 0 12px rgba(47, 247, 255, 0.14),
+        0 0 0 1px rgba(149, 251, 255, 0.42) inset;
 }
 
 .hourly-range-button:disabled {
@@ -783,14 +942,14 @@
 
 .hourly-strip {
     display: grid;
-    grid-template-columns: repeat(var(--hourly-card-count, 12), minmax(7.4rem, 1fr));
+    grid-template-columns: repeat(var(--hourly-card-count, 12), minmax(8.25rem, 1fr));
     gap: var(--space-3);
     max-width: 100%;
     min-width: 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    padding-top: 0.38rem;
-    padding-bottom: 0.58rem;
+    padding-top: 0.48rem;
+    padding-bottom: 0.72rem;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
 }
@@ -823,7 +982,8 @@
     min-height: 9rem;
     align-content: space-between;
     gap: var(--space-3);
-    padding: var(--space-4);
+    overflow: visible;
+    padding: var(--space-4) 1.08rem;
     scroll-snap-align: start;
     transition:
         transform var(--transition-base),
@@ -843,61 +1003,62 @@
     color: var(--color-white);
     font-size: 1.55rem;
     line-height: 1;
-    text-shadow: 0 0 20px rgba(47, 247, 255, 0.3);
+    text-shadow: 0 0 12px rgba(47, 247, 255, 0.2);
 }
 
 .forecast-icon {
     display: grid;
-    width: 3.55rem;
-    height: 3.55rem;
+    width: 3.85rem;
+    height: 3.85rem;
     justify-self: center;
     place-items: center;
-    border: 1px solid rgba(47, 247, 255, 0.22);
-    border-radius: var(--radius-md);
+    overflow: visible;
+    border: 1px solid rgba(47, 247, 255, 0.08);
+    border-radius: 50%;
     min-height: 2rem;
     background:
-        radial-gradient(circle at 45% 38%, rgba(255, 225, 109, 0.1), transparent 48%),
-        radial-gradient(circle at 58% 64%, rgba(47, 247, 255, 0.14), transparent 56%),
-        rgba(4, 33, 76, 0.28);
+        radial-gradient(circle at 50% 50%, rgba(47, 247, 255, 0.08), transparent 62%),
+        transparent;
     color: var(--color-white);
     font-size: 1.75rem;
     line-height: 1;
     box-shadow:
-        0 0 12px rgba(47, 247, 255, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.025) inset;
+        0 0 10px rgba(47, 247, 255, 0.05);
     text-shadow:
-        0 0 14px rgba(255, 255, 255, 0.28),
-        0 0 26px rgba(47, 247, 255, 0.34);
+        0 0 10px rgba(255, 255, 255, 0.18),
+        0 0 14px rgba(47, 247, 255, 0.18);
 }
 
 .forecast-meta {
     display: grid;
     gap: var(--space-1);
-    color: var(--color-subtle);
+    color: var(--color-muted);
     font-size: 0.78rem;
+    font-weight: 650;
     line-height: 1.25;
 }
 
 .forecast-list {
     display: grid;
-    grid-template-columns: repeat(7, minmax(8.5rem, 1fr));
+    grid-template-columns: repeat(7, minmax(9.2rem, 1fr));
     gap: var(--space-3);
     max-width: 100%;
     min-width: 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    padding-top: 0.38rem;
-    padding-bottom: 0.58rem;
+    padding-top: 0.48rem;
+    padding-bottom: 0.72rem;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
 }
 
 .forecast-day-card {
     display: grid;
-    min-height: 11rem;
+    min-height: 11.35rem;
     align-content: space-between;
     gap: var(--space-4);
-    padding: var(--space-4);
+    overflow: visible;
+    padding: 1.08rem;
     color: var(--color-text);
     scroll-snap-align: start;
     transition:
@@ -924,11 +1085,11 @@
     color: var(--color-white);
     font-size: 1.55rem;
     line-height: 1;
-    text-shadow: 0 0 20px rgba(47, 247, 255, 0.3);
+    text-shadow: 0 0 12px rgba(47, 247, 255, 0.2);
 }
 
 .forecast-temperature-range span {
-    color: var(--color-muted);
+    color: var(--color-silver);
     font-weight: 700;
 }
 
@@ -1010,7 +1171,7 @@
     margin: 0;
     color: var(--color-white);
     font-weight: 700;
-    text-shadow: 0 0 16px rgba(47, 247, 255, 0.24);
+    text-shadow: 0 0 10px rgba(47, 247, 255, 0.18);
 }
 
 .alerts-panel,
@@ -1094,7 +1255,7 @@
     color: var(--color-white);
     font-size: 1.08rem;
     line-height: 1.25;
-    text-shadow: 0 0 18px rgba(255, 225, 109, 0.22);
+    text-shadow: 0 0 10px rgba(255, 225, 109, 0.16);
 }
 
 .alert-card p {
