@@ -1,4 +1,4 @@
-import { searchLocations } from "../services/geocoding.service.js?v=1.3.0-favorites-polish";
+import { searchLocations } from "../services/geocoding.service.js?v=1.3.0-favorites-sidebar-polish";
 
 const SEARCH_FORM_SELECTOR = "[data-search-form]";
 const SEARCH_INPUT_SELECTOR = "#city-search";

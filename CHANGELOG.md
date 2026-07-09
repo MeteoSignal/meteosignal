@@ -19,11 +19,12 @@ Le projet suit le versionnement sémantique.
 - Bouton favori connecté à la liste visible : ajout et retrait mettent l'interface à jour immédiatement.
 - Déduplication renforcée dans le stockage local des favoris.
 - État vide ajouté : `Aucune ville enregistrée pour le moment.`
+- Section `Villes enregistrées` déplacée dans la sidebar desktop pour libérer le haut du dashboard, avec affichage mobile compact conservé.
 
 ### Technique
 
 - Version applicative passée à `1.3.0`.
-- Cache PWA passé à `v1.3.0-favorites`.
+- Cache PWA passé à `v1.3.0-favorites-sidebar-polish`.
 - Conservation de `storage.js` comme couche unique d'accès à `localStorage`.
 
 ---
