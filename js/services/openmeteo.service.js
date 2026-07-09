@@ -1,7 +1,7 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.5-hourly-72h";
-import { getMoonPhase } from "../core/moon.js?v=1.1.5-hourly-72h";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.5-hourly-72h";
-import { createWeatherState } from "../core/state.js?v=1.1.5-hourly-72h";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final";
+import { getMoonPhase } from "../core/moon.js?v=1.1.6-stabilization-final";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.6-stabilization-final";
+import { createWeatherState } from "../core/state.js?v=1.1.6-stabilization-final";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",
@@ -58,7 +58,21 @@ export const openMeteoProvider = {
 
 export async function fetchOpenMeteoForecast(location, options = {}) {
     const url = buildForecastUrl(location, options);
-    const rawData = await fetchJson(url);
+    let rawData;
+
+    try {
+        rawData = await fetchJson(url);
+    } catch (error) {
+        if (!url.searchParams.has("forecast_hours")) {
+            throw error;
+        }
+
+        const fallbackUrl = buildForecastUrl(location, {
+            ...options,
+            forecastHours: null
+        });
+        rawData = await fetchJson(fallbackUrl);
+    }
 
     return normalizeOpenMeteoForecast(rawData, location);
 }
@@ -67,7 +81,9 @@ export function buildForecastUrl(location, options = {}) {
     const url = new URL(APP_CONFIG.api.openMeteo.forecastUrl);
     const timezone = location.timezone ?? "auto";
     const forecastDays = options.forecastDays ?? APP_CONFIG.api.openMeteo.forecastDays ?? 7;
-    const forecastHours = options.forecastHours ?? APP_CONFIG.api.openMeteo.forecastHours ?? 72;
+    const forecastHours = options.forecastHours === null
+        ? null
+        : options.forecastHours ?? APP_CONFIG.api.openMeteo.forecastHours ?? 72;
 
     url.searchParams.set("latitude", location.latitude);
     url.searchParams.set("longitude", location.longitude);
@@ -75,7 +91,9 @@ export function buildForecastUrl(location, options = {}) {
     url.searchParams.set("hourly", HOURLY_VARIABLES.join(","));
     url.searchParams.set("daily", DAILY_VARIABLES.join(","));
     url.searchParams.set("forecast_days", forecastDays);
-    url.searchParams.set("forecast_hours", forecastHours);
+    if (forecastHours !== null) {
+        url.searchParams.set("forecast_hours", forecastHours);
+    }
     url.searchParams.set("timezone", timezone);
 
     return url;
