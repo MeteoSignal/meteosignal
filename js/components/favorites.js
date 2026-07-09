@@ -4,7 +4,7 @@ import {
     readFavorites,
     removeFavoriteLocation,
     toggleFavoriteLocation
-} from "../core/storage.js?v=1.3.0-favorites-polish";
+} from "../core/storage.js?v=1.3.0-favorites-sidebar-polish";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";
@@ -17,7 +17,7 @@ let favoriteOptions = {};
 export function initFavorites(options = {}) {
     favoriteOptions = options;
     const button = document.querySelector(FAVORITE_BUTTON_SELECTOR);
-    const list = document.querySelector(FAVORITES_LIST_SELECTOR);
+    const lists = document.querySelectorAll(FAVORITES_LIST_SELECTOR);
 
     if (button) {
         button.addEventListener("click", () => {
@@ -38,40 +38,43 @@ export function initFavorites(options = {}) {
         });
     }
 
-    if (list) {
+    lists.forEach((list) => {
         list.addEventListener("click", handleFavoritesListClick);
-    }
+    });
 
     renderFavoritesList(favoriteOptions.getActiveLocation?.());
 }
 
 export function renderFavoritesList(activeLocation = null) {
-    const list = document.querySelector(FAVORITES_LIST_SELECTOR);
-    const count = document.querySelector(FAVORITES_COUNT_SELECTOR);
+    const lists = document.querySelectorAll(FAVORITES_LIST_SELECTOR);
+    const counts = document.querySelectorAll(FAVORITES_COUNT_SELECTOR);
 
-    if (!list) {
+    if (lists.length === 0) {
         return;
     }
 
     const favorites = readFavorites();
     const activeLocationKey = getLocationKey(activeLocation);
 
-    list.innerHTML = "";
-
-    if (count) {
+    counts.forEach((count) => {
         count.textContent = formatFavoritesCount(favorites.length);
-    }
+        count.dataset.favoritesTotal = String(favorites.length);
+    });
 
-    if (favorites.length === 0) {
-        const empty = document.createElement("p");
-        empty.className = "favorites-empty";
-        empty.textContent = "Aucune ville enregistrée pour le moment.";
-        list.appendChild(empty);
-        return;
-    }
+    lists.forEach((list) => {
+        list.innerHTML = "";
 
-    favorites.forEach((favorite) => {
-        list.appendChild(buildFavoriteItem(favorite, getLocationKey(favorite) === activeLocationKey));
+        if (favorites.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "favorites-empty";
+            empty.textContent = "Aucune ville enregistrée pour le moment.";
+            list.appendChild(empty);
+            return;
+        }
+
+        favorites.forEach((favorite) => {
+            list.appendChild(buildFavoriteItem(favorite, getLocationKey(favorite) === activeLocationKey));
+        });
     });
 }
 

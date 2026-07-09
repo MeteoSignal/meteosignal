@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.3.0-favorites-polish";
+import { APP_CONFIG } from "../../config/config.js?v=1.3.0-favorites-sidebar-polish";
 
 export async function searchLocations(query, options = {}) {
     const normalizedQuery = query.trim();

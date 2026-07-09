@@ -1,5 +1,5 @@
-import { formatTemperature, formatTime } from "../core/formatters.js?v=1.3.0-favorites-polish";
-import { renderWeatherIcon } from "../core/weather-icons.js?v=1.3.0-favorites-polish";
+import { formatTemperature, formatTime } from "../core/formatters.js?v=1.3.0-favorites-sidebar-polish";
+import { renderWeatherIcon } from "../core/weather-icons.js?v=1.3.0-favorites-sidebar-polish";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";
