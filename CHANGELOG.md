@@ -6,6 +6,29 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.2.0] - 2026-07-09
+
+### Ajouté
+
+- Premier module dynamique d'alertes météo locales indicatives MeteoSignal.
+- Moteur d'analyse `js/core/weather-alerts.js` basé sur les données météo déjà normalisées.
+- Composant `js/components/weather-alerts.js` pour afficher une situation calme ou une liste compacte de signaux météo locaux.
+- Détection locale des seuils chaleur, vent, pluie, orage potentiel, UV élevé et qualité de l'air dégradée.
+
+### Amélioré
+
+- Bloc `Alertes météo` rendu dynamique tout en conservant le style premium bleu nuit/cyan/jaune.
+- Affichage limité aux signaux prioritaires pour préserver la lisibilité sur mobile et desktop.
+- Données manquantes ignorées proprement sans bloquer le tableau de bord.
+
+### Technique
+
+- Version applicative passée à `1.2.0`.
+- Cache PWA passé à `v1.2.0-weather-alerts`.
+- Précache enrichi avec les modules d'analyse et de rendu des alertes météo locales.
+
+---
+
 ## [1.1.6] - 2026-07-09
 
 ### Amélioré

@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
     <link rel="apple-touch-icon" href="assets/logo/icon-192.png">
-    <link rel="stylesheet" href="css/style.css?v=1.1.6-stabilization-final-w3c">
+    <link rel="stylesheet" href="css/style.css?v=1.2.0-weather-alerts">
 </head>
 
 <body data-nav-open="false" data-nav-collapsed="false">
@@ -313,17 +313,26 @@
                     </article>
                 </section>
 
-                <section id="alertes-meteo" class="alerts-panel" aria-labelledby="alerts-title" data-alerts>
+                <section
+                    id="alertes-meteo"
+                    class="alerts-panel"
+                    aria-labelledby="alerts-title"
+                    data-alerts
+                    data-alerts-state="loading"
+                    data-alerts-count="0">
                     <div class="section-heading">
-                        <p class="eyebrow">Vigilance</p>
+                        <p class="eyebrow">Signal local</p>
                         <h2 id="alerts-title">Alertes météo</h2>
                     </div>
 
-                    <article class="alert-card">
-                        <span class="alert-badge">En préparation</span>
-                        <h3>Aucune alerte météo active pour le moment</h3>
-                        <p>Le module d'alertes sera connecté dans une prochaine version de MeteoSignal.</p>
-                    </article>
+                    <div class="alerts-list" role="list" aria-live="polite" data-alerts-list>
+                        <div class="alert-card" role="listitem" data-alert-type="loading" data-alert-severity="calm">
+                            <span class="alert-badge">Analyse</span>
+                            <h3>Analyse des signaux météo locaux</h3>
+                            <p>MeteoSignal vérifie les seuils météo utiles pour cette zone.</p>
+                            <small class="alert-detail">Signal météo local MeteoSignal</small>
+                        </div>
+                    </div>
                 </section>
 
             </section>
@@ -367,9 +376,9 @@
         </a>
     </nav>
 
-    <script src="js/clock.js?v=1.1.6-stabilization-final-w3c"></script>
-    <script src="pwa.js?v=1.1.6-stabilization-final-w3c" defer></script>
-    <script type="module" src="js/app.js?v=1.1.6-stabilization-final-w3c"></script>
+    <script src="js/clock.js?v=1.2.0-weather-alerts"></script>
+    <script src="pwa.js?v=1.2.0-weather-alerts" defer></script>
+    <script type="module" src="js/app.js?v=1.2.0-weather-alerts"></script>
 </body>
 
 </html>

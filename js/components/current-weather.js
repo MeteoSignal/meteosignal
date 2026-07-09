@@ -1,5 +1,5 @@
-import { formatTemperature, formatTime } from "../core/formatters.js?v=1.1.6-stabilization-final-w3c";
-import { renderWeatherIcon } from "../core/weather-icons.js?v=1.1.6-stabilization-final-w3c";
+import { formatTemperature, formatTime } from "../core/formatters.js?v=1.2.0-weather-alerts";
+import { renderWeatherIcon } from "../core/weather-icons.js?v=1.2.0-weather-alerts";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";

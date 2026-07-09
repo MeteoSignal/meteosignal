@@ -1,16 +1,17 @@
-import { APP_CONFIG } from "../config/config.js?v=1.1.6-stabilization-final-w3c";
-import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.1.6-stabilization-final-w3c";
-import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.1.6-stabilization-final-w3c";
-import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.1.6-stabilization-final-w3c";
-import { initFavorites, renderFavoriteButton } from "./components/favorites.js?v=1.1.6-stabilization-final-w3c";
-import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.1.6-stabilization-final-w3c";
-import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.1.6-stabilization-final-w3c";
-import { initNavigation } from "./components/navigation.js?v=1.1.6-stabilization-final-w3c";
-import { initSearch, updateSearchInput } from "./components/search.js?v=1.1.6-stabilization-final-w3c";
-import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.1.6-stabilization-final-w3c";
-import { fetchAirQuality } from "./services/air-quality.service.js?v=1.1.6-stabilization-final-w3c";
-import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.1.6-stabilization-final-w3c";
-import { getWeatherProvider } from "./services/weather-provider.js?v=1.1.6-stabilization-final-w3c";
+import { APP_CONFIG } from "../config/config.js?v=1.2.0-weather-alerts";
+import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.2.0-weather-alerts";
+import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.2.0-weather-alerts";
+import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.2.0-weather-alerts";
+import { initFavorites, renderFavoriteButton } from "./components/favorites.js?v=1.2.0-weather-alerts";
+import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.2.0-weather-alerts";
+import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.2.0-weather-alerts";
+import { initNavigation } from "./components/navigation.js?v=1.2.0-weather-alerts";
+import { initSearch, updateSearchInput } from "./components/search.js?v=1.2.0-weather-alerts";
+import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.2.0-weather-alerts";
+import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.2.0-weather-alerts";
+import { fetchAirQuality } from "./services/air-quality.service.js?v=1.2.0-weather-alerts";
+import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.2.0-weather-alerts";
+import { getWeatherProvider } from "./services/weather-provider.js?v=1.2.0-weather-alerts";
 
 const provider = getWeatherProvider();
 const DASHBOARD_SELECTOR = "[data-dashboard]";
@@ -129,6 +130,7 @@ function renderWeatherDashboard(weather) {
     renderHourlyForecast(weather.hourly);
     renderDailyForecast(weather.daily);
     renderAstronomy(weather.astronomy);
+    renderWeatherAlerts(weather);
 }
 
 function renderDashboardLoading(location) {
@@ -138,6 +140,7 @@ function renderDashboardLoading(location) {
     renderHourlyForecastLoading();
     renderDailyForecastLoading();
     renderAstronomyLoading();
+    renderWeatherAlertsLoading();
 }
 
 function renderDashboardError(message, location) {
@@ -147,6 +150,7 @@ function renderDashboardError(message, location) {
     renderHourlyForecastError();
     renderDailyForecastError();
     renderAstronomyError();
+    renderWeatherAlertsError();
 }
 
 async function loadAirQuality(location) {
