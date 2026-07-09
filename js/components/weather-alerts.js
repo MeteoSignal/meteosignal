@@ -1,4 +1,4 @@
-import { analyzeWeatherAlerts, createCalmWeatherAlert } from "../core/weather-alerts.js?v=1.2.0-weather-alerts";
+import { analyzeWeatherAlerts, createCalmWeatherAlert } from "../core/weather-alerts.js?v=1.2.1-weather-alerts-polish";
 
 const ALERTS_PANEL_SELECTOR = "[data-alerts]";
 const ALERTS_LIST_SELECTOR = "[data-alerts-list]";
@@ -9,10 +9,10 @@ export function renderWeatherAlertsLoading() {
         id: "loading",
         type: "loading",
         severity: "calm",
-        badge: "Analyse",
+        badge: "Signal local",
         title: "Analyse des signaux météo locaux",
         message: "MeteoSignal vérifie les seuils météo utiles pour cette zone.",
-        detail: "Signal météo local MeteoSignal"
+        detail: "Analyse locale indicative en cours."
     }], {
         state: "loading",
         isBusy: true
@@ -37,9 +37,9 @@ export function renderWeatherAlertsError() {
         id: "unavailable",
         type: "unavailable",
         severity: "calm",
-        badge: "Indisponible",
+        badge: "Signal local",
         title: "Analyse des signaux indisponible",
-        message: "Les données nécessaires aux alertes locales ne sont pas disponibles pour le moment.",
+        message: "Le signal météo local ne peut pas être calculé pour le moment.",
         detail: "Les prévisions principales restent affichées si elles sont disponibles."
     }], {
         state: "error",
@@ -104,6 +104,6 @@ function buildAlertCard(alert) {
 function buildHiddenCount(count) {
     const note = document.createElement("p");
     note.className = "alerts-note";
-    note.textContent = `${count} autre${count > 1 ? "s" : ""} seuil${count > 1 ? "s" : ""} local${count > 1 ? "aux" : ""} détecté${count > 1 ? "s" : ""}.`;
+    note.textContent = `${count} autre${count > 1 ? "s" : ""} signal${count > 1 ? "s" : ""} local${count > 1 ? "aux" : ""} également détecté${count > 1 ? "s" : ""}.`;
     return note;
 }

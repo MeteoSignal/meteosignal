@@ -6,6 +6,19 @@ const SEVERITY_PRIORITY = {
     calm: 0
 };
 
+const ALERT_THRESHOLDS = {
+    heatWatch: 32,
+    heatStrong: 36,
+    windWatch: 60,
+    windStrong: 80,
+    rainWatch: 10,
+    rainStrong: 25,
+    uvWatch: 6,
+    uvStrong: 8,
+    airWatch: 61,
+    airStrong: 81
+};
+
 export function analyzeWeatherAlerts(weather = {}) {
     const alerts = [
         buildHeatAlert(weather),
@@ -32,10 +45,10 @@ export function createCalmWeatherAlert() {
         id: "calm",
         type: "calm",
         severity: "calm",
-        badge: "Situation calme",
+        badge: "Signal local",
         title: "Aucun seuil local notable détecté",
-        message: "Les données disponibles ne signalent pas de seuil météo particulier pour cette zone.",
-        detail: "Signal météo local MeteoSignal",
+        message: "Les conditions disponibles restent sous les seuils de signal MeteoSignal pour cette zone.",
+        detail: "Analyse locale indicative, basée sur les données météo disponibles.",
         priority: 0
     };
 }
@@ -50,22 +63,21 @@ function buildHeatAlert(weather) {
         today.apparentTemperatureMax
     ]);
 
-    if (!isNumber(value) || value < 32) {
+    if (!isNumber(value) || value < ALERT_THRESHOLDS.heatWatch) {
         return null;
     }
 
-    const severity = value >= 36 ? "strong" : "watch";
+    const severity = value >= ALERT_THRESHOLDS.heatStrong ? "strong" : "watch";
+    const threshold = severity === "strong" ? ALERT_THRESHOLDS.heatStrong : ALERT_THRESHOLDS.heatWatch;
 
     return {
         id: "heat",
         type: "heat",
         severity,
         badge: getBadge(severity),
-        title: "Chaleur élevée",
-        message: severity === "strong"
-            ? "Alerte locale estimée : chaleur marquée sur la zone."
-            : "À surveiller : température élevée détectée localement.",
-        detail: `Seuil chaleur atteint : ${formatRounded(value)} °C`,
+        title: "Chaleur à surveiller",
+        message: "Un seuil de chaleur est détecté localement. Pensez à limiter les efforts aux heures les plus chaudes.",
+        detail: `Valeur observée/estimée : ${formatMeasured(value)} °C • seuil MeteoSignal : ${threshold} °C`,
         priority: value
     };
 }
@@ -78,22 +90,21 @@ function buildWindAlert(weather) {
         today.windGustsMax
     ]);
 
-    if (!isNumber(value) || value < 60) {
+    if (!isNumber(value) || value < ALERT_THRESHOLDS.windWatch) {
         return null;
     }
 
-    const severity = value >= 80 ? "strong" : "watch";
+    const severity = value >= ALERT_THRESHOLDS.windStrong ? "strong" : "watch";
+    const threshold = severity === "strong" ? ALERT_THRESHOLDS.windStrong : ALERT_THRESHOLDS.windWatch;
 
     return {
         id: "wind",
         type: "wind",
         severity,
         badge: getBadge(severity),
-        title: "Vent fort",
-        message: severity === "strong"
-            ? "Alerte locale estimée : rafales fortes possibles."
-            : "À surveiller : rafales notables détectées.",
-        detail: `Rafales jusqu'à ${formatRounded(value)} km/h`,
+        title: "Rafales à surveiller",
+        message: "Des rafales notables sont possibles localement. Vérifiez les objets exposés au vent.",
+        detail: `Rafales estimées : ${formatRounded(value)} km/h • seuil MeteoSignal : ${threshold} km/h`,
         priority: value
     };
 }
@@ -107,13 +118,14 @@ function buildRainAlert(weather) {
         hourlyTotal
     ]);
 
-    if (!isNumber(value) || value < 10) {
+    if (!isNumber(value) || value < ALERT_THRESHOLDS.rainWatch) {
         return null;
     }
 
-    const severity = value >= 25 ? "strong" : "watch";
+    const severity = value >= ALERT_THRESHOLDS.rainStrong ? "strong" : "watch";
+    const threshold = severity === "strong" ? ALERT_THRESHOLDS.rainStrong : ALERT_THRESHOLDS.rainWatch;
     const probability = today.precipitationProbabilityMax;
-    const detailParts = [`Cumul estimé : ${formatDecimal(value)} mm`];
+    const detailParts = [`Cumul estimé : ${formatDecimal(value)} mm`, `seuil MeteoSignal : ${threshold} mm`];
 
     if (isNumber(probability)) {
         detailParts.push(`risque ${formatRounded(probability)} %`);
@@ -124,10 +136,8 @@ function buildRainAlert(weather) {
         type: "rain",
         severity,
         badge: getBadge(severity),
-        title: "Pluie importante",
-        message: severity === "strong"
-            ? "Alerte locale estimée : cumul de pluie significatif."
-            : "À surveiller : pluie notable possible.",
+        title: "Pluie soutenue possible",
+        message: "Un cumul de pluie notable est détecté dans les données disponibles.",
         detail: detailParts.join(" • "),
         priority: value
     };
@@ -145,17 +155,17 @@ function buildStormAlert(weather) {
     }
 
     const detail = hasCurrentStorm
-        ? "Signal détecté sur les conditions actuelles"
-        : "Signal détecté dans les prochaines 24 h";
+        ? "Signal météo détecté sur les conditions actuelles"
+        : "Signal météo détecté dans les prochaines 24 h";
 
     return {
         id: "storm",
         type: "storm",
         severity: "strong",
         badge: getBadge("strong"),
-        title: "Orage potentiel",
-        message: "Alerte locale estimée : contexte orageux détecté par les données météo.",
-        detail,
+        title: "Contexte orageux possible",
+        message: "Les données météo indiquent un signal orageux local à suivre.",
+        detail: `${detail} • analyse locale sur 24 h`,
         priority: 120
     };
 }
@@ -168,22 +178,21 @@ function buildUvAlert(weather) {
         maxNumber(nextHours.map((hour) => hour.uvIndex))
     ]);
 
-    if (!isNumber(value) || value < 6) {
+    if (!isNumber(value) || value < ALERT_THRESHOLDS.uvWatch) {
         return null;
     }
 
-    const severity = value >= 8 ? "strong" : "watch";
+    const severity = value >= ALERT_THRESHOLDS.uvStrong ? "strong" : "watch";
+    const threshold = severity === "strong" ? ALERT_THRESHOLDS.uvStrong : ALERT_THRESHOLDS.uvWatch;
 
     return {
         id: "uv",
         type: "uv",
         severity,
         badge: getBadge(severity),
-        title: "Indice UV élevé",
-        message: severity === "strong"
-            ? "Alerte locale estimée : rayonnement UV très élevé."
-            : "À surveiller : rayonnement UV élevé attendu.",
-        detail: `Indice UV max : ${formatRounded(value)}`,
+        title: "Indice UV à surveiller",
+        message: "Le rayonnement UV peut être élevé. Une protection solaire peut être utile.",
+        detail: `Indice UV max : ${formatMeasured(value)} • seuil MeteoSignal : ${threshold}`,
         priority: value
     };
 }
@@ -192,11 +201,12 @@ function buildAirQualityAlert(weather) {
     const airQuality = weather.airQuality;
     const value = numberOrNull(airQuality?.europeanAqi);
 
-    if (!isNumber(value) || value < 61) {
+    if (!isNumber(value) || value < ALERT_THRESHOLDS.airWatch) {
         return null;
     }
 
-    const severity = value >= 81 ? "strong" : "watch";
+    const severity = value >= ALERT_THRESHOLDS.airStrong ? "strong" : "watch";
+    const threshold = severity === "strong" ? ALERT_THRESHOLDS.airStrong : ALERT_THRESHOLDS.airWatch;
     const condition = airQuality?.condition?.label;
 
     return {
@@ -204,11 +214,9 @@ function buildAirQualityAlert(weather) {
         type: "air",
         severity,
         badge: getBadge(severity),
-        title: "Qualité de l'air dégradée",
-        message: severity === "strong"
-            ? "Alerte locale estimée : qualité de l'air mauvaise."
-            : "À surveiller : qualité de l'air dégradée.",
-        detail: [condition, `AQI ${formatRounded(value)}`].filter(Boolean).join(" • "),
+        title: "Qualité de l'air à surveiller",
+        message: "La qualité de l'air locale peut être moins favorable pour les personnes sensibles.",
+        detail: [condition, `AQI ${formatRounded(value)}`, `seuil MeteoSignal : ${threshold}`].filter(Boolean).join(" • "),
         priority: value
     };
 }
@@ -247,7 +255,7 @@ function getSeverityPriority(severity) {
 }
 
 function getBadge(severity) {
-    return severity === "strong" ? "Alerte locale estimée" : "À surveiller";
+    return severity === "strong" ? "Seuil notable" : "À surveiller";
 }
 
 function formatRounded(value) {
@@ -256,4 +264,15 @@ function formatRounded(value) {
 
 function formatDecimal(value) {
     return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 }).format(value);
+}
+
+function formatMeasured(value) {
+    const number = Number(value);
+
+    if (!Number.isFinite(number)) {
+        return "--";
+    }
+
+    const truncated = Math.trunc(number * 10) / 10;
+    return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 }).format(truncated);
 }

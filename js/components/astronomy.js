@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.2.0-weather-alerts";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.2.1-weather-alerts-polish";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";

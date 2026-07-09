@@ -1,4 +1,4 @@
-import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.2.0-weather-alerts";
+import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.2.1-weather-alerts-polish";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 
