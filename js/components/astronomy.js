@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.1.6-stabilization-final-w3c";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.2.0-weather-alerts";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";

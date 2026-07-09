@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatPressure,
     formatSpeed
-} from "../core/formatters.js?v=1.1.6-stabilization-final-w3c";
+} from "../core/formatters.js?v=1.2.0-weather-alerts";
 
 const WEATHER_CARDS_SELECTOR = "[data-weather-cards]";
 

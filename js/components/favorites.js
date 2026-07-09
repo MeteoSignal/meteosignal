@@ -1,4 +1,4 @@
-import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.1.6-stabilization-final-w3c";
+import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.2.0-weather-alerts";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 
