@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatPressure,
     formatSpeed
-} from "../core/formatters.js?v=1.1.6-stabilization-final";
+} from "../core/formatters.js?v=1.1.6-stabilization-final-w3c";
 
 const WEATHER_CARDS_SELECTOR = "[data-weather-cards]";
 
@@ -102,12 +102,12 @@ function renderCards(cards) {
 }
 
 function buildCardElement(card) {
-    const article = document.createElement("article");
-    article.className = "metric-card";
-    article.dataset.cardTone = card.tone;
+    const element = document.createElement("div");
+    element.className = "metric-card";
+    element.dataset.cardTone = card.tone;
 
     if (card.state) {
-        article.dataset.cardState = card.state;
+        element.dataset.cardState = card.state;
     }
 
     const label = document.createElement("span");
@@ -120,10 +120,10 @@ function buildCardElement(card) {
     const detail = document.createElement("small");
     detail.textContent = card.detail;
 
-    article.appendChild(label);
-    article.appendChild(value);
-    article.appendChild(detail);
-    return article;
+    element.appendChild(label);
+    element.appendChild(value);
+    element.appendChild(detail);
+    return element;
 }
 
 function createCard(label, value, detail, tone, state = null) {

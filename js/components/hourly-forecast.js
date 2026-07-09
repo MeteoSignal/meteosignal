@@ -1,5 +1,5 @@
-import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.1.6-stabilization-final";
-import { createWeatherIconElement } from "../core/weather-icons.js?v=1.1.6-stabilization-final";
+import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.1.6-stabilization-final-w3c";
+import { createWeatherIconElement } from "../core/weather-icons.js?v=1.1.6-stabilization-final-w3c";
 
 const HOURLY_SELECTOR = "[data-hourly-forecast]";
 const HOURLY_RANGE_SELECTOR = "button[data-hourly-range]";
@@ -94,6 +94,7 @@ function renderHourlyItems(items, isLoading, range = getActiveRange()) {
     }
 
     container.innerHTML = "";
+    container.setAttribute("role", "list");
     container.setAttribute("aria-busy", isLoading ? "true" : "false");
     container.style.setProperty("--hourly-card-count", String(items.length || LOADING_ITEMS));
     container.dataset.hourlyTotal = String(currentHourly.length);
@@ -107,16 +108,17 @@ function renderHourlyItems(items, isLoading, range = getActiveRange()) {
 }
 
 function buildHourlyCard(item) {
-    const article = document.createElement("article");
-    article.className = "hourly-card";
-    article.dataset.weatherTone = item.tone ?? "unknown";
+    const card = document.createElement("div");
+    card.className = "hourly-card";
+    card.setAttribute("role", "listitem");
+    card.dataset.weatherTone = item.tone ?? "unknown";
 
     if (item.state) {
-        article.dataset.forecastState = item.state;
+        card.dataset.forecastState = item.state;
     }
 
     if (item.label) {
-        article.setAttribute(
+        card.setAttribute(
             "aria-label",
             `${item.time} : ${item.label}, ${item.temperature}, ${item.precipitation}, ${item.wind}`
         );
@@ -142,12 +144,12 @@ function buildHourlyCard(item) {
     meta.appendChild(createMetaItem(item.precipitation));
     meta.appendChild(createMetaItem(item.wind));
 
-    article.appendChild(time);
-    article.appendChild(icon);
-    article.appendChild(temperature);
-    article.appendChild(meta);
+    card.appendChild(time);
+    card.appendChild(icon);
+    card.appendChild(temperature);
+    card.appendChild(meta);
 
-    return article;
+    return card;
 }
 
 function createMetaItem(text) {
@@ -164,6 +166,7 @@ function renderHourlyMessage(message) {
     }
 
     container.innerHTML = "";
+    container.setAttribute("role", "status");
     container.setAttribute("aria-busy", "false");
     container.style.setProperty("--hourly-card-count", "1");
     container.dataset.hourlyTotal = String(currentHourly.length);

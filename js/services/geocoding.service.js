@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final-w3c";
 
 export async function searchLocations(query, options = {}) {
     const normalizedQuery = query.trim();
