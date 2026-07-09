@@ -334,6 +334,16 @@
         font-size: 2.34rem;
     }
 
+    .weather-icon-img--forecast {
+        width: 2.45rem;
+        height: 2.45rem;
+    }
+
+    .forecast-icon {
+        width: 3.05rem;
+        height: 3.05rem;
+    }
+
     .weather-symbol::before {
         inset: -0.26rem;
         border-color: rgba(47, 247, 255, 0.22);
@@ -696,6 +706,16 @@
         height: 3.82rem;
         border-radius: 1.1rem;
         font-size: 2.05rem;
+    }
+
+    .weather-icon-img--forecast {
+        width: 2.28rem;
+        height: 2.28rem;
+    }
+
+    .forecast-icon {
+        width: 2.85rem;
+        height: 2.85rem;
     }
 
     .weather-summary h1 {

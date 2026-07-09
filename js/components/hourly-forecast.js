@@ -1,4 +1,5 @@
-import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js";
+import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.1.4-weather-icons-phase1-final";
+import { createWeatherIconElement } from "../core/weather-icons.js?v=1.1.4-weather-icons-phase1-final";
 
 const HOURLY_SELECTOR = "[data-hourly-forecast]";
 const HOURLY_LIMIT = 12;
@@ -8,6 +9,7 @@ export function renderHourlyForecastLoading() {
     const items = Array.from({ length: LOADING_ITEMS }, (_, index) => ({
         time: index === 0 ? "Maintenant" : "--:--",
         icon: "--",
+        iconId: null,
         temperature: "--",
         precipitation: "Pluie --",
         wind: "Vent --",
@@ -28,6 +30,7 @@ export function renderHourlyForecast(hourly = []) {
     const items = hours.map((hour, index) => ({
         time: index === 0 ? "Maintenant" : formatTime(hour.time),
         icon: hour.condition?.icon ?? "--",
+        iconId: hour.condition?.iconId ?? null,
         label: hour.condition?.label ?? "Météo indisponible",
         tone: hour.condition?.tone ?? "unknown",
         temperature: formatTemperature(hour.temperature),
@@ -80,7 +83,9 @@ function buildHourlyCard(item) {
     const icon = document.createElement("span");
     icon.className = "forecast-icon";
     icon.setAttribute("aria-hidden", "true");
-    icon.textContent = item.icon;
+    icon.appendChild(
+        createWeatherIconElement(item.iconId, item.icon, "weather-icon-img weather-icon-img--forecast")
+    );
 
     const temperature = document.createElement("strong");
     temperature.className = "hourly-temperature";

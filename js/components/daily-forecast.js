@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatTemperature,
     formatSpeed
-} from "../core/formatters.js";
+} from "../core/formatters.js?v=1.1.4-weather-icons-phase1-final";
 
 const DAILY_SELECTOR = "[data-daily-forecast]";
 const DAILY_LIMIT = 7;

@@ -15,17 +15,17 @@ body {
     margin: 0;
     overflow-x: hidden;
     background:
-        radial-gradient(ellipse at 50% 44%, rgba(1, 8, 24, 0.86) 0 24rem, rgba(2, 18, 48, 0.62) 37rem, rgba(1, 10, 26, 0.13) 64rem, transparent 82rem),
-        linear-gradient(90deg, rgba(1, 8, 24, 0.12) 0%, rgba(2, 15, 42, 0.5) 29%, rgba(1, 8, 24, 0.74) 50%, rgba(2, 15, 42, 0.5) 71%, rgba(1, 8, 24, 0.12) 100%),
-        radial-gradient(circle at 8% 20%, rgba(47, 247, 255, 0.32), rgba(18, 109, 255, 0.14) 16rem, transparent 37rem),
-        radial-gradient(circle at 92% 20%, rgba(47, 247, 255, 0.3), rgba(18, 109, 255, 0.14) 16rem, transparent 39rem),
-        linear-gradient(180deg, rgba(1, 7, 22, 0.28), rgba(1, 11, 31, 0.68)),
+        radial-gradient(ellipse at 50% 42%, rgba(1, 8, 24, 0.9) 0 23rem, rgba(1, 11, 31, 0.74) 36rem, rgba(1, 10, 26, 0.2) 59rem, transparent 78rem),
+        linear-gradient(90deg, rgba(1, 8, 24, 0.03) 0%, rgba(2, 24, 64, 0.22) 20%, rgba(1, 8, 24, 0.72) 43%, rgba(1, 8, 24, 0.8) 50%, rgba(1, 8, 24, 0.72) 57%, rgba(2, 24, 64, 0.22) 80%, rgba(1, 8, 24, 0.03) 100%),
+        radial-gradient(circle at 6% 18%, rgba(47, 247, 255, 0.36), rgba(18, 109, 255, 0.18) 15rem, transparent 35rem),
+        radial-gradient(circle at 94% 20%, rgba(47, 247, 255, 0.35), rgba(18, 109, 255, 0.18) 16rem, transparent 37rem),
+        linear-gradient(180deg, rgba(1, 7, 22, 0.14), rgba(1, 11, 31, 0.54)),
         url("../assets/backgrounds/meteosignal-lightning-bg.webp"),
         linear-gradient(140deg, #010716 0%, #02163f 52%, #020c22 100%),
         var(--color-night-900);
     background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
+    background-position: center, center, center, center, center, center top, center, center;
+    background-size: cover, cover, cover, cover, cover, cover, cover, cover;
     color: var(--color-text);
     font-family: var(--font-main);
     line-height: 1.5;
@@ -38,15 +38,15 @@ body::before {
     z-index: -1;
     content: "";
     background:
-        radial-gradient(ellipse at 50% 42%, rgba(1, 8, 24, 0.58) 0 24rem, rgba(1, 11, 31, 0.4) 38rem, transparent 62rem),
-        linear-gradient(90deg, rgba(47, 247, 255, 0.13), transparent 17%, transparent 83%, rgba(47, 247, 255, 0.13)),
-        radial-gradient(circle at 7% 20%, rgba(149, 251, 255, 0.21), transparent 31rem),
-        radial-gradient(circle at 93% 20%, rgba(149, 251, 255, 0.2), transparent 32rem),
-        repeating-linear-gradient(102deg, transparent 0 5.6rem, rgba(149, 251, 255, 0.02) 5.64rem 5.72rem, transparent 5.82rem 10.8rem),
-        linear-gradient(180deg, rgba(1, 8, 24, 0.05), rgba(1, 11, 31, 0.58));
+        radial-gradient(ellipse at 50% 42%, rgba(1, 8, 24, 0.62) 0 23rem, rgba(1, 11, 31, 0.48) 37rem, transparent 60rem),
+        linear-gradient(90deg, rgba(47, 247, 255, 0.2), transparent 18%, transparent 82%, rgba(47, 247, 255, 0.2)),
+        radial-gradient(circle at 5% 18%, rgba(149, 251, 255, 0.3), transparent 28rem),
+        radial-gradient(circle at 95% 18%, rgba(149, 251, 255, 0.28), transparent 29rem),
+        repeating-linear-gradient(102deg, transparent 0 5.6rem, rgba(149, 251, 255, 0.032) 5.64rem 5.72rem, transparent 5.82rem 10.8rem),
+        linear-gradient(180deg, rgba(1, 8, 24, 0), rgba(1, 11, 31, 0.48));
     background-position: center;
     background-size: cover;
-    opacity: 0.82;
+    opacity: 0.72;
     pointer-events: none;
 }
 

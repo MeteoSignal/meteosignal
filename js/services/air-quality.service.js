@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.3-build-date-automation";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.4-weather-icons-phase1-final";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",
