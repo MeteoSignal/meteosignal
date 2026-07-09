@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
     appName: "MeteoSignal",
-    version: "1.1.4",
+    version: "1.1.5",
     build: "2026-07-09",
     lastUpdated: "09 juillet 2026",
     copyright: "© 2026",
@@ -22,7 +22,9 @@ export const APP_CONFIG = {
         openMeteo: {
             forecastUrl: "https://api.open-meteo.com/v1/forecast",
             geocodingUrl: "https://geocoding-api.open-meteo.com/v1/search",
-            airQualityUrl: "https://air-quality-api.open-meteo.com/v1/air-quality"
+            airQualityUrl: "https://air-quality-api.open-meteo.com/v1/air-quality",
+            forecastDays: 7,
+            forecastHours: 72
         }
     }
 };

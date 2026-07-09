@@ -1,4 +1,4 @@
-import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.1.4-weather-icons-phase1-final";
+import { isFavoriteLocation, toggleFavoriteLocation } from "../core/storage.js?v=1.1.5-hourly-72h";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 

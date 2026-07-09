@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.1.4-weather-icons-phase1-final";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.1.5-hourly-72h";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";
