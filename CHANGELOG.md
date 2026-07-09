@@ -11,15 +11,16 @@ Le projet suit le versionnement sémantique.
 ### Amélioré
 
 - Stabilisation finale après les évolutions mobile, icônes météo SVG et prévisions horaires 72 h.
-- Cache-busters applicatifs alignés sur `v1.1.6-stabilization-final`.
+- Cache-busters applicatifs alignés sur `v1.1.6-stabilization-final-w3c`.
 - Précache PWA allégé en retirant les anciens assets `assets/icons/*` non utilisés par l'application active.
 - Récupération météo rendue plus robuste avec un repli sans `forecast_hours` si l'API refuse ce paramètre.
 - Ville active conservée dans la carte principale pendant les états de chargement ou d'erreur.
+- Corrections HTML/W3C ciblées : rôles ARIA ajoutés et petites cartes non autonomes converties de `article` vers `div`.
 
 ### Technique
 
 - Version applicative passée à `1.1.6`.
-- Cache PWA passé à `v1.1.6-stabilization-final`.
+- Cache PWA passé à `v1.1.6-stabilization-final-w3c`.
 - Conservation des fallbacks visuels `clear.jpg` et `night.jpg`, encore référencés par le CSS.
 
 ---

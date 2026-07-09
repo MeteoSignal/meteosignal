@@ -566,7 +566,7 @@
     gap: var(--space-3);
 }
 
-.hero-metrics article,
+.hero-metric,
 .metric-card,
 .forecast-panel,
 .astro-card,
@@ -583,7 +583,7 @@
     backdrop-filter: blur(18px);
 }
 
-.hero-metrics article {
+.hero-metric {
     padding: var(--space-4);
 }
 
@@ -1115,7 +1115,7 @@
 }
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-    .hero-metrics article,
+    .hero-metric,
     .metric-card,
     .forecast-panel,
     .astro-card,

@@ -1,4 +1,4 @@
-import { searchLocations } from "../services/geocoding.service.js?v=1.1.6-stabilization-final";
+import { searchLocations } from "../services/geocoding.service.js?v=1.1.6-stabilization-final-w3c";
 
 const SEARCH_FORM_SELECTOR = "[data-search-form]";
 const SEARCH_INPUT_SELECTOR = "#city-search";

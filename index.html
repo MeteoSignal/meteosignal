@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
     <link rel="apple-touch-icon" href="assets/logo/icon-192.png">
-    <link rel="stylesheet" href="css/style.css?v=1.1.6-stabilization-final">
+    <link rel="stylesheet" href="css/style.css?v=1.1.6-stabilization-final-w3c">
 </head>
 
 <body data-nav-open="false" data-nav-collapsed="false">
@@ -157,59 +157,59 @@
                         </div>
                     </div>
 
-                    <div class="hero-metrics" aria-label="Températures du jour">
-                        <article>
+                    <div class="hero-metrics" role="group" aria-label="Températures du jour">
+                        <div class="hero-metric">
                             <span>Minimum</span>
                             <strong id="temp-min">--°</strong>
-                        </article>
-                        <article>
+                        </div>
+                        <div class="hero-metric">
                             <span>Ressenti</span>
                             <strong id="feels-like">--°</strong>
-                        </article>
-                        <article>
+                        </div>
+                        <div class="hero-metric">
                             <span>Maximum</span>
                             <strong id="temp-max">--°</strong>
-                        </article>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section id="cartes-meteo" class="weather-grid" aria-label="Indicateurs météo" aria-live="polite" data-weather-cards>
-                <article class="metric-card" data-card-tone="wind">
+                <div class="metric-card" data-card-tone="wind">
                     <span class="metric-label">Vent</span>
                     <strong>--</strong>
                     <small>Vitesse moyenne</small>
-                </article>
+                </div>
 
-                <article class="metric-card" data-card-tone="humidity">
+                <div class="metric-card" data-card-tone="humidity">
                     <span class="metric-label">Humidité</span>
                     <strong>--</strong>
                     <small>Taux actuel</small>
-                </article>
+                </div>
 
-                <article class="metric-card" data-card-tone="pressure">
+                <div class="metric-card" data-card-tone="pressure">
                     <span class="metric-label">Pression</span>
                     <strong>-- hPa</strong>
                     <small>Atmosphère</small>
-                </article>
+                </div>
 
-                <article class="metric-card" data-card-tone="rain">
+                <div class="metric-card" data-card-tone="rain">
                     <span class="metric-label">Précipitations</span>
                     <strong>-- mm</strong>
                     <small>Cumul récent</small>
-                </article>
+                </div>
 
-                <article class="metric-card" data-card-tone="uv">
+                <div class="metric-card" data-card-tone="uv">
                     <span class="metric-label">Indice UV</span>
                     <strong>--</strong>
                     <small>Rayonnement</small>
-                </article>
+                </div>
 
-                <article class="metric-card" data-card-tone="air">
+                <div class="metric-card" data-card-tone="air">
                     <span class="metric-label">Qualité de l'air</span>
                     <strong>--</strong>
                     <small>Indice européen</small>
-                </article>
+                </div>
             </section>
 
             <section class="content-grid" aria-label="Prévisions et astronomie">
@@ -229,27 +229,27 @@
                             48–72 h
                         </button>
                     </div>
-                    <div class="hourly-strip" aria-label="Aperçu horaire" aria-live="polite" data-hourly-forecast>
-                        <article class="hourly-card" data-forecast-state="loading">
+                    <div class="hourly-strip" role="list" aria-label="Aperçu horaire" aria-live="polite" data-hourly-forecast>
+                        <div class="hourly-card" role="listitem" data-forecast-state="loading">
                             <span class="hourly-time">Maintenant</span>
                             <span class="forecast-icon" aria-hidden="true">--</span>
                             <strong class="hourly-temperature">--</strong>
-                        </article>
-                        <article class="hourly-card" data-forecast-state="loading">
+                        </div>
+                        <div class="hourly-card" role="listitem" data-forecast-state="loading">
                             <span class="hourly-time">--:--</span>
                             <span class="forecast-icon" aria-hidden="true">--</span>
                             <strong class="hourly-temperature">--</strong>
-                        </article>
-                        <article class="hourly-card" data-forecast-state="loading">
+                        </div>
+                        <div class="hourly-card" role="listitem" data-forecast-state="loading">
                             <span class="hourly-time">--:--</span>
                             <span class="forecast-icon" aria-hidden="true">--</span>
                             <strong class="hourly-temperature">--</strong>
-                        </article>
-                        <article class="hourly-card" data-forecast-state="loading">
+                        </div>
+                        <div class="hourly-card" role="listitem" data-forecast-state="loading">
                             <span class="hourly-time">--:--</span>
                             <span class="forecast-icon" aria-hidden="true">--</span>
                             <strong class="hourly-temperature">--</strong>
-                        </article>
+                        </div>
                     </div>
                 </section>
 
@@ -367,9 +367,9 @@
         </a>
     </nav>
 
-    <script src="js/clock.js?v=1.1.6-stabilization-final"></script>
-    <script src="pwa.js?v=1.1.6-stabilization-final" defer></script>
-    <script type="module" src="js/app.js?v=1.1.6-stabilization-final"></script>
+    <script src="js/clock.js?v=1.1.6-stabilization-final-w3c"></script>
+    <script src="pwa.js?v=1.1.6-stabilization-final-w3c" defer></script>
+    <script type="module" src="js/app.js?v=1.1.6-stabilization-final-w3c"></script>
 </body>
 
 </html>

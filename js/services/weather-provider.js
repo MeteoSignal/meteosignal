@@ -1,5 +1,5 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final";
-import { openMeteoProvider } from "./openmeteo.service.js?v=1.1.6-stabilization-final";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final-w3c";
+import { openMeteoProvider } from "./openmeteo.service.js?v=1.1.6-stabilization-final-w3c";
 
 const WEATHER_PROVIDERS = {
     [openMeteoProvider.id]: openMeteoProvider

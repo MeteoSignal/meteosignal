@@ -1,7 +1,7 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final";
-import { getMoonPhase } from "../core/moon.js?v=1.1.6-stabilization-final";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.6-stabilization-final";
-import { createWeatherState } from "../core/state.js?v=1.1.6-stabilization-final";
+import { APP_CONFIG } from "../../config/config.js?v=1.1.6-stabilization-final-w3c";
+import { getMoonPhase } from "../core/moon.js?v=1.1.6-stabilization-final-w3c";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.1.6-stabilization-final-w3c";
+import { createWeatherState } from "../core/state.js?v=1.1.6-stabilization-final-w3c";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",
