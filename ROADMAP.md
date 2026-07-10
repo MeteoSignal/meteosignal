@@ -1,73 +1,86 @@
 # ROADMAP
 
-MeteoSignal v1.0.0 constitue la première version stable publique du produit.
+MeteoSignal évolue par versions courtes et publiables. Chaque étape doit préserver la simplicité, l'élégance, la performance et la maintenabilité du produit.
 
-La suite du projet doit continuer à respecter les principes fondateurs : simplicité, élégance, performance et évolutivité.
+## Historique terminé
 
----
-
-## Version 1.0.0 - Stable initiale
+### Version 1.0.0 - Fondation stable
 
 Statut : terminée.
 
-- [x] Architecture modulaire HTML/CSS/JavaScript sans framework.
-- [x] Modèle météo interne normalisé.
-- [x] Open-Meteo comme fournisseur principal.
-- [x] Recherche de ville.
-- [x] Ville active sauvegardée.
-- [x] Favoris.
-- [x] Géolocalisation.
-- [x] Météo actuelle.
-- [x] Prévisions horaires.
-- [x] Prévisions sur 7 jours.
-- [x] Soleil et Lune.
-- [x] Indice UV.
-- [x] Qualité de l'air.
-- [x] PWA installable.
-- [x] Navigation adaptative mobile, tablette, desktop et TV.
-- [x] Audit final et rapport de validation.
+- [x] Architecture modulaire HTML, CSS et JavaScript sans framework.
+- [x] Modèle météo interne normalisé et Open-Meteo comme source principale.
+- [x] Météo actuelle, prévisions horaires et prévisions sur 7 jours.
+- [x] Recherche, géolocalisation, ville active sauvegardée et premiers favoris.
+- [x] Soleil, Lune, UV, qualité de l'air et indicateurs météo.
+- [x] PWA, navigation adaptative et validation initiale mobile, tablette, desktop et TV.
 
----
+### Version 1.1 - Identité visuelle et confort
 
-## Version 1.1 - Confort utilisateur
+Statut : terminée.
 
-Objectif : améliorer les usages quotidiens sans complexifier l'interface.
+- [x] Identité visuelle officielle MeteoSignal et fond météo premium.
+- [x] Expérience mobile avec navigation basse et hero compact.
+- [x] Icônes météo SVG personnalisées, Phase 1.
+- [x] Prévisions horaires étendues à 72 heures.
+- [x] Stabilisation PWA, accessibilité HTML et compatibilité Safari.
 
-- [ ] Vue complète des favoris.
-- [ ] Paramètres utilisateur simples.
-- [ ] Préférences d'unités.
-- [ ] Améliorations d'accessibilité après tests lecteurs d'écran.
-- [ ] Validation PWA post-publication sur GitHub Pages, Android et iOS.
+### Version 1.2 - Alertes météo locales
 
----
+Statut : terminée.
 
-## Version 1.2 - Météo enrichie
+- [x] Moteur d'alertes locales indicatives MeteoSignal.
+- [x] Signaux chaleur, vent, pluie, orage, UV et qualité de l'air.
+- [x] Wording pédagogique, priorisation et gestion des données absentes.
 
-Objectif : ajouter des informations utiles, uniquement lorsqu'elles apportent une vraie valeur.
+La vigilance officielle externe n'est pas encore intégrée.
 
-- [ ] Radar météo.
-- [ ] Vigilance météo.
-- [ ] Cartes météo enrichies.
-- [ ] Meilleure gestion des indisponibilités API.
+### Version 1.3 - Favoris et expérience quotidienne
 
----
+Statut : terminée.
 
-## Version 1.3 - Multiplateforme avancé
+- [x] Gestion visible des villes favorites avec stockage local.
+- [x] Sélection, suppression et conservation de la ville active.
+- [x] Favoris compacts dans la sidebar desktop et accessibles sur mobile.
+- [x] Polish des prévisions et de la lisibilité générale.
 
-Objectif : renforcer l'expérience sur grands écrans et installations PWA.
+### Version 1.4.0 - Fondation multi-fournisseur
 
-- [ ] Optimisations TV.
-- [ ] Mode kiosque.
-- [ ] Notifications météo optionnelles.
-- [ ] Widgets si la plateforme le permet.
+Statut : terminée.
 
----
+- [x] Registre de fournisseurs fondé sur les capacités.
+- [x] Orchestrateur avec fallback explicite et traçable.
+- [x] Provenance normalisée pour la météo actuelle, les prévisions et la qualité de l'air.
+- [x] Open-Meteo conservé comme unique fournisseur actif.
 
-## Version 2.0 - Mode Expert
+### Version 1.4.1 - Recherche et géocodage fiables
 
-Objectif : proposer une couche avancée pour les passionnés météo, séparée de l'expérience simple par défaut.
+Statut : terminée.
 
-- [ ] Mode Expert.
-- [ ] Données météo détaillées.
-- [ ] Comparaison de fournisseurs.
-- [ ] Visualisations avancées.
+- [x] Suggestions accessibles et responsive.
+- [x] Recherche par ville, code postal et pays.
+- [x] Classement prioritaire des lieux habités.
+- [x] Annulation des recherches obsolètes et sélection explicite en cas d'ambiguïté.
+- [x] Déduplication sémantique et correction tactile mobile.
+
+## Prochaine étape - Publication Reliability & Documentation
+
+Statut : en cours.
+
+- [ ] Finaliser le certificat HTTPS du domaine personnalisé.
+- [ ] Vérifier l'accès direct au service worker sans redirection.
+- [ ] Confirmer le remplacement des anciens caches et services workers publiés.
+- [ ] Valider la documentation v1.4.1 et les procédures de publication.
+- [ ] Retester la géolocalisation et l'installation PWA une fois HTTPS actif.
+
+## Étapes suivantes
+
+Les éléments ci-dessous sont prévus, mais ne sont pas terminés :
+
+- validation PWA sur Chrome, Edge, Android et iOS ;
+- tests de géolocalisation réelle et sur appareils physiques ;
+- amélioration de l'accessibilité après tests clavier et lecteurs d'écran ;
+- intégration progressive d'un second fournisseur météo ;
+- radar météo et vigilance officielle, avec attribution et sources clairement identifiées ;
+- préférences d'unités et paramètres utilisateur simples ;
+- futur Mode Expert avec données détaillées, comparaison de sources et visualisations avancées.
