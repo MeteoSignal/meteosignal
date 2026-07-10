@@ -123,3 +123,13 @@ Conséquence : les fichiers officiels attendus sont préparés dans `assets/logo
 - `favicon-16.png`.
 
 Le CSS peut enrichir l'interface avec halos, bordures cyan, fonds atmosphériques et effets premium, mais il ne doit pas remplacer définitivement le logo officiel par une imitation HTML/CSS. Tant que les fichiers officiels ne sont pas présents, l'application conserve un fallback temporaire.
+
+## D014 - Orchestration météo par capacités et provenance
+
+Décision : à partir de MeteoSignal v1.4.0, les fournisseurs sont enregistrés par capacités et sélectionnés par un orchestrateur indépendant de l'interface.
+
+Raison : les observations, prévisions, données quotidiennes et qualité de l'air peuvent provenir de services différents. Leur origine doit rester explicite sans moyenne ni fusion silencieuse.
+
+Conséquence : chaque bloc `current`, `hourly`, `daily` et `airQuality` possède sa propre provenance normalisée. Open-Meteo reste l'unique fournisseur actif en v1.4.0. Les futurs fallbacks seront configurés explicitement et marqués avec `isFallback`.
+
+Les clés API ne sont jamais placées dans le code public. Toute passerelle serveur future fera l'objet d'une validation technique et juridique avant activation.

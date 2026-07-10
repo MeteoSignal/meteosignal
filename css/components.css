@@ -746,6 +746,30 @@
     font-size: 1.05rem;
 }
 
+.data-source-label {
+    display: block;
+    margin-top: 0.24rem;
+    color: rgba(188, 229, 245, 0.7);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.25;
+}
+
+.data-source-label[hidden] {
+    display: none;
+}
+
+.data-source-label--hero {
+    margin-top: 0.38rem;
+}
+
+.metric-source-inline {
+    color: rgba(166, 234, 247, 0.7);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
 .hero-metrics {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -4,7 +4,7 @@ import {
     readFavorites,
     removeFavoriteLocation,
     toggleFavoriteLocation
-} from "../core/storage.js?v=1.3.0-favorites-sidebar-polish";
+} from "../core/storage.js?v=1.4.0-multi-api-foundation";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";

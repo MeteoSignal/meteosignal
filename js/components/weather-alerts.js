@@ -1,4 +1,4 @@
-import { analyzeWeatherAlerts, createCalmWeatherAlert } from "../core/weather-alerts.js?v=1.3.0-favorites-sidebar-polish";
+import { analyzeWeatherAlerts, createCalmWeatherAlert } from "../core/weather-alerts.js?v=1.4.0-multi-api-foundation";
 
 const ALERTS_PANEL_SELECTOR = "[data-alerts]";
 const ALERTS_LIST_SELECTOR = "[data-alerts-list]";

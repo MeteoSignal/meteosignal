@@ -1,0 +1,52 @@
+{
+  "latitude": 43.6,
+  "longitude": 1.44,
+  "timezone": "Europe/Paris",
+  "current": {
+    "time": "2026-07-10T09:00",
+    "temperature_2m": 22.4,
+    "apparent_temperature": 24.1,
+    "relative_humidity_2m": 72,
+    "precipitation": 0,
+    "rain": 0,
+    "weather_code": 2,
+    "cloud_cover": 42,
+    "pressure_msl": 1014.2,
+    "wind_speed_10m": 8.2,
+    "wind_direction_10m": 280,
+    "wind_gusts_10m": 17.5,
+    "is_day": 1
+  },
+  "hourly": {
+    "time": [
+      "2026-07-10T09:00",
+      "2026-07-10T10:00",
+      "2026-07-10T11:00",
+      "2026-07-10T12:00"
+    ],
+    "temperature_2m": [22.4, 24.2, 26.1, 27.3],
+    "apparent_temperature": [24.1, 25.7, 27.4, 28.2],
+    "precipitation_probability": [4, 3, 5, 8],
+    "precipitation": [0, 0, 0, 0.1],
+    "weather_code": [2, 1, 2, 3],
+    "uv_index": [3.1, 4.7, 6.2, 7.1],
+    "wind_speed_10m": [8.2, 9.1, 10.4, 11.2]
+  },
+  "daily": {
+    "time": ["2026-07-10", "2026-07-11"],
+    "weather_code": [2, 3],
+    "temperature_2m_max": [31.2, 29.4],
+    "temperature_2m_min": [18.3, 17.8],
+    "apparent_temperature_max": [33.1, 30.2],
+    "apparent_temperature_min": [18.1, 17.2],
+    "sunrise": ["2026-07-10T06:23", "2026-07-11T06:24"],
+    "sunset": ["2026-07-10T21:36", "2026-07-11T21:35"],
+    "daylight_duration": [54780, 54660],
+    "uv_index_max": [7.1, 6.4],
+    "precipitation_sum": [0.1, 0.5],
+    "precipitation_probability_max": [8, 24],
+    "wind_speed_10m_max": [15.2, 18.1],
+    "wind_gusts_10m_max": [28.4, 35.2],
+    "wind_direction_10m_dominant": [285, 300]
+  }
+}

@@ -1,19 +1,18 @@
-import { APP_CONFIG } from "../config/config.js?v=1.3.0-favorites-sidebar-polish";
-import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.3.0-favorites-sidebar-polish";
-import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.3.0-favorites-sidebar-polish";
-import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.3.0-favorites-sidebar-polish";
-import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.3.0-favorites-sidebar-polish";
-import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.3.0-favorites-sidebar-polish";
-import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.3.0-favorites-sidebar-polish";
-import { initNavigation } from "./components/navigation.js?v=1.3.0-favorites-sidebar-polish";
-import { initSearch, updateSearchInput } from "./components/search.js?v=1.3.0-favorites-sidebar-polish";
-import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.3.0-favorites-sidebar-polish";
-import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.3.0-favorites-sidebar-polish";
-import { fetchAirQuality } from "./services/air-quality.service.js?v=1.3.0-favorites-sidebar-polish";
-import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.3.0-favorites-sidebar-polish";
-import { getWeatherProvider } from "./services/weather-provider.js?v=1.3.0-favorites-sidebar-polish";
+import { APP_CONFIG } from "../config/config.js?v=1.4.0-multi-api-foundation";
+import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.4.0-multi-api-foundation";
+import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.4.0-multi-api-foundation";
+import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.4.0-multi-api-foundation";
+import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.4.0-multi-api-foundation";
+import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.4.0-multi-api-foundation";
+import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.4.0-multi-api-foundation";
+import { initNavigation } from "./components/navigation.js?v=1.4.0-multi-api-foundation";
+import { initSearch, updateSearchInput } from "./components/search.js?v=1.4.0-multi-api-foundation";
+import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.4.0-multi-api-foundation";
+import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.4.0-multi-api-foundation";
+import { renderDataSources, renderDataSourcesEmpty } from "./components/data-sources.js?v=1.4.0-multi-api-foundation";
+import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.4.0-multi-api-foundation";
+import { weatherOrchestrator } from "./services/weather-orchestrator.service.js?v=1.4.0-multi-api-foundation";
 
-const provider = getWeatherProvider();
 const DASHBOARD_SELECTOR = "[data-dashboard]";
 let activeLocation = readActiveLocation(APP_CONFIG.defaultLocation);
 let dashboardRequestId = 0;
@@ -61,24 +60,19 @@ async function loadWeatherDashboard({ showLoading = true } = {}) {
             setDashboardBusy(true, "Mise à jour météo en arrière-plan.");
         }
 
-        const [weather, airQuality] = await Promise.all([
-            provider.getWeather(requestedLocation),
-            loadAirQuality(requestedLocation)
-        ]);
+        const weather = await weatherOrchestrator.getWeather(requestedLocation);
 
         if (!isCurrentDashboardRequest(requestId, requestedLocation)) {
             return;
         }
 
-        const weatherWithAirQuality = {
-            ...weather,
-            airQuality
-        };
-
-        renderWeatherDashboard(weatherWithAirQuality);
+        renderWeatherDashboard(weather);
         renderFavoriteButton(activeLocation);
         renderFavoritesList(activeLocation);
-        setDashboardBusy(false, `Météo mise à jour pour ${weather.location.name}.`);
+        const statusMessage = weather.errors.length > 0
+            ? `Météo partiellement mise à jour pour ${weather.location.name}.`
+            : `Météo mise à jour pour ${weather.location.name}.`;
+        setDashboardBusy(false, statusMessage);
     } catch (error) {
         if (!isCurrentDashboardRequest(requestId, requestedLocation)) {
             return;
@@ -147,12 +141,31 @@ function bindGeolocationButton() {
 }
 
 function renderWeatherDashboard(weather) {
-    renderCurrentWeather(weather);
-    renderWeatherCards(weather);
-    renderHourlyForecast(weather.hourly);
-    renderDailyForecast(weather.daily);
-    renderAstronomy(weather.astronomy);
-    renderWeatherAlerts(weather);
+    if (weather.current) {
+        renderCurrentWeather(weather);
+        renderWeatherCards(weather);
+    } else {
+        renderCurrentWeatherError("Conditions actuelles indisponibles.", weather.location);
+        renderWeatherCardsError();
+    }
+
+    Array.isArray(weather.hourly) && weather.hourly.length > 0
+        ? renderHourlyForecast(weather.hourly)
+        : renderHourlyForecastError();
+
+    Array.isArray(weather.daily) && weather.daily.length > 0
+        ? renderDailyForecast(weather.daily)
+        : renderDailyForecastError();
+
+    weather.astronomy
+        ? renderAstronomy(weather.astronomy)
+        : renderAstronomyError();
+
+    weather.current || weather.daily.length > 0 || weather.hourly.length > 0
+        ? renderWeatherAlerts(weather)
+        : renderWeatherAlertsError();
+
+    renderDataSources(weather);
 }
 
 function renderDashboardLoading(location) {
@@ -163,6 +176,7 @@ function renderDashboardLoading(location) {
     renderDailyForecastLoading();
     renderAstronomyLoading();
     renderWeatherAlertsLoading();
+    renderDataSourcesEmpty();
 }
 
 function renderDashboardError(message, location) {
@@ -173,15 +187,7 @@ function renderDashboardError(message, location) {
     renderDailyForecastError();
     renderAstronomyError();
     renderWeatherAlertsError();
-}
-
-async function loadAirQuality(location) {
-    try {
-        return await fetchAirQuality(location);
-    } catch (error) {
-        console.warn(error);
-        return null;
-    }
+    renderDataSourcesEmpty();
 }
 
 function renderProjectStatus() {
