@@ -137,9 +137,11 @@
     }
 
     .site-header {
-        position: static;
+        position: relative;
+        z-index: 20;
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 0.45rem;
+        overflow: visible;
         margin-bottom: var(--space-3);
         border-radius: var(--radius-md);
         padding: 0.45rem;

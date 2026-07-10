@@ -48,6 +48,8 @@ test("Saint-Gaudens habité passe avant le site historique et l'aéroport", () =
     assert.equal(ranked[0].featureCode, "PPLA3");
     assert.equal(ranked.at(-1).featureCode, "AIRP");
     assert.equal(findUniqueExactInhabitedLocation(ranked, plan)?.id, 2980045);
+    assert.equal(ranked.filter(({ featureCode }) => featureCode === "PRK").length, 1);
+    assert.equal(ranked.find(({ featureCode }) => featureCode === "PRK")?.id, 5092119);
 });
 
 test("un code postal partagé et des homonymes restent ambigus", () => {

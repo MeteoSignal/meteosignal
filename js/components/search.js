@@ -4,8 +4,8 @@ import {
     getAutomaticLocationSelection,
     getLocationTypeLabel,
     getNextSuggestionIndex
-} from "../core/location-search.js?v=1.4.1-search-geocoding-reliability-release";
-import { searchLocations } from "../services/geocoding.service.js?v=1.4.1-search-geocoding-reliability-release";
+} from "../core/location-search.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { searchLocations } from "../services/geocoding.service.js?v=1.4.1-search-geocoding-reliability-hotfix";
 
 const SEARCH_FORM_SELECTOR = "[data-search-form]";
 const SEARCH_INPUT_SELECTOR = "#city-search";

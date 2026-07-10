@@ -38,10 +38,10 @@
       "timezone": "Europe/Paris"
     },
     {
-      "id": 5092119,
-      "name": "Saint Gaudens National Historic Site",
-      "latitude": 43.4984,
-      "longitude": -72.3734,
+      "id": 9000001,
+      "name": "Saint-Gaudens National Historic Site",
+      "latitude": 43.4986,
+      "longitude": -72.3732,
       "feature_code": "PRK",
       "country_code": "US",
       "country": "États-Unis",
