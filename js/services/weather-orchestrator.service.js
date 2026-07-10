@@ -1,15 +1,15 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.0-multi-api-foundation";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.1-search-geocoding-reliability-release";
 import {
     createSourceMetadata,
     createWeatherSources,
     markSourceAsFallback,
     WEATHER_SOURCE_BLOCKS
-} from "../core/provenance.js?v=1.4.0-multi-api-foundation";
-import { createWeatherError, createWeatherState } from "../core/state.js?v=1.4.0-multi-api-foundation";
+} from "../core/provenance.js?v=1.4.1-search-geocoding-reliability-release";
+import { createWeatherError, createWeatherState } from "../core/state.js?v=1.4.1-search-geocoding-reliability-release";
 import {
     WEATHER_CAPABILITIES,
     weatherProviderRegistry
-} from "./weather-provider.js?v=1.4.0-multi-api-foundation";
+} from "./weather-provider.js?v=1.4.1-search-geocoding-reliability-release";
 
 const WEATHER_ENDPOINT_CAPABILITIES = Object.freeze([
     "current",

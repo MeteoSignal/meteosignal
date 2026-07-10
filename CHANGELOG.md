@@ -6,6 +6,31 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.4.1] - 2026-07-10
+
+### Ajouté
+
+- Liste de suggestions géographiques accessible et responsive sous forme de combobox.
+- Classement métier donnant la priorité aux correspondances exactes, aux pays ou régions demandés, puis aux lieux habités et à la population.
+- Recherche complémentaire contrôlée pour les noms composés, limitée à une seule variante et annulable avec `AbortSignal`.
+- Prise en charge des recherches par code postal et des formulations qualifiées par pays ou région.
+
+### Amélioré
+
+- Équivalence des noms indépendamment de la casse, des accents, des tirets, des apostrophes et des espaces multiples.
+- Conservation de `featureCode`, `postcodes` et `population` dans le modèle de localisation et le stockage local.
+- Sélection automatique limitée aux correspondances exactes, uniques et habitées lors d'une validation explicite.
+- Compatibilité maintenue avec les anciennes villes favorites dépourvues des nouveaux champs.
+
+### Technique
+
+- Temporisation de recherche fixée à 300 ms avec annulation des requêtes obsolètes.
+- Maximum strict de deux appels de géocodage par recherche : requête principale et une variante éventuelle.
+- Cache PWA passé à `v1.4.1-search-geocoding-reliability-release` sans précache des réponses API.
+- Tests unitaires de classement, géocodage, annulation, ambiguïté, stockage historique et protection contre les réponses obsolètes.
+
+---
+
 ## [1.4.0] - 2026-07-10
 
 ### Ajouté

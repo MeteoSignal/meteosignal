@@ -1,5 +1,5 @@
-import { formatTime } from "../core/formatters.js?v=1.4.0-multi-api-foundation";
-import { weatherProviderRegistry } from "../services/weather-provider.js?v=1.4.0-multi-api-foundation";
+import { formatTime } from "../core/formatters.js?v=1.4.1-search-geocoding-reliability-release";
+import { weatherProviderRegistry } from "../services/weather-provider.js?v=1.4.1-search-geocoding-reliability-release";
 
 const SOURCE_TARGETS = {
     current: "[data-source-current]",

@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
     <link rel="apple-touch-icon" href="assets/logo/icon-192.png">
-    <link rel="stylesheet" href="css/style.css?v=1.4.0-multi-api-foundation">
+    <link rel="stylesheet" href="css/style.css?v=1.4.1-search-geocoding-reliability-release">
 </head>
 
 <body data-nav-open="false" data-nav-collapsed="false">
@@ -112,13 +112,27 @@
 
             <form class="search-panel" role="search" aria-label="Recherche de ville" data-search-form>
                 <label class="sr-only" for="city-search">Rechercher une ville</label>
-                <input
-                    id="city-search"
-                    name="city"
-                    type="search"
-                    autocomplete="off"
-                    aria-describedby="search-status"
-                    placeholder="Rechercher une ville">
+                <div class="search-combobox">
+                    <input
+                        id="city-search"
+                        name="city"
+                        type="search"
+                        role="combobox"
+                        autocomplete="off"
+                        aria-autocomplete="list"
+                        aria-controls="city-search-suggestions"
+                        aria-describedby="search-status"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        placeholder="Rechercher une ville">
+                    <ul
+                        id="city-search-suggestions"
+                        class="search-suggestions"
+                        role="listbox"
+                        aria-label="Propositions de lieux"
+                        data-search-suggestions
+                        hidden></ul>
+                </div>
                 <button class="icon-action" type="submit" aria-label="Lancer la recherche">
                     <span aria-hidden="true">⌕</span>
                 </button>
@@ -408,9 +422,9 @@
         </a>
     </nav>
 
-    <script src="js/clock.js?v=1.4.0-multi-api-foundation"></script>
-    <script src="pwa.js?v=1.4.0-multi-api-foundation" defer></script>
-    <script type="module" src="js/app.js?v=1.4.0-multi-api-foundation"></script>
+    <script src="js/clock.js?v=1.4.1-search-geocoding-reliability-release"></script>
+    <script src="pwa.js?v=1.4.1-search-geocoding-reliability-release" defer></script>
+    <script type="module" src="js/app.js?v=1.4.1-search-geocoding-reliability-release"></script>
 </body>
 
 </html>

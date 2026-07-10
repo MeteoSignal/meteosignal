@@ -1,5 +1,5 @@
-import { formatTemperature, formatTime } from "../core/formatters.js?v=1.4.0-multi-api-foundation";
-import { renderWeatherIcon } from "../core/weather-icons.js?v=1.4.0-multi-api-foundation";
+import { formatTemperature, formatTime } from "../core/formatters.js?v=1.4.1-search-geocoding-reliability-release";
+import { renderWeatherIcon } from "../core/weather-icons.js?v=1.4.1-search-geocoding-reliability-release";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";

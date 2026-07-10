@@ -177,6 +177,33 @@
         height: 2rem;
     }
 
+    .search-suggestions {
+        top: calc(100% + 0.32rem);
+        max-height: min(20rem, 48dvh);
+        border-radius: var(--radius-sm);
+        padding: 0.28rem;
+    }
+
+    .search-suggestion {
+        min-height: 3.35rem;
+        gap: var(--space-2);
+        padding: 0.52rem 0.58rem;
+    }
+
+    .search-suggestion-content strong {
+        font-size: 0.84rem;
+    }
+
+    .search-suggestion-content small {
+        font-size: 0.66rem;
+    }
+
+    .search-suggestion-type {
+        max-width: 7.8rem;
+        padding: 0.2rem 0.38rem;
+        font-size: 0.61rem;
+    }
+
     .dashboard {
         gap: var(--space-3);
         padding-bottom: var(--space-3);
@@ -679,6 +706,16 @@
         width: 1.95rem;
         min-width: 1.95rem;
         height: 1.95rem;
+    }
+
+    .search-suggestion {
+        grid-template-columns: minmax(0, 1fr) minmax(4.3rem, auto);
+        gap: 0.38rem;
+        padding-inline: 0.48rem;
+    }
+
+    .search-suggestion-type {
+        max-width: 6.4rem;
     }
 
     .weather-grid {

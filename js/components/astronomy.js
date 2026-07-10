@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.4.0-multi-api-foundation";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.4.1-search-geocoding-reliability-release";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";
