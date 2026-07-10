@@ -6,13 +6,22 @@ MeteoSignal est une Progressive Web App météo moderne, élégante, rapide et i
 
 Le projet est conçu comme un véritable produit logiciel : simple à utiliser, agréable à consulter, maintenable dans le temps et capable d'évoluer vers des fonctionnalités plus avancées sans reconstruire ses fondations.
 
+## État actuel
+
+MeteoSignal est publié en version **1.4.1**. Le produit propose déjà la météo actuelle, les prévisions horaires sur 72 heures, les prévisions sur 7 jours, la recherche géographique, la géolocalisation, les favoris, l'astronomie, la qualité de l'air et des alertes locales indicatives.
+
+La v1.4.0 a introduit une fondation multi-fournisseur avec registre par capacités, orchestration et provenance des données. Open-Meteo reste l'unique fournisseur actif en v1.4.1 ; aucun mélange automatique de données entre fournisseurs n'est réalisé.
+
 ## Référence officielle
 
 Ce fichier résume la vision du projet. Les documents techniques de référence sont :
 
 - [Architecture](docs/architecture.md)
+- [Architecture multi-fournisseur](docs/multi-provider-architecture.md)
 - [Décisions techniques](docs/decisions.md)
-- [Feuille de route v1.0](docs/roadmap-v1.md)
+- [Feuille de route actuelle](ROADMAP.md)
+- [Historique de la feuille de route v1.0](docs/roadmap-v1.md)
+- [Changelog](CHANGELOG.md)
 
 Ces documents doivent être consultés avant chaque évolution importante.
 
@@ -41,20 +50,20 @@ Une fonctionnalité est ajoutée uniquement si elle améliore clairement l'expé
 
 ## Technologies
 
-Version 1.0 :
+Socle actuel en v1.4.1 :
 
 - HTML5 ;
 - CSS3 ;
 - JavaScript ES6 natif ;
 - Progressive Web App ;
 - Git, GitHub, GitHub Pages ;
-- Open-Meteo comme fournisseur principal.
+- Open-Meteo comme fournisseur actif au sein de l'architecture multi-fournisseur.
 
-Aucun framework JavaScript n'est utilisé pour la version 1.0.
+Aucun framework JavaScript n'est utilisé.
 
-## Périmètre de la version 1.0
+## Périmètre historique de la version 1.0
 
-La version 1.0 doit proposer une expérience complète, stable et simple :
+La version 1.0 a établi une expérience complète, stable et simple :
 
 - météo actuelle ;
 - recherche de ville ;
@@ -70,13 +79,14 @@ La version 1.0 doit proposer une expérience complète, stable et simple :
 - mode sombre automatique ;
 - responsive mobile, tablette, ordinateur et grands écrans.
 
-## Versions ultérieures
+## Évolutions futures
 
-Les fonctionnalités suivantes sont préparées architecturalement, mais ne sont pas prioritaires pour la v1.0 :
+Les fonctionnalités suivantes restent prévues au-delà de la v1.4.1 :
 
 - mode Expert ;
 - radar météo ;
-- vigilance météo ;
+- vigilance météo officielle ;
+- second fournisseur météo actif ;
 - widgets ;
 - notifications ;
 - publications plateforme avancées.
@@ -104,7 +114,9 @@ Un composant validé reste stable. Il n'est modifié ensuite que pour corriger u
 
 - `main` : version publique stable ;
 - `develop` : préparation de la prochaine version ;
-- `feature/*` : développement d'une évolution précise.
+- `feature/*` : développement d'une évolution précise ;
+- `hotfix/*` : correction urgente d'une version publiée ;
+- `docs/*` : mise à jour documentaire isolée.
 
 Le développement ne se fait pas directement sur `main`.
 
