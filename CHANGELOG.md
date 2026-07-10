@@ -6,6 +6,33 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.4.0] - 2026-07-10
+
+### Ajouté
+
+- Registre de fournisseurs fondé sur les capacités `current`, `hourly`, `daily`, `astronomy` et `airQuality`.
+- Orchestrateur multi-fournisseur avec regroupement des appels, timeout, annulation et fallback explicite.
+- Provenance normalisée par bloc avec dates ISO, attribution, station, qualité et état de fallback.
+- Affichage discret de la source dans le hero, les prévisions et la qualité de l'air.
+- Fixtures Open-Meteo et tests unitaires sans requête réseau réelle.
+- Documentation officielle `docs/multi-provider-architecture.md`.
+
+### Compatibilité
+
+- Open-Meteo reste l'unique fournisseur actif.
+- Un appel Forecast conserve la météo actuelle, les prévisions 72 h, les 7 jours et l'astronomie.
+- Air Quality reste un second appel indépendant.
+- Aucun appel Infoclimat, MET Norway, Météo-France ou Cloudflare Worker.
+- Aucun secret ajouté au dépôt.
+
+### Technique
+
+- Version applicative passée à `1.4.0`.
+- Cache PWA passé à `v1.4.0-multi-api-foundation`.
+- Réponses météo maintenues hors du précache PWA.
+
+---
+
 ## [1.3.0] - 2026-07-09
 
 ### Ajouté

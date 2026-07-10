@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.3.0-favorites-sidebar-polish";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.4.0-multi-api-foundation";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";

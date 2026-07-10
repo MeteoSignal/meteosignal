@@ -1,0 +1,10 @@
+{
+  "hourly": {
+    "time": ["2026-07-10T09:00"],
+    "european_aqi": [24],
+    "pm10": [13.2],
+    "pm2_5": [7.1],
+    "ozone": [62.5],
+    "nitrogen_dioxide": [10.4]
+  }
+}

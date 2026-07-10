@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatTemperature,
     formatSpeed
-} from "../core/formatters.js?v=1.3.0-favorites-sidebar-polish";
+} from "../core/formatters.js?v=1.4.0-multi-api-foundation";
 
 const DAILY_SELECTOR = "[data-daily-forecast]";
 const DAILY_LIMIT = 7;

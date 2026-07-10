@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.3.0-favorites-sidebar-polish";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.0-multi-api-foundation";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",
@@ -10,7 +10,7 @@ const AIR_QUALITY_VARIABLES = [
 
 export async function fetchAirQuality(location, options = {}) {
     const url = buildAirQualityUrl(location, options);
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: options.signal });
 
     if (!response.ok) {
         throw new Error("La qualité de l'air est momentanément indisponible.");

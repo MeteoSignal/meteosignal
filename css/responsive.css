@@ -436,6 +436,16 @@
         white-space: nowrap;
     }
 
+    .data-source-label {
+        margin-top: 0.16rem;
+        font-size: 0.62rem;
+        line-height: 1.15;
+    }
+
+    .data-source-label--hero {
+        margin-top: 0.18rem;
+    }
+
     .hero-metrics {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         width: 100%;

@@ -1,12 +1,23 @@
 export const APP_CONFIG = {
     appName: "MeteoSignal",
-    version: "1.3.0",
-    build: "2026-07-09",
-    lastUpdated: "09 juillet 2026",
+    version: "1.4.0",
+    build: "2026-07-10",
+    lastUpdated: "10 juillet 2026",
     copyright: "© 2026",
     refresh: 600000,
     theme: "auto",
     weatherProvider: "openmeteo",
+    multiProvider: {
+        requestTimeoutMs: 10000,
+        compatibilityProviderId: "openmeteo",
+        capabilities: {
+            current: { primary: "openmeteo", fallbacks: [] },
+            hourly: { primary: "openmeteo", fallbacks: [] },
+            daily: { primary: "openmeteo", fallbacks: [] },
+            astronomy: { primary: "openmeteo", fallbacks: [] },
+            airQuality: { primary: "openmeteo", fallbacks: [] }
+        }
+    },
     defaultLocation: {
         id: "toulouse-fr",
         name: "Toulouse",

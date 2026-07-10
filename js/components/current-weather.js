@@ -1,5 +1,5 @@
-import { formatTemperature, formatTime } from "../core/formatters.js?v=1.3.0-favorites-sidebar-polish";
-import { renderWeatherIcon } from "../core/weather-icons.js?v=1.3.0-favorites-sidebar-polish";
+import { formatTemperature, formatTime } from "../core/formatters.js?v=1.4.0-multi-api-foundation";
+import { renderWeatherIcon } from "../core/weather-icons.js?v=1.4.0-multi-api-foundation";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";
@@ -37,6 +37,7 @@ export function renderCurrentWeatherError(message = "Données météo indisponib
     setText("#temp", "--");
     setText("#description", message);
     setText("#hero-status", "Indisponible");
+    setText("#updated-at", "Mise à jour --:--");
     renderWeatherIcon("#icon", null, "--", "weather-icon-img weather-icon-img--hero");
 }
 

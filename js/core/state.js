@@ -1,5 +1,7 @@
+import { createWeatherSources } from "./provenance.js?v=1.4.0-multi-api-foundation";
+
 export function createWeatherState(overrides = {}) {
-    return {
+    const state = {
         provider: null,
         location: null,
         current: null,
@@ -10,6 +12,14 @@ export function createWeatherState(overrides = {}) {
         updatedAt: null,
         errors: [],
         ...overrides
+    };
+
+    return {
+        ...state,
+        hourly: Array.isArray(state.hourly) ? [...state.hourly] : [],
+        daily: Array.isArray(state.daily) ? [...state.daily] : [],
+        errors: Array.isArray(state.errors) ? [...state.errors] : [],
+        sources: createWeatherSources(state.sources)
     };
 }
 

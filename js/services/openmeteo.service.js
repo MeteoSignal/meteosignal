@@ -1,7 +1,9 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.3.0-favorites-sidebar-polish";
-import { getMoonPhase } from "../core/moon.js?v=1.3.0-favorites-sidebar-polish";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.3.0-favorites-sidebar-polish";
-import { createWeatherState } from "../core/state.js?v=1.3.0-favorites-sidebar-polish";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.0-multi-api-foundation";
+import { getMoonPhase } from "../core/moon.js?v=1.4.0-multi-api-foundation";
+import { createSourceMetadata } from "../core/provenance.js?v=1.4.0-multi-api-foundation";
+import { createWeatherState } from "../core/state.js?v=1.4.0-multi-api-foundation";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.4.0-multi-api-foundation";
+import { fetchAirQuality } from "./air-quality.service.js?v=1.4.0-multi-api-foundation";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",
@@ -48,22 +50,43 @@ const DAILY_VARIABLES = [
 export const openMeteoProvider = {
     id: "openmeteo",
     name: "Open-Meteo",
+    enabled: true,
+    capabilities: ["current", "hourly", "daily", "astronomy", "airQuality"],
+    coverage: "global",
+    requiresProxy: false,
+    attribution: "Open-Meteo",
+    license: null,
     async getWeather(location, options = {}) {
         return fetchOpenMeteoForecast(location, options);
     },
-    normalize(rawData, location) {
-        return normalizeOpenMeteoForecast(rawData, location);
+    async getAirQuality(location, options = {}) {
+        const airQuality = await fetchAirQuality(location, options);
+        const fetchedAt = new Date().toISOString();
+
+        return createWeatherState({
+            airQuality,
+            sources: {
+                airQuality: createOpenMeteoSource({
+                    type: "analysis",
+                    fetchedAt
+                })
+            }
+        });
+    },
+    normalize(rawData, location, context = {}) {
+        return normalizeOpenMeteoForecast(rawData, location, context);
     }
 };
 
 export async function fetchOpenMeteoForecast(location, options = {}) {
     const url = buildForecastUrl(location, options);
     let rawData;
+    const qualityFlags = [];
 
     try {
-        rawData = await fetchJson(url);
+        rawData = await fetchJson(url, options);
     } catch (error) {
-        if (!url.searchParams.has("forecast_hours")) {
+        if (isAbortError(error) || !url.searchParams.has("forecast_hours")) {
             throw error;
         }
 
@@ -71,10 +94,14 @@ export async function fetchOpenMeteoForecast(location, options = {}) {
             ...options,
             forecastHours: null
         });
-        rawData = await fetchJson(fallbackUrl);
+        rawData = await fetchJson(fallbackUrl, options);
+        qualityFlags.push("forecast-hours-fallback");
     }
 
-    return normalizeOpenMeteoForecast(rawData, location);
+    return normalizeOpenMeteoForecast(rawData, location, {
+        fetchedAt: new Date().toISOString(),
+        qualityFlags
+    });
 }
 
 export function buildForecastUrl(location, options = {}) {
@@ -99,10 +126,16 @@ export function buildForecastUrl(location, options = {}) {
     return url;
 }
 
-export function normalizeOpenMeteoForecast(rawData, location = {}) {
+export function normalizeOpenMeteoForecast(rawData, location = {}, context = {}) {
     const current = rawData.current ?? {};
     const currentIsDay = current.is_day !== 0;
     const daily = normalizeDailyForecast(rawData.daily, currentIsDay);
+    const fetchedAt = context.fetchedAt ?? new Date().toISOString();
+    const sourceContext = {
+        type: "forecast",
+        fetchedAt,
+        qualityFlags: context.qualityFlags
+    };
 
     return createWeatherState({
         provider: openMeteoProvider.id,
@@ -112,6 +145,11 @@ export function normalizeOpenMeteoForecast(rawData, location = {}) {
         daily,
         astronomy: normalizeAstronomy(daily[0]),
         updatedAt: current.time ?? new Date().toISOString(),
+        sources: {
+            current: createOpenMeteoSource(sourceContext),
+            hourly: createOpenMeteoSource(sourceContext),
+            daily: createOpenMeteoSource(sourceContext)
+        },
         errors: []
     });
 }
@@ -261,8 +299,8 @@ function normalizeAstronomy(today) {
     };
 }
 
-async function fetchJson(url) {
-    const response = await fetch(url);
+async function fetchJson(url, options = {}) {
+    const response = await fetch(url, { signal: options.signal });
 
     if (!response.ok) {
         const error = new Error("La météo est momentanément indisponible.");
@@ -274,6 +312,24 @@ async function fetchJson(url) {
     }
 
     return response.json();
+}
+
+function createOpenMeteoSource(overrides = {}) {
+    return createSourceMetadata({
+        providerId: openMeteoProvider.id,
+        type: overrides.type ?? "forecast",
+        observedAt: overrides.observedAt,
+        issuedAt: overrides.issuedAt,
+        fetchedAt: overrides.fetchedAt,
+        isFallback: false,
+        attribution: openMeteoProvider.attribution,
+        license: openMeteoProvider.license,
+        qualityFlags: overrides.qualityFlags
+    });
+}
+
+function isAbortError(error) {
+    return error?.name === "AbortError" || error?.code === "REQUEST_ABORTED";
 }
 
 function findForecastStartIndex(times, currentTime) {
