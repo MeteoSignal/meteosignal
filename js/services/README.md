@@ -7,7 +7,7 @@ Modules principaux :
 - `weather-provider.js` : registre des fournisseurs météo actifs ;
 - `weather-orchestrator.service.js` : sélection des fournisseurs par capacité et fallback traçable ;
 - `openmeteo.service.js` : météo actuelle et prévisions ;
-- `geocoding.service.js` : recherche de ville ;
+- `geocoding.service.js` : recherche mondiale, variante contrôlée et normalisation des lieux ;
 - `geolocation.service.js` : position actuelle du navigateur ;
 - `air-quality.service.js` : qualité de l'air.
 

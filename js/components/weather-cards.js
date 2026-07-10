@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatPressure,
     formatSpeed
-} from "../core/formatters.js?v=1.4.0-multi-api-foundation";
+} from "../core/formatters.js?v=1.4.1-search-geocoding-reliability-release";
 
 const WEATHER_CARDS_SELECTOR = "[data-weather-cards]";
 

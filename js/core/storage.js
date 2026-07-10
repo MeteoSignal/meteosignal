@@ -117,13 +117,47 @@ export function normalizeLocation(location) {
         name: location.name ?? "Position actuelle",
         label: location.label ?? buildLocationLabel(location),
         country: location.country ?? null,
-        countryCode: location.countryCode ?? null,
+        countryCode: normalizeCountryCode(location.countryCode),
         admin1: location.admin1 ?? null,
+        featureCode: normalizeOptionalString(location.featureCode),
+        postcodes: normalizePostcodes(location.postcodes),
+        population: normalizePopulation(location.population),
         latitude: Number(location.latitude),
         longitude: Number(location.longitude),
         timezone: location.timezone ?? "auto",
         source: location.source ?? "manual"
     };
+}
+
+function normalizeCountryCode(value) {
+    const countryCode = normalizeOptionalString(value);
+    return countryCode ? countryCode.toUpperCase() : null;
+}
+
+function normalizePostcodes(postcodes) {
+    if (!Array.isArray(postcodes)) {
+        return [];
+    }
+
+    return [...new Set(postcodes.map(normalizeOptionalString).filter(Boolean))];
+}
+
+function normalizePopulation(value) {
+    if (value === null || value === undefined || value === "") {
+        return null;
+    }
+
+    const population = Number(value);
+    return Number.isFinite(population) && population >= 0 ? population : null;
+}
+
+function normalizeOptionalString(value) {
+    if (value === null || value === undefined) {
+        return null;
+    }
+
+    const normalizedValue = String(value).trim();
+    return normalizedValue || null;
 }
 
 function readJson(key, fallbackValue) {

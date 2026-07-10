@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.0-multi-api-foundation";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.1-search-geocoding-reliability-release";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",
