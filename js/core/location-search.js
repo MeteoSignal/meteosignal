@@ -1,4 +1,5 @@
 const INACTIVE_POPULATED_CODES = new Set(["PPLH", "PPLQ", "PPLW"]);
+const SEMANTIC_DUPLICATE_DISTANCE_KM = 1;
 const COUNTRY_ALIAS_OVERRIDES = new Map([
     ["france", "FR"],
     ["etats unis", "US"],
@@ -62,7 +63,7 @@ export function shouldRequestSupplemental(plan, primaryResults) {
 }
 
 export function rankLocationResults(results, plan) {
-    const uniqueResults = deduplicateLocations(results);
+    const uniqueResults = deduplicateLocations(results, plan);
 
     return uniqueResults
         .map((location, providerIndex) => ({ location, providerIndex }))
@@ -354,19 +355,129 @@ function normalizePopulation(value) {
     return Number.isFinite(population) && population > 0 ? population : 0;
 }
 
-function deduplicateLocations(results) {
-    const seen = new Set();
+function deduplicateLocations(results, plan) {
+    const uniqueLocations = [];
 
-    return (Array.isArray(results) ? results : []).filter((location) => {
-        const key = location?.id
-            ? `id:${location.id}`
-            : `geo:${Number(location?.latitude).toFixed(5)},${Number(location?.longitude).toFixed(5)}`;
+    (Array.isArray(results) ? results : []).forEach((location, providerIndex) => {
+        const candidate = { location, providerIndex };
+        const duplicateIndex = uniqueLocations.findIndex((existing) => (
+            hasSameProviderId(existing.location, location)
+            || areSemanticallyEquivalent(existing.location, location)
+        ));
 
-        if (seen.has(key)) {
-            return false;
+        if (duplicateIndex === -1) {
+            uniqueLocations.push(candidate);
+            return;
         }
 
-        seen.add(key);
-        return true;
+        if (isPreferredDuplicate(candidate, uniqueLocations[duplicateIndex], plan)) {
+            uniqueLocations[duplicateIndex] = candidate;
+        }
     });
+
+    return uniqueLocations.map(({ location }) => location);
+}
+
+function hasSameProviderId(left, right) {
+    return left?.id !== null
+        && left?.id !== undefined
+        && right?.id !== null
+        && right?.id !== undefined
+        && String(left.id) === String(right.id);
+}
+
+function areSemanticallyEquivalent(left, right) {
+    if (
+        normalizeSearchText(left?.name) !== normalizeSearchText(right?.name)
+        || getCountryKey(left) !== getCountryKey(right)
+        || normalizeSearchText(left?.admin1) !== normalizeSearchText(right?.admin1)
+        || String(left?.featureCode ?? "").toUpperCase() !== String(right?.featureCode ?? "").toUpperCase()
+    ) {
+        return false;
+    }
+
+    const distanceKm = getCoordinateDistanceKm(left, right);
+    return distanceKm !== null && distanceKm <= SEMANTIC_DUPLICATE_DISTANCE_KM;
+}
+
+function getCountryKey(location) {
+    const countryCode = String(location?.countryCode ?? "").trim().toUpperCase();
+    return countryCode || normalizeSearchText(location?.country);
+}
+
+function getCoordinateDistanceKm(left, right) {
+    const coordinateValues = [
+        left?.latitude,
+        left?.longitude,
+        right?.latitude,
+        right?.longitude
+    ];
+
+    if (coordinateValues.some((value) => value === null || value === undefined || value === "")) {
+        return null;
+    }
+
+    const [leftLatitude, leftLongitude, rightLatitude, rightLongitude] = coordinateValues.map(Number);
+
+    if (![leftLatitude, leftLongitude, rightLatitude, rightLongitude].every(Number.isFinite)) {
+        return null;
+    }
+
+    const toRadians = (value) => value * (Math.PI / 180);
+    const latitudeDelta = toRadians(rightLatitude - leftLatitude);
+    const longitudeDelta = toRadians(rightLongitude - leftLongitude);
+    const startLatitude = toRadians(leftLatitude);
+    const endLatitude = toRadians(rightLatitude);
+    const haversine = (
+        Math.sin(latitudeDelta / 2) ** 2
+        + Math.cos(startLatitude)
+            * Math.cos(endLatitude)
+            * Math.sin(longitudeDelta / 2) ** 2
+    );
+
+    return 6371 * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+}
+
+function isPreferredDuplicate(candidate, existing, plan) {
+    const candidateRank = getLocationRank(candidate.location, candidate.providerIndex, plan).slice(0, -1);
+    const existingRank = getLocationRank(existing.location, existing.providerIndex, plan).slice(0, -1);
+
+    for (let index = 0; index < candidateRank.length; index += 1) {
+        if (candidateRank[index] !== existingRank[index]) {
+            return candidateRank[index] > existingRank[index];
+        }
+    }
+
+    const candidateCompleteness = getLocationCompleteness(candidate.location);
+    const existingCompleteness = getLocationCompleteness(existing.location);
+
+    if (candidateCompleteness !== existingCompleteness) {
+        return candidateCompleteness > existingCompleteness;
+    }
+
+    return candidate.providerIndex < existing.providerIndex;
+}
+
+function getLocationCompleteness(location) {
+    const populatedFields = [
+        location?.id,
+        location?.name,
+        location?.country,
+        location?.countryCode,
+        location?.admin1,
+        location?.timezone,
+        location?.featureCode
+    ].filter((value) => value !== null && value !== undefined && value !== "").length;
+    const hasCoordinates = location?.latitude !== null
+        && location?.latitude !== undefined
+        && location?.longitude !== null
+        && location?.longitude !== undefined
+        && Number.isFinite(Number(location.latitude))
+        && Number.isFinite(Number(location.longitude));
+    const hasPostcodes = Array.isArray(location?.postcodes) && location.postcodes.length > 0;
+    const hasPopulation = location?.population !== null
+        && location?.population !== undefined
+        && Number.isFinite(Number(location.population));
+
+    return populatedFields + (hasCoordinates ? 2 : 0) + (hasPostcodes ? 1 : 0) + (hasPopulation ? 1 : 0);
 }

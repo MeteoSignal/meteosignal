@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.1-search-geocoding-reliability-release";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.1-search-geocoding-reliability-hotfix";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",

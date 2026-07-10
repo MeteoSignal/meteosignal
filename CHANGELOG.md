@@ -22,11 +22,16 @@ Le projet suit le versionnement sémantique.
 - Sélection automatique limitée aux correspondances exactes, uniques et habitées lors d'une validation explicite.
 - Compatibilité maintenue avec les anciennes villes favorites dépourvues des nouveaux champs.
 
+### Corrigé
+
+- Déduplication sémantique des lieux équivalents après fusion des recherches avec et sans tiret.
+- Liste de suggestions replacée au-dessus du bloc des favoris sur smartphone pour rétablir la sélection tactile.
+
 ### Technique
 
 - Temporisation de recherche fixée à 300 ms avec annulation des requêtes obsolètes.
 - Maximum strict de deux appels de géocodage par recherche : requête principale et une variante éventuelle.
-- Cache PWA passé à `v1.4.1-search-geocoding-reliability-release` sans précache des réponses API.
+- Cache PWA passé à `v1.4.1-search-geocoding-reliability-hotfix` sans précache des réponses API.
 - Tests unitaires de classement, géocodage, annulation, ambiguïté, stockage historique et protection contre les réponses obsolètes.
 
 ---

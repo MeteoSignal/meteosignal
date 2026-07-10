@@ -21,6 +21,17 @@ test("Saint Gaudens utilise au maximum une variante complémentaire", async () =
     assert.deepEqual(results[0].postcodes.slice(0, 2), ["31800", "31801 CEDEX"]);
 });
 
+test("la fusion retire le doublon semantique du site historique", async () => {
+    const results = await searchLocations("Saint Gaudens", {
+        fetchImpl: createFixtureFetch([])
+    });
+    const historicSites = results.filter(({ featureCode }) => featureCode === "PRK");
+
+    assert.equal(historicSites.length, 1);
+    assert.equal(historicSites[0].id, 5092119);
+    assert.equal(historicSites[0].name, "Saint Gaudens National Historic Site");
+});
+
 test("Saint-Gaudens exact ne déclenche aucune requête complémentaire", async () => {
     const requests = [];
     const results = await searchLocations("Saint-Gaudens", {

@@ -4,7 +4,7 @@ import {
     readFavorites,
     removeFavoriteLocation,
     toggleFavoriteLocation
-} from "../core/storage.js?v=1.4.1-search-geocoding-reliability-release";
+} from "../core/storage.js?v=1.4.1-search-geocoding-reliability-hotfix";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";
