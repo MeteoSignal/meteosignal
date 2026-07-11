@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "fr.meteosignal.app",
+      "sha256_cert_fingerprints": [
+        "4C:44:88:8F:DE:78:E3:C8:9B:3B:1E:47:E9:D7:A0:B5:D1:B6:79:3E:A7:F8:D3:EF:87:D0:FA:E6:66:63:79:48"
+      ]
+    }
+  }
+]
