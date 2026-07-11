@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = "v1.4.1-search-geocoding-reliability-hotfix";
+const CACHE_VERSION = "v1.4.1-pwa-maskable-icon";
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -87,6 +87,7 @@ const STATIC_ASSETS = [
     "./assets/backgrounds/night.jpg",
     "./assets/logo/icon-192.png",
     "./assets/logo/icon-512.png",
+    "./assets/logo/icon-maskable-512.png",
     "./assets/logo/favicon-32.png",
     "./assets/logo/favicon-16.png",
     "./assets/logo/logo-meteosignal-sans-slogan.png",
