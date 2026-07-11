@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = "v1.4.1-w3c-combobox-validation";
+const CACHE_VERSION = "v1.4.1-privacy-policy";
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -11,6 +11,7 @@ const WEATHER_API_HOSTS = new Set([
 const STATIC_ASSETS = [
     "./",
     "./index.html",
+    "./confidentialite.html",
     "./manifest.json",
     "./pwa.js",
     "./pwa.js?v=1.4.1-search-geocoding-reliability-hotfix",
@@ -166,8 +167,14 @@ async function handleNavigation(request) {
         // The cached app shell takes over; weather data remains network-only.
     }
 
-    const cachedPage = await caches.match("./index.html");
-    return cachedPage ?? createOfflineResponse();
+    const cachedPage = await caches.match(request);
+
+    if (cachedPage) {
+        return cachedPage;
+    }
+
+    const cachedAppShell = await caches.match("./index.html");
+    return cachedAppShell ?? createOfflineResponse();
 }
 
 async function handleStaticAsset(request) {

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Règles de confidentialité du site et de l’application Android MeteoSignal.">
+    <meta name="theme-color" content="#07182c">
+
+    <title>Règles de confidentialité - MeteoSignal</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
+
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background: #03101f;
+            color: #f2f8ff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(0, 191, 255, 0.16), transparent 32rem),
+                radial-gradient(circle at 90% 30%, rgba(20, 95, 190, 0.18), transparent 36rem),
+                linear-gradient(145deg, #03101f, #07182c 55%, #08233f);
+            line-height: 1.7;
+        }
+
+        a {
+            color: #63ddff;
+            text-underline-offset: 0.2em;
+        }
+
+        a:hover {
+            color: #b6f1ff;
+        }
+
+        a:focus-visible {
+            border-radius: 4px;
+            outline: 3px solid #ffdb63;
+            outline-offset: 4px;
+        }
+
+        .skip-link {
+            position: fixed;
+            z-index: 10;
+            top: 12px;
+            left: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #03101f;
+            font-weight: 700;
+            transform: translateY(-160%);
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        .page-header,
+        .page-main,
+        .page-footer {
+            width: min(920px, calc(100% - 32px));
+            margin-inline: auto;
+        }
+
+        .page-header {
+            padding: 38px 0 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .brand img {
+            width: min(270px, 68vw);
+            height: auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            margin-top: 24px;
+            font-weight: 700;
+        }
+
+        .privacy-card {
+            padding: clamp(24px, 5vw, 54px);
+            border: 1px solid rgba(119, 218, 255, 0.24);
+            border-radius: 28px;
+            background: rgba(5, 25, 47, 0.88);
+            box-shadow:
+                0 28px 80px rgba(0, 0, 0, 0.34),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(18px);
+        }
+
+        h1,
+        h2 {
+            line-height: 1.25;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: clamp(2rem, 7vw, 3.5rem);
+        }
+
+        h2 {
+            margin: 40px 0 12px;
+            color: #9eeaff;
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
+        }
+
+        p,
+        li {
+            color: #d6e7f7;
+        }
+
+        strong {
+            color: #ffffff;
+        }
+
+        address {
+            color: #d6e7f7;
+            font-style: normal;
+        }
+
+        .intro {
+            font-size: 1.08rem;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        .meta span {
+            padding: 8px 13px;
+            border: 1px solid rgba(99, 221, 255, 0.2);
+            border-radius: 999px;
+            background: rgba(99, 221, 255, 0.08);
+            color: #c9f4ff;
+            font-size: 0.92rem;
+        }
+
+        .notice {
+            margin: 26px 0;
+            padding: 18px 20px;
+            border-left: 4px solid #49d7ff;
+            border-radius: 12px;
+            background: rgba(73, 215, 255, 0.08);
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+        .page-footer {
+            padding: 28px 0 42px;
+            color: #91abc2;
+            text-align: center;
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 600px) {
+            .page-header {
+                padding-top: 24px;
+            }
+
+            .privacy-card {
+                border-radius: 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="page-header">
+        <a class="brand" href="./" aria-label="Retour à l’accueil de MeteoSignal">
+            <img
+                src="assets/logo/logo-meteosignal-sans-slogan.png"
+                alt="MeteoSignal">
+        </a>
+
+        <br>
+
+        <a class="back-link" href="./">← Retour à MeteoSignal</a>
+    </header>
+
+    <main id="contenu" class="page-main">
+        <article class="privacy-card">
+            <h1>Règles de confidentialité</h1>
+
+            <p class="intro">
+                Cette page explique de manière transparente comment le site et
+                l’application Android MeteoSignal utilisent les informations
+                nécessaires à leur fonctionnement.
+            </p>
+
+            <div class="meta" role="group" aria-label="Informations principales">
+                <span>MeteoSignal</span>
+                <span>Application Android : fr.meteosignal.app</span>
+                <span>Dernière mise à jour : 11 juillet 2026</span>
+            </div>
+
+            <p class="notice">
+                <strong>En résumé :</strong> MeteoSignal ne crée aucun compte,
+                n’affiche aucune publicité, ne vend aucune donnée personnelle et
+                n’utilise aucun outil de suivi publicitaire.
+            </p>
+
+            <section aria-labelledby="responsable">
+                <h2 id="responsable">1. Responsable de l’application</h2>
+                <p>
+                    MeteoSignal est éditée par <strong>Yoann Bourillon</strong>.
+                </p>
+                <address>
+                    Pour toute question relative à la confidentialité :
+                    <a href="mailto:bourillon.yoann@gmail.com">
+                        bourillon.yoann@gmail.com
+                    </a>
+                </address>
+            </section>
+
+            <section aria-labelledby="donnees">
+                <h2 id="donnees">2. Données utilisées</h2>
+                <p>
+                    Selon les fonctions choisies, MeteoSignal utilise une ville,
+                    un code postal, un texte de recherche ou des coordonnées
+                    géographiques. Ces informations permettent de demander les
+                    prévisions météo locales, la qualité de l’air et les
+                    informations astronomiques.
+                </p>
+                <p>
+                    MeteoSignal ne possède actuellement aucune base de données
+                    personnelle et ne constitue aucun profil utilisateur.
+                </p>
+            </section>
+
+            <section aria-labelledby="geolocalisation">
+                <h2 id="geolocalisation">3. Géolocalisation</h2>
+                <p>
+                    La géolocalisation est facultative. Elle est utilisée
+                    uniquement lorsque l’utilisateur choisit « Utiliser ma
+                    position » et autorise l’accès demandé par son appareil.
+                </p>
+                <p>
+                    Les coordonnées obtenues servent à fournir la météo, la
+                    qualité de l’air et les informations astronomiques de la
+                    zone concernée. L’utilisateur peut refuser ou retirer cette
+                    autorisation et rechercher une ville manuellement.
+                </p>
+            </section>
+
+            <section aria-labelledby="recherche">
+                <h2 id="recherche">4. Recherche de villes</h2>
+                <p>
+                    Les termes saisis dans le champ de recherche sont transmis
+                    au service de géocodage Open-Meteo afin de proposer des lieux
+                    correspondants. La météo active ne change qu’après la
+                    sélection ou la validation d’un lieu.
+                </p>
+            </section>
+
+            <section aria-labelledby="stockage">
+                <h2 id="stockage">5. Données stockées localement</h2>
+                <p>
+                    La ville active et les villes favorites sont enregistrées
+                    dans le <code>localStorage</code> de l’appareil. Si la
+                    position actuelle devient la ville active, ses coordonnées
+                    peuvent également être conservées dans ce stockage local.
+                </p>
+                <p>
+                    Le cache de la PWA conserve des fichiers statiques
+                    nécessaires au chargement et au fonctionnement hors ligne.
+                    Les réponses des API météo ne sont pas enregistrées dans ce
+                    précache.
+                </p>
+            </section>
+
+            <section aria-labelledby="services">
+                <h2 id="services">6. Services externes</h2>
+                <p>
+                    MeteoSignal utilise Open-Meteo pour le géocodage, les
+                    prévisions météo et la qualité de l’air. Les coordonnées ou
+                    les termes nécessaires à la requête sont transmis aux
+                    services concernés.
+                </p>
+                <p>
+                    Open-Meteo indique que son API gratuite peut traiter des
+                    adresses IP pour des raisons techniques et conserver
+                    temporairement des journaux de dépannage pouvant contenir
+                    des coordonnées géographiques.
+                </p>
+                <p>
+                    Consultez les
+                    <a
+                        href="https://open-meteo.com/en/terms"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        conditions et règles de confidentialité d’Open-Meteo
+                    </a>.
+                </p>
+                <p>
+                    MeteoSignal est hébergé par GitHub Pages. GitHub peut traiter
+                    des données techniques, notamment l’adresse IP, des
+                    informations sur l’appareil et les requêtes, conformément à
+                    ses propres règles de confidentialité.
+                </p>
+            </section>
+
+            <section aria-labelledby="finalites">
+                <h2 id="finalites">7. Finalités</h2>
+                <p>Les informations utilisées servent uniquement à :</p>
+                <ul>
+                    <li>rechercher et sélectionner un lieu ;</li>
+                    <li>afficher la météo actuelle et les prévisions ;</li>
+                    <li>afficher la qualité de l’air et l’astronomie locale ;</li>
+                    <li>mémoriser localement la ville active et les favoris ;</li>
+                    <li>assurer la sécurité et le fonctionnement du service.</li>
+                </ul>
+            </section>
+
+            <section aria-labelledby="conservation">
+                <h2 id="conservation">8. Conservation et suppression</h2>
+                <p>
+                    Les données locales restent sur l’appareil jusqu’à leur
+                    modification, l’effacement des données du site ou de
+                    l’application, ou la désinstallation de l’application.
+                    Les favoris peuvent aussi être retirés depuis MeteoSignal.
+                </p>
+                <p>
+                    Les éventuelles données techniques traitées par Open-Meteo
+                    ou GitHub sont soumises aux durées de conservation définies
+                    par ces fournisseurs.
+                </p>
+            </section>
+
+            <section aria-labelledby="securite">
+                <h2 id="securite">9. Sécurité</h2>
+                <p>
+                    Les échanges avec MeteoSignal, GitHub Pages et les API
+                    externes configurées utilisent HTTPS. Aucun service Internet
+                    ne peut toutefois garantir une sécurité absolue.
+                </p>
+            </section>
+
+            <section aria-labelledby="droits">
+                <h2 id="droits">10. Droits et choix de l’utilisateur</h2>
+                <p>L’utilisateur peut à tout moment :</p>
+                <ul>
+                    <li>refuser ou retirer l’autorisation de géolocalisation ;</li>
+                    <li>rechercher manuellement une ville ;</li>
+                    <li>ajouter ou retirer des villes favorites ;</li>
+                    <li>effacer les données locales dans son navigateur ou les réglages Android ;</li>
+                    <li>désinstaller l’application.</li>
+                </ul>
+                <p>
+                    Toute question peut être adressée à
+                    <a href="mailto:bourillon.yoann@gmail.com">
+                        bourillon.yoann@gmail.com
+                    </a>.
+                </p>
+            </section>
+
+            <section aria-labelledby="publicite">
+                <h2 id="publicite">11. Publicité, achats et comptes</h2>
+                <p>
+                    MeteoSignal ne propose actuellement aucune publicité, aucun
+                    achat intégré, aucun abonnement et aucune création de compte.
+                    L’application n’utilise aucun outil de suivi publicitaire et
+                    ne vend aucune donnée personnelle.
+                </p>
+            </section>
+
+            <section aria-labelledby="evolution">
+                <h2 id="evolution">12. Évolution des règles de confidentialité</h2>
+                <p>
+                    Ces règles pourront évoluer si MeteoSignal ajoute de
+                    nouvelles fonctionnalités, de nouveaux fournisseurs ou de
+                    nouveaux traitements. La date de mise à jour sera alors
+                    modifiée sur cette page.
+                </p>
+            </section>
+        </article>
+    </main>
+
+    <footer class="page-footer">
+        MeteoSignal © 2026 - Prévisions et alertes météo
+    </footer>
+</body>
+</html>
