@@ -35,6 +35,7 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
     const { api } = createServiceWorkerHarness();
     const packageVersion = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).version;
     const configSource = fs.readFileSync(path.join(ROOT, "config", "config.js"), "utf8");
+    const indexSource = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
     const configVersion = configSource.match(/version:\s*"(\d+\.\d+\.\d+)"/)?.[1];
     const versionedSources = [
         path.join(ROOT, "index.html"),
@@ -49,7 +50,8 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
-    assert.equal(api.CACHE_VERSION, "v1.4.1-p1b2-css-loading");
+    assert.equal(api.CACHE_VERSION, "v1.4.1-p1b2-weather-cancellation");
+    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1b2-weather-cancellation"/);
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
     assert.ok(cacheBusterVersions.length > 0);
     assert.deepEqual(new Set(cacheBusterVersions), new Set([packageVersion]));
@@ -180,8 +182,9 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
             "meteosignal-static-v1.4.0",
             "meteosignal-static-v1.4.1-pwa-reliability",
             "meteosignal-static-v1.4.1-p1b-assets",
+            "meteosignal-static-v1.4.1-p1b2-css-loading",
             "autre-application",
-            "meteosignal-static-v1.4.1-p1b2-css-loading"
+            "meteosignal-static-v1.4.1-p1b2-weather-cancellation"
         ]
     });
     let activation;
@@ -192,7 +195,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
     assert.deepEqual(harness.deletedCaches, [
         "meteosignal-static-v1.4.0",
         "meteosignal-static-v1.4.1-pwa-reliability",
-        "meteosignal-static-v1.4.1-p1b-assets"
+        "meteosignal-static-v1.4.1-p1b-assets",
+        "meteosignal-static-v1.4.1-p1b2-css-loading"
     ]);
     assert.equal(harness.claimCalls.length, 1);
 });

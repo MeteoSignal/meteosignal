@@ -1,6 +1,6 @@
 const APP_VERSION = "1.4.1";
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = `v${APP_VERSION}-p1b2-css-loading`;
+const CACHE_VERSION = `v${APP_VERSION}-p1b2-weather-cancellation`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
