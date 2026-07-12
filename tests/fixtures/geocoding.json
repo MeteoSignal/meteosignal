@@ -1,0 +1,134 @@
+{
+  "saintGaudensOriginal": [
+    {
+      "id": 5092119,
+      "name": "Saint Gaudens National Historic Site",
+      "latitude": 43.4984,
+      "longitude": -72.3734,
+      "feature_code": "PRK",
+      "country_code": "US",
+      "country": "États-Unis",
+      "admin1": "New Hampshire",
+      "timezone": "America/New_York"
+    }
+  ],
+  "saintGaudensHyphen": [
+    {
+      "id": 2980045,
+      "name": "Saint-Gaudens",
+      "latitude": 43.1081,
+      "longitude": 0.7232,
+      "feature_code": "PPLA3",
+      "country_code": "FR",
+      "country": "France",
+      "admin1": "Occitanie",
+      "timezone": "Europe/Paris",
+      "population": 12193,
+      "postcodes": ["31800", "31801 CEDEX"]
+    },
+    {
+      "id": 6694777,
+      "name": "Saint-Gaudens - Montrejeau",
+      "latitude": 43.1086,
+      "longitude": 0.6194,
+      "feature_code": "AIRP",
+      "country_code": "FR",
+      "country": "France",
+      "admin1": "Occitanie",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "id": 9000001,
+      "name": "Saint-Gaudens National Historic Site",
+      "latitude": 43.4986,
+      "longitude": -72.3732,
+      "feature_code": "PRK",
+      "country_code": "US",
+      "country": "États-Unis",
+      "admin1": "New Hampshire",
+      "timezone": "America/New_York"
+    }
+  ],
+  "postal31800": [
+    {
+      "id": 2980045,
+      "name": "Saint-Gaudens",
+      "latitude": 43.1081,
+      "longitude": 0.7232,
+      "feature_code": "PPLA3",
+      "country_code": "FR",
+      "country": "France",
+      "admin1": "Occitanie",
+      "timezone": "Europe/Paris",
+      "population": 12193,
+      "postcodes": ["31800"]
+    },
+    {
+      "id": 3130244,
+      "name": "Altsasu",
+      "latitude": 42.8999,
+      "longitude": -2.1652,
+      "feature_code": "PPL",
+      "country_code": "ES",
+      "country": "Espagne",
+      "admin1": "Navarre",
+      "timezone": "Europe/Madrid",
+      "population": 7407,
+      "postcodes": ["31800"]
+    },
+    {
+      "id": 2968566,
+      "name": "Villeneuve-de-Rivière",
+      "latitude": 43.1201,
+      "longitude": 0.6651,
+      "feature_code": "PPL",
+      "country_code": "FR",
+      "country": "France",
+      "admin1": "Occitanie",
+      "timezone": "Europe/Paris",
+      "population": 1552,
+      "postcodes": ["31800"]
+    }
+  ],
+  "toulouse": [
+    {
+      "id": 2972315,
+      "name": "Toulouse",
+      "latitude": 43.6043,
+      "longitude": 1.4437,
+      "feature_code": "PPLA",
+      "country_code": "FR",
+      "country": "France",
+      "admin1": "Occitanie",
+      "timezone": "Europe/Paris",
+      "population": 493465,
+      "postcodes": ["31000"]
+    }
+  ],
+  "parisHomonyms": [
+    {
+      "id": 2988507,
+      "name": "Paris",
+      "latitude": 48.8534,
+      "longitude": 2.3488,
+      "feature_code": "PPLC",
+      "country_code": "FR",
+      "country": "France",
+      "admin1": "Île-de-France",
+      "timezone": "Europe/Paris",
+      "population": 2138551
+    },
+    {
+      "id": 4717560,
+      "name": "Paris",
+      "latitude": 33.6609,
+      "longitude": -95.5555,
+      "feature_code": "PPLA2",
+      "country_code": "US",
+      "country": "États-Unis",
+      "admin1": "Texas",
+      "timezone": "America/Chicago",
+      "population": 24782
+    }
+  ]
+}

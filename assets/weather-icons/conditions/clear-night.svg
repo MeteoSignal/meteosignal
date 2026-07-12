@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title" shape-rendering="geometricPrecision">
+  <title id="title">Clear night</title>
+  <defs>
+    <linearGradient id="moon" x1="30" x2="72" y1="20" y2="76">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".55" stop-color="#bdefff"/>
+      <stop offset="1" stop-color="#5bc9ff"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation=".9" flood-color="#2ff7ff" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <circle cx="48" cy="48" r="33" fill="#2ff7ff" opacity=".07"/>
+  <path d="M63 18c-16 5-27 20-27 36 0 13 8 25 20 30-22 1-41-16-41-38 0-21 17-38 38-38 4 0 7 .4 10 1Z" fill="url(#moon)" stroke="#eaffff" stroke-width="1" filter="url(#glow)"/>
+  <g fill="#dff9ff" opacity=".92">
+    <circle cx="68" cy="25" r="2.1"/>
+    <circle cx="74" cy="42" r="1.5"/>
+    <circle cx="30" cy="22" r="1.4"/>
+    <circle cx="27" cy="70" r="1.8"/>
+  </g>
+</svg>

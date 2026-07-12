@@ -1,59 +1,30 @@
+# TODO
 
-# ✅ TODO
+## Terminé jusqu'à la v1.4.1
 
-## 🎯 Sprint 1 — Dashboard (v0.2.0)
+- [x] Fondation stable v1.0 et identité visuelle officielle.
+- [x] Expérience mobile, prévisions horaires 72 h et icônes météo SVG.
+- [x] Alertes météo locales indicatives.
+- [x] Favoris et villes enregistrées.
+- [x] Fondation multi-fournisseur avec provenance des données.
+- [x] Recherche géographique avancée et correctifs de géocodage.
+- [x] Actualisation de la documentation de référence v1.4.1.
 
-### Interface
+## P0 - Publication
 
-* [ ] Refonte complète du tableau de bord
-* [ ] Ajout de la date complète
-* [ ] Affichage de la pression atmosphérique
-* [ ] Affichage de la température ressentie
-* [ ] Affichage de l'indice UV
-* [ ] Affichage du lever et coucher du soleil
-* [ ] Amélioration du responsive (smartphone, tablette, PC, TV)
+- [ ] Finaliser le certificat HTTPS de `meteosignal.fr` et activer HTTPS forcé.
+- [ ] Vérifier que `https://meteosignal.fr/sw.js` répond directement, sans redirection.
+- [ ] Confirmer le remplacement de l'ancien service worker et des anciens caches sur les installations existantes.
 
----
+## P1 - Validation réelle
 
-## 🚀 Sprint 2 — Localisation
+- [ ] Valider l'installation PWA sur Chrome, Edge, Android et iOS.
+- [ ] Tester la géolocalisation réelle après activation HTTPS.
+- [ ] Tester l'interface sur smartphones, tablettes et grands écrans physiques.
+- [ ] Relire, valider et publier la documentation v1.4.1.
 
-* [ ] Géolocalisation
-* [ ] Recherche de ville
-* [ ] Gestion des favoris
+## P2 - Maintenance
 
----
-
-## 🌍 Sprint 3 — Personnalisation
-
-* [ ] Thème clair
-* [ ] Thème sombre
-* [ ] Paramètres utilisateur
-* [ ] Langues
-
----
-
-## 🛰️ Sprint 4 — Météo avancée
-
-* [ ] Plusieurs fournisseurs météo
-* [ ] Radar météo
-* [ ] Vigilance météo
-* [ ] Qualité de l'air
-
----
-
-## 📺 Sprint 5 — Plateformes
-
-* [ ] Optimisation Android
-* [ ] Optimisation TV
-* [ ] Optimisation PC
-* [ ] Publication Play Store
-
----
-
-## 💡 Idées
-
-* [ ] Widget Android
-* [ ] Widget Windows
-* [ ] Notifications météo
-* [ ] Animations météo
-* [ ] Cartes interactives
+- [ ] Rationaliser le précache statique versionné et non versionné.
+- [ ] Fournir une véritable icône PWA `maskable` avec zone de sécurité vérifiée.
+- [ ] Étudier une automatisation CI légère pour les tests, la syntaxe et les liens documentaires.

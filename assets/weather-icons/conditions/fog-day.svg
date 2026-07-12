@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title" shape-rendering="geometricPrecision">
+  <title id="title">Fog</title>
+  <defs>
+    <linearGradient id="cloud" x1="20" x2="78" y1="30" y2="58">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".58" stop-color="#d7f7ff"/>
+      <stop offset="1" stop-color="#8adfff"/>
+    </linearGradient>
+  </defs>
+  <circle cx="48" cy="48" r="33" fill="#2ff7ff" opacity=".06"/>
+  <path d="M26 58h40c10 0 18-6 18-15 0-8-7-14-17-14h-2c-4-9-13-15-24-15-13 0-24 9-27 21-8 2-13 7-13 14 0 6 6 9 25 9Z" fill="url(#cloud)" stroke="#eafcff" stroke-width="1" opacity=".94"/>
+  <g fill="none" stroke-linecap="round" stroke-width="4">
+    <path d="M16 68h52" stroke="#d7f7ff" opacity=".82"/>
+    <path d="M29 78h51" stroke="#8adfff" opacity=".66"/>
+    <path d="M13 87h41" stroke="#2ff7ff" opacity=".48"/>
+  </g>
+</svg>
