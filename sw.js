@@ -1,6 +1,6 @@
 const APP_VERSION = "1.4.1";
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = `v${APP_VERSION}-p1b-assets`;
+const CACHE_VERSION = `v${APP_VERSION}-p1b2-css-loading`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -14,7 +14,6 @@ const ESSENTIAL_ASSETS = [
     "./index.html",
     "./pwa.js",
     "./config/config.js",
-    "./css/style.css",
     "./css/tokens.css",
     "./css/base.css",
     "./css/layout.css",
