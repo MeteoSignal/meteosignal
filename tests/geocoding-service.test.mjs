@@ -2,7 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-import { searchLocations } from "../js/services/geocoding.service.js";
+import {
+    normalizeGeocodingResults,
+    searchLocations
+} from "../js/services/geocoding.service.js";
 
 const fixtureUrl = new URL("./fixtures/geocoding.json", import.meta.url);
 const fixture = JSON.parse(await readFile(fixtureUrl, "utf8"));
@@ -121,6 +124,35 @@ test("AbortSignal annule immédiatement la recherche active", async () => {
 
     controller.abort();
     await assert.rejects(promise, { name: "AbortError" });
+});
+
+test("les resultats de geocodage incomplets ou hors bornes sont ignores", () => {
+    const results = normalizeGeocodingResults([
+        null,
+        {},
+        { name: "Sans coordonnées" },
+        { name: "Latitude invalide", latitude: 91, longitude: 1 },
+        { name: "Longitude invalide", latitude: 43, longitude: -181 },
+        { name: "Chaînes", latitude: "43", longitude: "1" },
+        { name: "Valide", latitude: 43.6, longitude: 1.44, country: "France" }
+    ]);
+
+    assert.equal(results.length, 1);
+    assert.equal(results[0].name, "Valide");
+    assert.equal(results[0].label, "Valide, France");
+    assert.deepEqual(normalizeGeocodingResults({ results: [] }), []);
+});
+
+test("une reponse JSON geocodage inattendue devient une liste vide", async () => {
+    const results = await searchLocations("Toulouse", {
+        fetchImpl: async () => ({
+            ok: true,
+            status: 200,
+            json: async () => ({ results: { name: "Toulouse" } })
+        })
+    });
+
+    assert.deepEqual(results, []);
 });
 
 function createFixtureFetch(requests) {

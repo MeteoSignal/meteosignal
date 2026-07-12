@@ -105,6 +105,7 @@ export async function fetchOpenMeteoForecast(location, options = {}) {
 }
 
 export function buildForecastUrl(location, options = {}) {
+    assertValidLocation(location);
     const url = new URL(APP_CONFIG.api.openMeteo.forecastUrl);
     const timezone = location.timezone ?? "auto";
     const forecastDays = options.forecastDays ?? APP_CONFIG.api.openMeteo.forecastDays ?? 7;
@@ -127,9 +128,11 @@ export function buildForecastUrl(location, options = {}) {
 }
 
 export function normalizeOpenMeteoForecast(rawData, location = {}, context = {}) {
-    const current = rawData.current ?? {};
-    const currentIsDay = current.is_day !== 0;
-    const daily = normalizeDailyForecast(rawData.daily, currentIsDay);
+    const response = isRecord(rawData) ? rawData : {};
+    const current = normalizeCurrentWeather(response.current);
+    const daily = normalizeDailyForecast(response.daily);
+    const hourly = normalizeHourlyForecast(response.hourly, current?.time, daily);
+    const astronomy = normalizeAstronomy(daily[0]);
     const fetchedAt = context.fetchedAt ?? new Date().toISOString();
     const sourceContext = {
         type: "forecast",
@@ -139,22 +142,34 @@ export function normalizeOpenMeteoForecast(rawData, location = {}, context = {})
 
     return createWeatherState({
         provider: openMeteoProvider.id,
-        location: normalizeLocation(rawData, location),
-        current: normalizeCurrentWeather(current),
-        hourly: normalizeHourlyForecast(rawData.hourly, current.time, daily),
+        location: normalizeLocation(response, location),
+        current,
+        hourly,
         daily,
-        astronomy: normalizeAstronomy(daily[0]),
-        updatedAt: current.time ?? new Date().toISOString(),
+        astronomy,
+        updatedAt: current?.time ?? fetchedAt,
         sources: {
-            current: createOpenMeteoSource(sourceContext),
-            hourly: createOpenMeteoSource(sourceContext),
-            daily: createOpenMeteoSource(sourceContext)
+            current: current ? createOpenMeteoSource(sourceContext) : null,
+            hourly: hourly.length > 0 ? createOpenMeteoSource(sourceContext) : null,
+            daily: daily.length > 0 ? createOpenMeteoSource(sourceContext) : null
         },
         errors: []
     });
 }
 
 function normalizeLocation(rawData, location) {
+    const responseLatitude = validCoordinate(rawData.latitude, -90, 90);
+    const responseLongitude = validCoordinate(rawData.longitude, -180, 180);
+    const requestedLatitude = validCoordinate(location.latitude, -90, 90);
+    const requestedLongitude = validCoordinate(location.longitude, -180, 180);
+    const hasValidResponseCoordinates = responseLatitude !== null && responseLongitude !== null;
+    const latitude = hasValidResponseCoordinates ? responseLatitude : requestedLatitude;
+    const longitude = hasValidResponseCoordinates ? responseLongitude : requestedLongitude;
+
+    if (latitude === null || longitude === null) {
+        return null;
+    }
+
     return {
         id: location.id ?? null,
         name: location.name ?? "Position actuelle",
@@ -162,26 +177,39 @@ function normalizeLocation(rawData, location) {
         country: location.country ?? null,
         countryCode: location.countryCode ?? null,
         admin1: location.admin1 ?? null,
-        latitude: Number(rawData.latitude ?? location.latitude),
-        longitude: Number(rawData.longitude ?? location.longitude),
-        timezone: rawData.timezone ?? location.timezone ?? "auto",
+        latitude,
+        longitude,
+        timezone: normalizeOptionalString(rawData.timezone)
+            ?? normalizeOptionalString(location.timezone)
+            ?? "auto",
         source: location.source ?? "provider"
     };
 }
 
 function normalizeCurrentWeather(current) {
+    if (!isRecord(current) || !isValidLocalDateTime(current.time)) {
+        return null;
+    }
+
+    const temperature = numberOrNull(current.temperature_2m);
+    const weatherCode = numberOrNull(current.weather_code);
+
+    if (temperature === null || weatherCode === null) {
+        return null;
+    }
+
     const condition = getWeatherCondition(current.weather_code, current.is_day !== 0);
 
     return {
         time: current.time ?? null,
-        temperature: numberOrNull(current.temperature_2m),
+        temperature,
         apparentTemperature: numberOrNull(current.apparent_temperature),
         humidity: numberOrNull(current.relative_humidity_2m),
         precipitation: numberOrNull(current.precipitation),
         rain: numberOrNull(current.rain),
         pressure: numberOrNull(current.pressure_msl),
         cloudCover: numberOrNull(current.cloud_cover),
-        weatherCode: numberOrNull(current.weather_code),
+        weatherCode,
         condition,
         isDay: current.is_day !== 0,
         wind: {
@@ -193,32 +221,50 @@ function normalizeCurrentWeather(current) {
 }
 
 function normalizeHourlyForecast(hourly = {}, currentTime = null, daily = []) {
-    const times = hourly.time ?? [];
+    if (!isRecord(hourly) || !Array.isArray(hourly.time)) {
+        return [];
+    }
+
+    const normalizedHours = hourly.time.map((time, index) => normalizeHourlyEntry(hourly, time, index, daily))
+        .filter(Boolean);
+    const times = normalizedHours.map((hour) => hour.time);
     const startIndex = findForecastStartIndex(times, currentTime);
     const forecastHours = APP_CONFIG.api.openMeteo.forecastHours ?? 72;
     const endIndex = Math.min(startIndex + forecastHours, times.length);
-    const hours = [];
+    const selectedHours = normalizedHours.slice(startIndex, endIndex);
 
-    for (let index = startIndex; index < endIndex; index += 1) {
-        const time = times[index];
-        const code = hourly.weather_code?.[index];
-        const isDay = isDayAtTime(time, daily);
+    return selectedHours.map((hour, index) => ({
+        ...hour,
+        isCurrent: index === 0 && isTimeWithinHourlyPeriod(
+            currentTime,
+            hour.time,
+            selectedHours[index + 1]?.time
+        )
+    }));
+}
 
-        hours.push({
-            time,
-            temperature: numberOrNull(hourly.temperature_2m?.[index]),
-            apparentTemperature: numberOrNull(hourly.apparent_temperature?.[index]),
-            precipitationProbability: numberOrNull(hourly.precipitation_probability?.[index]),
-            precipitation: numberOrNull(hourly.precipitation?.[index]),
-            uvIndex: numberOrNull(hourly.uv_index?.[index]),
-            windSpeed: numberOrNull(hourly.wind_speed_10m?.[index]),
-            weatherCode: numberOrNull(code),
-            condition: getWeatherCondition(code, isDay),
-            isDay
-        });
+function normalizeHourlyEntry(hourly, time, index, daily) {
+    const temperature = numberOrNull(hourly.temperature_2m?.[index]);
+    const weatherCode = numberOrNull(hourly.weather_code?.[index]);
+
+    if (!isValidLocalDateTime(time) || temperature === null || weatherCode === null) {
+        return null;
     }
 
-    return hours;
+    const isDay = isDayAtTime(time, daily);
+
+    return {
+        time,
+        temperature,
+        apparentTemperature: numberOrNull(hourly.apparent_temperature?.[index]),
+        precipitationProbability: numberOrNull(hourly.precipitation_probability?.[index]),
+        precipitation: numberOrNull(hourly.precipitation?.[index]),
+        uvIndex: numberOrNull(hourly.uv_index?.[index]),
+        windSpeed: numberOrNull(hourly.wind_speed_10m?.[index]),
+        weatherCode,
+        condition: getWeatherCondition(weatherCode, isDay),
+        isDay
+    };
 }
 
 function isDayAtTime(time, daily = []) {
@@ -226,7 +272,7 @@ function isDayAtTime(time, daily = []) {
         return true;
     }
 
-    const timestamp = new Date(time).getTime();
+    const timestamp = parseLocalDateTime(time);
 
     if (!Number.isFinite(timestamp)) {
         return true;
@@ -241,13 +287,13 @@ function isDayAtTime(time, daily = []) {
     });
 
     if (!matchingDay?.sunrise || !matchingDay?.sunset) {
-        const hour = new Date(time).getHours();
+        const hour = Number(String(time).slice(11, 13));
 
         return hour >= 7 && hour < 20;
     }
 
-    const sunrise = new Date(matchingDay.sunrise).getTime();
-    const sunset = new Date(matchingDay.sunset).getTime();
+    const sunrise = parseLocalDateTime(matchingDay.sunrise);
+    const sunset = parseLocalDateTime(matchingDay.sunset);
 
     if (!Number.isFinite(sunrise) || !Number.isFinite(sunset)) {
         return true;
@@ -256,16 +302,27 @@ function isDayAtTime(time, daily = []) {
     return timestamp >= sunrise && timestamp < sunset;
 }
 
-function normalizeDailyForecast(daily = {}, currentIsDay = true) {
-    const times = daily.time ?? [];
+function normalizeDailyForecast(daily = {}) {
+    if (!isRecord(daily) || !Array.isArray(daily.time)) {
+        return [];
+    }
 
-    return times.map((date, index) => {
-        const code = daily.weather_code?.[index];
+    return daily.time.map((date, index) => {
+        const weatherCode = numberOrNull(daily.weather_code?.[index]);
+        const temperatureMax = numberOrNull(daily.temperature_2m_max?.[index]);
+        const temperatureMin = numberOrNull(daily.temperature_2m_min?.[index]);
+
+        if (!isValidCalendarDate(date)
+            || weatherCode === null
+            || temperatureMax === null
+            || temperatureMin === null) {
+            return null;
+        }
 
         return {
             date,
-            temperatureMax: numberOrNull(daily.temperature_2m_max?.[index]),
-            temperatureMin: numberOrNull(daily.temperature_2m_min?.[index]),
+            temperatureMax,
+            temperatureMin,
             apparentTemperatureMax: numberOrNull(daily.apparent_temperature_max?.[index]),
             apparentTemperatureMin: numberOrNull(daily.apparent_temperature_min?.[index]),
             precipitationSum: numberOrNull(daily.precipitation_sum?.[index]),
@@ -277,14 +334,14 @@ function normalizeDailyForecast(daily = {}, currentIsDay = true) {
             windSpeedMax: numberOrNull(daily.wind_speed_10m_max?.[index]),
             windGustsMax: numberOrNull(daily.wind_gusts_10m_max?.[index]),
             windDirectionDominant: numberOrNull(daily.wind_direction_10m_dominant?.[index]),
-            weatherCode: numberOrNull(code),
-            condition: getWeatherCondition(code, currentIsDay)
+            weatherCode,
+            condition: getWeatherCondition(weatherCode, true)
         };
-    });
+    }).filter(Boolean);
 }
 
 function normalizeAstronomy(today) {
-    if (!today) {
+    if (!today || !isValidLocalDateTime(today.sunrise) || !isValidLocalDateTime(today.sunset)) {
         return null;
     }
 
@@ -333,23 +390,118 @@ function isAbortError(error) {
 }
 
 function findForecastStartIndex(times, currentTime) {
-    if (!currentTime) {
+    const currentTimestamp = parseLocalDateTime(currentTime);
+
+    if (!Number.isFinite(currentTimestamp) || times.length === 0) {
         return 0;
     }
 
-    const currentDate = new Date(currentTime).getTime();
-    const index = times.findIndex((time) => new Date(time).getTime() >= currentDate);
+    let selectedIndex = -1;
 
-    return index >= 0 ? index : 0;
+    times.forEach((time, index) => {
+        const timestamp = parseLocalDateTime(time);
+
+        if (Number.isFinite(timestamp) && timestamp <= currentTimestamp) {
+            selectedIndex = index;
+        }
+    });
+
+    return selectedIndex >= 0 ? selectedIndex : 0;
+}
+
+function isTimeWithinHourlyPeriod(currentTime, periodStart, nextPeriodStart = null) {
+    const currentTimestamp = parseLocalDateTime(currentTime);
+    const startTimestamp = parseLocalDateTime(periodStart);
+    const parsedNextTimestamp = parseLocalDateTime(nextPeriodStart);
+    const endTimestamp = Number.isFinite(parsedNextTimestamp)
+        ? parsedNextTimestamp
+        : startTimestamp + 60 * 60 * 1000;
+
+    return Number.isFinite(currentTimestamp)
+        && Number.isFinite(startTimestamp)
+        && currentTimestamp >= startTimestamp
+        && currentTimestamp < endTimestamp;
 }
 
 function numberOrNull(value) {
-    if (value === null || value === undefined || value === "") {
+    return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function assertValidLocation(location) {
+    if (validCoordinate(location?.latitude, -90, 90) === null
+        || validCoordinate(location?.longitude, -180, 180) === null) {
+        throw new TypeError("Les coordonnées de la localisation sont invalides.");
+    }
+}
+
+function validCoordinate(value, minimum, maximum) {
+    return typeof value === "number" && Number.isFinite(value) && value >= minimum && value <= maximum
+        ? value
+        : null;
+}
+
+function isRecord(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function normalizeOptionalString(value) {
+    if (typeof value !== "string") {
         return null;
     }
 
-    const number = Number(value);
-    return Number.isFinite(number) ? number : null;
+    const normalized = value.trim();
+    return normalized || null;
+}
+
+function isValidCalendarDate(value) {
+    if (typeof value !== "string") {
+        return false;
+    }
+
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+    if (!match) {
+        return false;
+    }
+
+    return isValidUtcDateParts(match.slice(1).map(Number));
+}
+
+function isValidLocalDateTime(value) {
+    return Number.isFinite(parseLocalDateTime(value));
+}
+
+function parseLocalDateTime(value) {
+    if (typeof value !== "string") {
+        return Number.NaN;
+    }
+
+    const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(value);
+
+    if (!match) {
+        return Number.NaN;
+    }
+
+    const parts = match.slice(1).map((part) => Number(part ?? 0));
+    const [year, month, day, hour, minute, second] = parts;
+    const timestamp = Date.UTC(year, month - 1, day, hour, minute, second);
+    const date = new Date(timestamp);
+
+    return date.getUTCFullYear() === year
+        && date.getUTCMonth() === month - 1
+        && date.getUTCDate() === day
+        && date.getUTCHours() === hour
+        && date.getUTCMinutes() === minute
+        && date.getUTCSeconds() === second
+        ? timestamp
+        : Number.NaN;
+}
+
+function isValidUtcDateParts([year, month, day]) {
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date.getUTCFullYear() === year
+        && date.getUTCMonth() === month - 1
+        && date.getUTCDate() === day;
 }
 
 function buildLocationLabel(location) {

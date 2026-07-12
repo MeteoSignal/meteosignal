@@ -78,8 +78,8 @@ function renderActiveHourlyRange(isLoading) {
     renderHourlyItems(items, isLoading, range);
 }
 
-function formatHourlyTime(hour, index, range) {
-    if (range.index === 0 && index === 0) {
+export function formatHourlyTime(hour, index, range) {
+    if (range.index === 0 && index === 0 && hour.isCurrent) {
         return "Maintenant";
     }
 
