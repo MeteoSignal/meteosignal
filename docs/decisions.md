@@ -116,7 +116,7 @@ Raison : le logo validé devient la référence graphique du produit : globe lum
 Conséquence : les fichiers officiels attendus sont préparés dans `assets/logo/` :
 
 - `logo-meteosignal-complet.png` ;
-- `logo-meteosignal-sans-slogan.png` ;
+- `logo-meteosignal-sans-slogan.webp` ;
 - `icon-512.png` ;
 - `icon-192.png` ;
 - `favicon-32.png` ;

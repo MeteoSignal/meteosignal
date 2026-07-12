@@ -1,6 +1,6 @@
 const APP_VERSION = "1.4.1";
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = `v${APP_VERSION}-pwa-reliability`;
+const CACHE_VERSION = `v${APP_VERSION}-p1b-assets`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -60,7 +60,7 @@ const OPTIONAL_ASSETS = [
     "./assets/logo/icon-maskable-512.png",
     "./assets/logo/favicon-32.png",
     "./assets/logo/favicon-16.png",
-    "./assets/logo/logo-meteosignal-sans-slogan.png",
+    "./assets/logo/logo-meteosignal-sans-slogan.webp",
     "./assets/weather-icons/conditions/clear-day.svg",
     "./assets/weather-icons/conditions/clear-night.svg",
     "./assets/weather-icons/conditions/partly-cloudy-day.svg",
