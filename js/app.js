@@ -15,10 +15,39 @@ import { weatherOrchestrator } from "./services/weather-orchestrator.service.js?
 
 const DASHBOARD_SELECTOR = "[data-dashboard]";
 let activeLocation = readActiveLocation(APP_CONFIG.defaultLocation);
-let dashboardRequestId = 0;
-let isDashboardLoading = false;
+const weatherDashboardLoader = createWeatherDashboardLoader({
+    getActiveLocation: () => activeLocation,
+    getWeather: (location, requestOptions) => weatherOrchestrator.getWeather(location, requestOptions),
+    onStart({ location, showLoading }) {
+        if (showLoading) {
+            renderDashboardLoading(location);
+        } else {
+            setDashboardBusy(true, "Mise à jour météo en arrière-plan.");
+        }
+    },
+    onSuccess(weather) {
+        renderWeatherDashboard(weather);
+        renderFavoriteButton(activeLocation);
+        renderFavoritesList(activeLocation);
+        const statusMessage = weather.errors.length > 0
+            ? `Météo partiellement mise à jour pour ${weather.location.name}.`
+            : `Météo mise à jour pour ${weather.location.name}.`;
+        setDashboardBusy(false, statusMessage);
+    },
+    onError(error, { location, showLoading }) {
+        console.warn(error);
 
-initApp();
+        if (showLoading) {
+            renderDashboardError("Données météo indisponibles.", location);
+        } else {
+            setDashboardBusy(false, "Mise à jour météo différée.");
+        }
+    }
+});
+
+if (typeof document !== "undefined") {
+    initApp();
+}
 
 function initApp() {
     console.log(`${APP_CONFIG.appName} v${APP_CONFIG.version} démarré`);
@@ -43,53 +72,73 @@ function initApp() {
     setInterval(() => loadWeatherDashboard({ showLoading: false }), APP_CONFIG.refresh);
 }
 
-async function loadWeatherDashboard({ showLoading = true } = {}) {
-    if (isDashboardLoading && !showLoading) {
-        return;
+function loadWeatherDashboard(options) {
+    return weatherDashboardLoader.load(options);
+}
+
+export function createWeatherDashboardLoader({
+    getActiveLocation,
+    getWeather,
+    onStart = () => {},
+    onSuccess = () => {},
+    onError = () => {}
+}) {
+    if (typeof getActiveLocation !== "function" || typeof getWeather !== "function") {
+        throw new TypeError("Le chargement météo nécessite une localisation active et un orchestrateur.");
     }
 
-    const requestId = dashboardRequestId + 1;
-    const requestedLocation = activeLocation;
-    dashboardRequestId = requestId;
-    isDashboardLoading = true;
+    let latestRequestId = 0;
+    let isLoading = false;
+    let activeController = null;
 
-    try {
-        if (showLoading) {
-            renderDashboardLoading(requestedLocation);
-        } else {
-            setDashboardBusy(true, "Mise à jour météo en arrière-plan.");
-        }
-
-        const weather = await weatherOrchestrator.getWeather(requestedLocation);
-
-        if (!isCurrentDashboardRequest(requestId, requestedLocation)) {
+    async function load({ showLoading = true } = {}) {
+        if (isLoading && !showLoading) {
             return;
         }
 
-        renderWeatherDashboard(weather);
-        renderFavoriteButton(activeLocation);
-        renderFavoritesList(activeLocation);
-        const statusMessage = weather.errors.length > 0
-            ? `Météo partiellement mise à jour pour ${weather.location.name}.`
-            : `Météo mise à jour pour ${weather.location.name}.`;
-        setDashboardBusy(false, statusMessage);
-    } catch (error) {
-        if (!isCurrentDashboardRequest(requestId, requestedLocation)) {
-            return;
-        }
+        activeController?.abort();
+        const controller = new AbortController();
+        activeController = controller;
+        const requestId = latestRequestId + 1;
+        const requestedLocation = getActiveLocation();
+        latestRequestId = requestId;
+        isLoading = true;
 
-        console.warn(error);
+        const isCurrentRequest = () => (
+            requestId === latestRequestId
+            && requestedLocation === getActiveLocation()
+        );
 
-        if (showLoading) {
-            renderDashboardError("Données météo indisponibles.", requestedLocation);
-        } else {
-            setDashboardBusy(false, "Mise à jour météo différée.");
-        }
-    } finally {
-        if (requestId === dashboardRequestId) {
-            isDashboardLoading = false;
+        try {
+            onStart({ location: requestedLocation, showLoading });
+            const weather = await getWeather(requestedLocation, { signal: controller.signal });
+
+            if (!isCurrentRequest()) {
+                return;
+            }
+
+            onSuccess(weather, { location: requestedLocation, showLoading });
+        } catch (error) {
+            if (!isCurrentRequest() || isAbortError(error)) {
+                return;
+            }
+
+            onError(error, { location: requestedLocation, showLoading });
+        } finally {
+            if (activeController === controller) {
+                activeController = null;
+            }
+
+            if (requestId === latestRequestId) {
+                isLoading = false;
+            }
         }
     }
+
+    return Object.freeze({
+        load,
+        getActiveSignal: () => activeController?.signal ?? null
+    });
 }
 
 async function handleLocationSelect(location) {
@@ -241,6 +290,8 @@ function setDashboardBusy(isBusy, statusMessage) {
     }
 }
 
-function isCurrentDashboardRequest(requestId, location) {
-    return requestId === dashboardRequestId && location === activeLocation;
+function isAbortError(error) {
+    return error?.name === "AbortError"
+        || error?.code === "ABORT_ERR"
+        || error?.code === "REQUEST_ABORTED";
 }

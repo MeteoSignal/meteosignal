@@ -177,6 +177,56 @@ test("un AbortSignal externe annule toute l'orchestration", async () => {
     );
 });
 
+test("une annulation externe en cours traverse les groupes sans activer les fallbacks", async () => {
+    const primarySignals = {};
+    const fallbackCounters = { weather: 0, air: 0 };
+    const primary = createFakeProvider({
+        id: "primary",
+        capabilities: ["current", "hourly", "daily", "astronomy", "airQuality"],
+        weatherResult: ({ signal }) => {
+            primarySignals.weather = signal;
+            return waitForAbort(signal);
+        },
+        airResult: ({ signal }) => {
+            primarySignals.air = signal;
+            return waitForAbort(signal);
+        }
+    });
+    const fallback = createFakeProvider({
+        id: "fallback",
+        capabilities: ["current", "hourly", "daily", "astronomy", "airQuality"],
+        weatherResult: createCompleteWeatherResult("fallback"),
+        airResult: createAirResult("fallback"),
+        counters: fallbackCounters
+    });
+    const fallbackPolicy = Object.fromEntries([
+        "current",
+        "hourly",
+        "daily",
+        "astronomy",
+        "airQuality"
+    ].map((capability) => [capability, ["fallback"]]));
+    const controller = new AbortController();
+    const orchestrator = createWeatherOrchestrator({
+        registry: createWeatherProviderRegistry([primary, fallback]),
+        policy: createPolicy("primary", fallbackPolicy),
+        timeoutMs: 1000,
+        now: FIXED_NOW
+    });
+
+    const weatherPromise = orchestrator.getWeather(LOCATION, { signal: controller.signal });
+    await Promise.resolve();
+
+    assert.equal(primarySignals.weather.aborted, false);
+    assert.equal(primarySignals.air.aborted, false);
+    controller.abort();
+
+    await assert.rejects(weatherPromise, { name: "AbortError" });
+    assert.equal(primarySignals.weather.aborted, true);
+    assert.equal(primarySignals.air.aborted, true);
+    assert.deepEqual(fallbackCounters, { weather: 0, air: 0 });
+});
+
 test("le fallback de compatibilite reste encapsule dans l'orchestrateur", async () => {
     const counters = { weather: 0, air: 0 };
     const compatibility = createFakeProvider({
