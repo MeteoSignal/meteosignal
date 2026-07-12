@@ -18,6 +18,8 @@ test("le precache contient une seule URL canonique par fichier local", () => {
     assert.equal(assets.length, 55);
     assert.equal(new Set(assets).size, assets.length);
     assert.equal(assets.some((asset) => asset.includes("open-meteo.com")), false);
+    assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.webp"), true);
+    assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.png"), false);
     assert.equal(manifest.start_url, "./");
     assert.equal(manifest.scope, "./");
 
@@ -172,14 +174,22 @@ test("les appels meteo restent strictement network-only", async () => {
 
 test("l'activation supprime seulement les anciens caches MeteoSignal", async () => {
     const harness = createServiceWorkerHarness({
-        cacheNames: ["meteosignal-static-v1.4.0", "autre-application", "meteosignal-static-v1.4.1-pwa-reliability"]
+        cacheNames: [
+            "meteosignal-static-v1.4.0",
+            "meteosignal-static-v1.4.1-pwa-reliability",
+            "autre-application",
+            "meteosignal-static-v1.4.1-p1b-assets"
+        ]
     });
     let activation;
 
     harness.events.get("activate")({ waitUntil(value) { activation = value; } });
     await activation;
 
-    assert.deepEqual(harness.deletedCaches, ["meteosignal-static-v1.4.0"]);
+    assert.deepEqual(harness.deletedCaches, [
+        "meteosignal-static-v1.4.0",
+        "meteosignal-static-v1.4.1-pwa-reliability"
+    ]);
     assert.equal(harness.claimCalls.length, 1);
 });
 

@@ -283,7 +283,7 @@ Le projet suit le versionnement sémantique.
 ### Assets officiels attendus
 
 - `assets/logo/logo-meteosignal-complet.png`
-- `assets/logo/logo-meteosignal-sans-slogan.png`
+- `assets/logo/logo-meteosignal-sans-slogan.webp`
 - `assets/logo/icon-512.png`
 - `assets/logo/icon-192.png`
 - `assets/logo/favicon-32.png`
