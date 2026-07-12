@@ -1,5 +1,6 @@
+const APP_VERSION = "1.4.1";
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = "v1.4.1-privacy-policy";
+const CACHE_VERSION = `v${APP_VERSION}-pwa-reliability`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -8,81 +9,49 @@ const WEATHER_API_HOSTS = new Set([
     "air-quality-api.open-meteo.com"
 ]);
 
-const STATIC_ASSETS = [
-    "./",
+// One canonical URL per file. Versioned requests are matched with ignoreSearch.
+const ESSENTIAL_ASSETS = [
     "./index.html",
+    "./pwa.js",
+    "./config/config.js",
+    "./css/style.css",
+    "./css/tokens.css",
+    "./css/base.css",
+    "./css/layout.css",
+    "./css/components.css",
+    "./css/responsive.css",
+    "./js/clock.js",
+    "./js/app.js",
+    "./js/components/astronomy.js",
+    "./js/components/current-weather.js",
+    "./js/components/data-sources.js",
+    "./js/components/daily-forecast.js",
+    "./js/components/favorites.js",
+    "./js/components/hourly-forecast.js",
+    "./js/components/navigation.js",
+    "./js/components/search.js",
+    "./js/components/weather-alerts.js",
+    "./js/components/weather-cards.js",
+    "./js/core/formatters.js",
+    "./js/core/location-search.js",
+    "./js/core/moon.js",
+    "./js/core/provenance.js",
+    "./js/core/state.js",
+    "./js/core/storage.js",
+    "./js/core/weather-codes.js",
+    "./js/core/weather-alerts.js",
+    "./js/core/weather-icons.js",
+    "./js/services/air-quality.service.js",
+    "./js/services/geocoding.service.js",
+    "./js/services/geolocation.service.js",
+    "./js/services/openmeteo.service.js",
+    "./js/services/weather-provider.js",
+    "./js/services/weather-orchestrator.service.js"
+];
+
+const OPTIONAL_ASSETS = [
     "./confidentialite.html",
     "./manifest.json",
-    "./pwa.js",
-    "./pwa.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./config/config.js",
-    "./config/config.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./css/style.css",
-    "./css/style.css?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./css/tokens.css",
-    "./css/tokens.css?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./css/base.css",
-    "./css/base.css?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./css/layout.css",
-    "./css/layout.css?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./css/components.css",
-    "./css/components.css?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./css/responsive.css",
-    "./css/responsive.css?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/clock.js",
-    "./js/clock.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/app.js",
-    "./js/app.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/astronomy.js",
-    "./js/components/astronomy.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/current-weather.js",
-    "./js/components/current-weather.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/data-sources.js",
-    "./js/components/data-sources.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/daily-forecast.js",
-    "./js/components/daily-forecast.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/favorites.js",
-    "./js/components/favorites.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/hourly-forecast.js",
-    "./js/components/hourly-forecast.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/navigation.js",
-    "./js/components/navigation.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/search.js",
-    "./js/components/search.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/weather-alerts.js",
-    "./js/components/weather-alerts.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/components/weather-cards.js",
-    "./js/components/weather-cards.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/formatters.js",
-    "./js/core/formatters.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/location-search.js",
-    "./js/core/location-search.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/moon.js",
-    "./js/core/moon.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/provenance.js",
-    "./js/core/provenance.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/state.js",
-    "./js/core/state.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/storage.js",
-    "./js/core/storage.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/weather-codes.js",
-    "./js/core/weather-codes.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/weather-alerts.js",
-    "./js/core/weather-alerts.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/core/weather-icons.js",
-    "./js/core/weather-icons.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/services/air-quality.service.js",
-    "./js/services/air-quality.service.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/services/geocoding.service.js",
-    "./js/services/geocoding.service.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/services/geolocation.service.js",
-    "./js/services/geolocation.service.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/services/openmeteo.service.js",
-    "./js/services/openmeteo.service.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/services/weather-provider.js",
-    "./js/services/weather-provider.js?v=1.4.1-search-geocoding-reliability-hotfix",
-    "./js/services/weather-orchestrator.service.js",
-    "./js/services/weather-orchestrator.service.js?v=1.4.1-search-geocoding-reliability-hotfix",
     "./assets/backgrounds/clear.jpg",
     "./assets/backgrounds/meteosignal-lightning-bg.webp",
     "./assets/backgrounds/night.jpg",
@@ -93,30 +62,17 @@ const STATIC_ASSETS = [
     "./assets/logo/favicon-16.png",
     "./assets/logo/logo-meteosignal-sans-slogan.png",
     "./assets/weather-icons/conditions/clear-day.svg",
-    "./assets/weather-icons/conditions/clear-day.svg?v=v1.4.1-search-geocoding-reliability-hotfix",
     "./assets/weather-icons/conditions/clear-night.svg",
-    "./assets/weather-icons/conditions/clear-night.svg?v=v1.4.1-search-geocoding-reliability-hotfix",
     "./assets/weather-icons/conditions/partly-cloudy-day.svg",
-    "./assets/weather-icons/conditions/partly-cloudy-day.svg?v=v1.4.1-search-geocoding-reliability-hotfix",
     "./assets/weather-icons/conditions/partly-cloudy-night.svg",
-    "./assets/weather-icons/conditions/partly-cloudy-night.svg?v=v1.4.1-search-geocoding-reliability-hotfix",
     "./assets/weather-icons/conditions/cloudy.svg",
-    "./assets/weather-icons/conditions/cloudy.svg?v=v1.4.1-search-geocoding-reliability-hotfix",
     "./assets/weather-icons/conditions/light-rain-day.svg",
-    "./assets/weather-icons/conditions/light-rain-day.svg?v=v1.4.1-search-geocoding-reliability-hotfix",
     "./assets/weather-icons/conditions/storm-day.svg",
-    "./assets/weather-icons/conditions/storm-day.svg?v=v1.4.1-search-geocoding-reliability-hotfix",
-    "./assets/weather-icons/conditions/fog-day.svg",
-    "./assets/weather-icons/conditions/fog-day.svg?v=v1.4.1-search-geocoding-reliability-hotfix"
+    "./assets/weather-icons/conditions/fog-day.svg"
 ];
 
 self.addEventListener("install", (event) => {
-    event.waitUntil(
-        caches
-            .open(STATIC_CACHE)
-            .then((cache) => cache.addAll(STATIC_ASSETS))
-            .then(() => self.skipWaiting())
-    );
+    event.waitUntil(installAppShell());
 });
 
 self.addEventListener("activate", (event) => {
@@ -156,29 +112,52 @@ self.addEventListener("fetch", (event) => {
     }
 });
 
+async function installAppShell() {
+    const cache = await caches.open(STATIC_CACHE);
+
+    try {
+        await cache.addAll(ESSENTIAL_ASSETS);
+    } catch (error) {
+        await caches.delete(STATIC_CACHE);
+        throw error;
+    }
+
+    const optionalResults = await Promise.allSettled(
+        OPTIONAL_ASSETS.map((asset) => cache.add(asset))
+    );
+
+    optionalResults.forEach((result, index) => {
+        if (result.status === "rejected") {
+            console.warn(`Ressource PWA facultative non mise en cache : ${OPTIONAL_ASSETS[index]}`, result.reason);
+        }
+    });
+
+    // Take control immediately only on the first installation. Updates stay waiting.
+    if (!self.registration.active) {
+        await self.skipWaiting();
+    }
+}
+
 async function handleNavigation(request) {
     try {
-        const response = await fetch(request);
-
-        if (response.ok) {
-            return response;
-        }
+        // Preserve every HTTP response, including 404 and 5xx.
+        return await fetch(request);
     } catch (error) {
-        // The cached app shell takes over; weather data remains network-only.
+        const cache = await caches.open(STATIC_CACHE);
+        const cachedPage = await cache.match(request, { ignoreSearch: true });
+
+        if (cachedPage) {
+            return cachedPage;
+        }
+
+        const cachedAppShell = await cache.match("./index.html");
+        return cachedAppShell ?? createOfflineResponse();
     }
-
-    const cachedPage = await caches.match(request);
-
-    if (cachedPage) {
-        return cachedPage;
-    }
-
-    const cachedAppShell = await caches.match("./index.html");
-    return cachedAppShell ?? createOfflineResponse();
 }
 
 async function handleStaticAsset(request) {
-    const cachedResponse = await caches.match(request);
+    const cache = await caches.open(STATIC_CACHE);
+    const cachedResponse = await cache.match(request, { ignoreSearch: true });
 
     if (cachedResponse) {
         return cachedResponse;
