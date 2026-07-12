@@ -31,21 +31,30 @@ export function formatTime(value) {
         return "--:--";
     }
 
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "--:--";
+    }
+
     return new Intl.DateTimeFormat(DEFAULT_LOCALE, {
         hour: "2-digit",
         minute: "2-digit"
-    }).format(new Date(value));
+    }).format(date);
 }
 
 export function formatForecastDay(value) {
-    if (!value) {
+    const calendarDate = parseCalendarDate(value);
+
+    if (!calendarDate) {
         return "--";
     }
 
     return new Intl.DateTimeFormat(DEFAULT_LOCALE, {
         weekday: "short",
-        day: "2-digit"
-    }).format(new Date(value));
+        day: "2-digit",
+        timeZone: "UTC"
+    }).format(calendarDate);
 }
 
 export function formatDuration(seconds) {
@@ -72,4 +81,25 @@ export function formatNumberWithUnit(value, unit, options = {}) {
 
     const formatted = new Intl.NumberFormat(DEFAULT_LOCALE, options).format(value);
     return `${formatted}${unit}`;
+}
+
+function parseCalendarDate(value) {
+    if (typeof value !== "string") {
+        return null;
+    }
+
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+    if (!match) {
+        return null;
+    }
+
+    const [year, month, day] = match.slice(1).map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+
+    return date.getUTCFullYear() === year
+        && date.getUTCMonth() === month - 1
+        && date.getUTCDate() === day
+        ? date
+        : null;
 }

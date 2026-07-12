@@ -58,25 +58,47 @@ async function fetchGeocodingQuery(searchQuery, options) {
     }
 
     const data = await response.json();
-    return normalizeGeocodingResults(data.results ?? []);
+    return normalizeGeocodingResults(isRecord(data) ? data.results : []);
 }
 
 export function normalizeGeocodingResults(results) {
-    return results.map((result) => ({
-        id: result.id,
-        name: result.name,
-        country: result.country ?? null,
+    if (!Array.isArray(results)) {
+        return [];
+    }
+
+    return results.map(normalizeGeocodingResult).filter(Boolean);
+}
+
+function normalizeGeocodingResult(result) {
+    if (!isRecord(result)) {
+        return null;
+    }
+
+    const name = normalizeString(result.name);
+    const country = normalizeString(result.country);
+    const admin1 = normalizeString(result.admin1);
+    const latitude = normalizeCoordinate(result.latitude, -90, 90);
+    const longitude = normalizeCoordinate(result.longitude, -180, 180);
+
+    if (!name || latitude === null || longitude === null) {
+        return null;
+    }
+
+    return {
+        id: result.id ?? null,
+        name,
+        country,
         countryCode: normalizeCountryCode(result.country_code),
-        admin1: result.admin1 ?? null,
-        latitude: result.latitude,
-        longitude: result.longitude,
-        timezone: result.timezone ?? "auto",
+        admin1,
+        latitude,
+        longitude,
+        timezone: normalizeString(result.timezone) ?? "auto",
         featureCode: normalizeString(result.feature_code),
         postcodes: normalizePostcodes(result.postcodes),
         population: normalizePopulation(result.population),
         source: "search",
-        label: buildLocationLabel(result)
-    }));
+        label: buildLocationLabel({ name, admin1, country })
+    };
 }
 
 function buildLocationLabel(result) {
@@ -109,8 +131,13 @@ function normalizePostcodes(postcodes) {
 }
 
 function normalizePopulation(value) {
-    const population = Number(value);
-    return Number.isFinite(population) && population >= 0 ? population : null;
+    return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function normalizeCoordinate(value, minimum, maximum) {
+    return typeof value === "number" && Number.isFinite(value) && value >= minimum && value <= maximum
+        ? value
+        : null;
 }
 
 function normalizeString(value) {
@@ -124,4 +151,8 @@ function normalizeString(value) {
 
 function isAbortError(error) {
     return error?.name === "AbortError" || error?.code === "ABORT_ERR";
+}
+
+function isRecord(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
