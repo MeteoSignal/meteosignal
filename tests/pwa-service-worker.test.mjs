@@ -13,13 +13,14 @@ test("le precache contient une seule URL canonique par fichier local", () => {
     const assets = [...api.ESSENTIAL_ASSETS, ...api.OPTIONAL_ASSETS];
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
 
-    assert.equal(api.ESSENTIAL_ASSETS.length, 36);
+    assert.equal(api.ESSENTIAL_ASSETS.length, 35);
     assert.equal(api.OPTIONAL_ASSETS.length, 19);
-    assert.equal(assets.length, 55);
+    assert.equal(assets.length, 54);
     assert.equal(new Set(assets).size, assets.length);
     assert.equal(assets.some((asset) => asset.includes("open-meteo.com")), false);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.webp"), true);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.png"), false);
+    assert.equal(assets.includes("./css/style.css"), false);
     assert.equal(manifest.start_url, "./");
     assert.equal(manifest.scope, "./");
 
@@ -48,6 +49,7 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
+    assert.equal(api.CACHE_VERSION, "v1.4.1-p1b2-css-loading");
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
     assert.ok(cacheBusterVersions.length > 0);
     assert.deepEqual(new Set(cacheBusterVersions), new Set([packageVersion]));
@@ -177,8 +179,9 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
         cacheNames: [
             "meteosignal-static-v1.4.0",
             "meteosignal-static-v1.4.1-pwa-reliability",
+            "meteosignal-static-v1.4.1-p1b-assets",
             "autre-application",
-            "meteosignal-static-v1.4.1-p1b-assets"
+            "meteosignal-static-v1.4.1-p1b2-css-loading"
         ]
     });
     let activation;
@@ -188,7 +191,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
 
     assert.deepEqual(harness.deletedCaches, [
         "meteosignal-static-v1.4.0",
-        "meteosignal-static-v1.4.1-pwa-reliability"
+        "meteosignal-static-v1.4.1-pwa-reliability",
+        "meteosignal-static-v1.4.1-p1b-assets"
     ]);
     assert.equal(harness.claimCalls.length, 1);
 });
