@@ -15,6 +15,7 @@ import { weatherOrchestrator } from "./services/weather-orchestrator.service.js?
 
 const DASHBOARD_SELECTOR = "[data-dashboard]";
 let activeLocation = readActiveLocation(APP_CONFIG.defaultLocation);
+let weatherRefreshController = null;
 const weatherDashboardLoader = createWeatherDashboardLoader({
     getActiveLocation: () => activeLocation,
     getWeather: (location, requestOptions) => weatherOrchestrator.getWeather(location, requestOptions),
@@ -33,6 +34,7 @@ const weatherDashboardLoader = createWeatherDashboardLoader({
             ? `Météo partiellement mise à jour pour ${weather.location.name}.`
             : `Météo mise à jour pour ${weather.location.name}.`;
         setDashboardBusy(false, statusMessage);
+        weatherRefreshController?.recordSuccess();
     },
     onError(error, { location, showLoading }) {
         console.warn(error);
@@ -43,6 +45,12 @@ const weatherDashboardLoader = createWeatherDashboardLoader({
             setDashboardBusy(false, "Mise à jour météo différée.");
         }
     }
+});
+weatherRefreshController = createWeatherRefreshController({
+    refreshMs: APP_CONFIG.refresh,
+    getVisibilityState: () => document.visibilityState,
+    isRequestActive: () => weatherDashboardLoader.getActiveSignal() !== null,
+    loadWeather: (options) => loadWeatherDashboard(options)
 });
 
 if (typeof document !== "undefined") {
@@ -69,7 +77,12 @@ function initApp() {
     renderFavoritesList(activeLocation);
     renderProjectStatus();
     loadWeatherDashboard();
-    setInterval(() => loadWeatherDashboard({ showLoading: false }), APP_CONFIG.refresh);
+    setInterval(() => {
+        void weatherRefreshController.handleAutomaticRefresh();
+    }, APP_CONFIG.refresh);
+    document.addEventListener("visibilitychange", () => {
+        void weatherRefreshController.handleVisibilityChange();
+    });
 }
 
 function loadWeatherDashboard(options) {
@@ -138,6 +151,94 @@ export function createWeatherDashboardLoader({
     return Object.freeze({
         load,
         getActiveSignal: () => activeController?.signal ?? null
+    });
+}
+
+export function createWeatherRefreshController({
+    refreshMs,
+    getVisibilityState,
+    isRequestActive,
+    loadWeather,
+    now = () => Date.now()
+}) {
+    const refreshInterval = Number(refreshMs);
+
+    if (!Number.isFinite(refreshInterval) || refreshInterval <= 0) {
+        throw new TypeError("La fréquence d'actualisation météo doit être positive.");
+    }
+
+    if (typeof getVisibilityState !== "function"
+        || typeof isRequestActive !== "function"
+        || typeof loadWeather !== "function") {
+        throw new TypeError("Le contrôleur d'actualisation météo est incomplet.");
+    }
+
+    let lastSuccessfulRenderAt = null;
+    let missedRefresh = false;
+    let refreshInFlight = false;
+
+    function recordSuccess(value = now()) {
+        const timestamp = value instanceof Date ? value.getTime() : Number(value);
+
+        if (!Number.isFinite(timestamp)) {
+            throw new TypeError("La date de fraîcheur météo est invalide.");
+        }
+
+        lastSuccessfulRenderAt = timestamp;
+        missedRefresh = false;
+    }
+
+    function isDataStale() {
+        if (lastSuccessfulRenderAt === null) {
+            return true;
+        }
+
+        return Number(now()) - lastSuccessfulRenderAt >= refreshInterval;
+    }
+
+    async function requestRefresh() {
+        if (refreshInFlight || isRequestActive()) {
+            return false;
+        }
+
+        refreshInFlight = true;
+
+        try {
+            await loadWeather({ showLoading: false });
+            return true;
+        } finally {
+            refreshInFlight = false;
+        }
+    }
+
+    async function handleAutomaticRefresh() {
+        if (getVisibilityState() !== "visible") {
+            missedRefresh = true;
+            return false;
+        }
+
+        return requestRefresh();
+    }
+
+    async function handleVisibilityChange() {
+        if (getVisibilityState() !== "visible" || (!missedRefresh && !isDataStale())) {
+            return false;
+        }
+
+        const started = await requestRefresh();
+
+        if (started) {
+            missedRefresh = false;
+        }
+
+        return started;
+    }
+
+    return Object.freeze({
+        handleAutomaticRefresh,
+        handleVisibilityChange,
+        recordSuccess,
+        getLastSuccessAt: () => lastSuccessfulRenderAt
     });
 }
 
