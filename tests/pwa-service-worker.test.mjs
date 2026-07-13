@@ -13,9 +13,9 @@ test("le precache contient une seule URL canonique par fichier local", () => {
     const assets = [...api.ESSENTIAL_ASSETS, ...api.OPTIONAL_ASSETS];
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
 
-    assert.equal(api.ESSENTIAL_ASSETS.length, 35);
+    assert.equal(api.ESSENTIAL_ASSETS.length, 36);
     assert.equal(api.OPTIONAL_ASSETS.length, 19);
-    assert.equal(assets.length, 54);
+    assert.equal(assets.length, 55);
     assert.equal(new Set(assets).size, assets.length);
     assert.equal(assets.some((asset) => asset.includes("open-meteo.com")), false);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.webp"), true);
@@ -50,7 +50,7 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
-    assert.equal(api.CACHE_VERSION, "v1.4.1-p1c-semantic-structure");
+    assert.equal(api.CACHE_VERSION, "v1.4.1-p1c-final-accessibility");
     assert.match(indexSource, /src="js\/clock\.js\?v=1\.4\.1-p1b2-runtime-efficiency"/);
     assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1c-live-semantics"/);
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
@@ -190,7 +190,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
             "meteosignal-static-v1.4.1-p1c-focus-visibility",
             "meteosignal-static-v1.4.1-p1c-favorite-focus",
             "meteosignal-static-v1.4.1-p1c-live-semantics",
-            "meteosignal-static-v1.4.1-p1c-semantic-structure"
+            "meteosignal-static-v1.4.1-p1c-semantic-structure",
+            "meteosignal-static-v1.4.1-p1c-final-accessibility"
         ]
     });
     let activation;
@@ -207,7 +208,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
         "meteosignal-static-v1.4.1-p1b2-runtime-efficiency",
         "meteosignal-static-v1.4.1-p1c-focus-visibility",
         "meteosignal-static-v1.4.1-p1c-favorite-focus",
-        "meteosignal-static-v1.4.1-p1c-live-semantics"
+        "meteosignal-static-v1.4.1-p1c-live-semantics",
+        "meteosignal-static-v1.4.1-p1c-semantic-structure"
     ]);
     assert.equal(harness.claimCalls.length, 1);
 });

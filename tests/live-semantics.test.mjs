@@ -161,8 +161,8 @@ test("les revisions JavaScript, CSS et PWA restent coherentes", () => {
     assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.4\.1-p1c-live-semantics/);
     assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.4\.1-p1c-live-semantics/);
     assert.match(SW_SOURCE, /const CACHE_PREFIX = "meteosignal-static"/);
-    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{APP_VERSION\}-p1c-semantic-structure`/);
-    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-p1c-semantic-structure/);
+    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{APP_VERSION\}-p1c-final-accessibility`/);
+    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-p1c-final-accessibility/);
     assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-p1c-live-semantics/);
 });
 
