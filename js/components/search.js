@@ -3,9 +3,11 @@ import {
     createSearchRequestGuard,
     getAutomaticLocationSelection,
     getLocationTypeLabel,
-    getNextSuggestionIndex
-} from "../core/location-search.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { searchLocations } from "../services/geocoding.service.js?v=1.4.1-search-geocoding-reliability-hotfix";
+    getNextSuggestionIndex,
+    LOCATION_SEARCH_LIMIT_MESSAGE,
+    validateLocationSearchQuery
+} from "../core/location-search.js?v=1.4.1-p1d-search-privacy";
+import { searchLocations } from "../services/geocoding.service.js?v=1.4.1-p1d-search-privacy";
 
 const SEARCH_FORM_SELECTOR = "[data-search-form]";
 const SEARCH_INPUT_SELECTOR = "#city-search";
@@ -15,7 +17,7 @@ const SEARCH_DEBOUNCE_MS = 300;
 
 let searchRuntime = null;
 
-export function initSearch({ onLocationSelect, onError } = {}) {
+export function initSearch({ onLocationSelect, onError, searchLocationsImpl = searchLocations } = {}) {
     const form = document.querySelector(SEARCH_FORM_SELECTOR);
     const input = document.querySelector(SEARCH_INPUT_SELECTOR);
     const suggestions = document.querySelector(SEARCH_SUGGESTIONS_SELECTOR);
@@ -29,7 +31,8 @@ export function initSearch({ onLocationSelect, onError } = {}) {
         input,
         suggestions,
         onLocationSelect,
-        onError
+        onError,
+        searchLocations: searchLocationsImpl
     });
 
     form.addEventListener("submit", async (event) => {
@@ -37,6 +40,8 @@ export function initSearch({ onLocationSelect, onError } = {}) {
         await submitSearch(searchRuntime);
     });
 
+    input.addEventListener("beforeinput", (event) => handleSearchBeforeInput(event, searchRuntime));
+    input.addEventListener("paste", (event) => handleSearchPaste(event, searchRuntime));
     input.addEventListener("input", () => handleSearchInput(searchRuntime));
     input.addEventListener("keydown", (event) => handleSearchKeydown(event, searchRuntime));
     suggestions.addEventListener("mousedown", (event) => event.preventDefault());
@@ -90,20 +95,59 @@ function createSearchRuntime(options) {
 }
 
 function handleSearchInput(runtime) {
-    const query = runtime.input.value.trim();
+    const validation = validateLocationSearchQuery(runtime.input.value);
 
     runtime.input.setCustomValidity("");
     cancelPendingSearch(runtime);
     closeSuggestions(runtime);
 
-    if (query.length < 2) {
+    if (validation.isTooLong) {
+        rejectExcessiveSearch(runtime);
+        return;
+    }
+
+    if (validation.isTooShort) {
         setSearchStatus("");
         return;
     }
 
     runtime.debounceId = setTimeout(() => {
-        performSearch(query, "input", runtime);
+        performSearch(validation.query, "input", runtime);
     }, SEARCH_DEBOUNCE_MS);
+}
+
+function handleSearchBeforeInput(event, runtime) {
+    if (!event.inputType?.startsWith("insert") || typeof event.data !== "string") {
+        return;
+    }
+
+    if (validateLocationSearchQuery(getValueAfterInsertion(runtime.input, event.data)).isTooLong) {
+        event.preventDefault();
+        rejectExcessiveSearch(runtime);
+    }
+}
+
+function handleSearchPaste(event, runtime) {
+    const pastedText = event.clipboardData?.getData("text/plain");
+
+    if (
+        typeof pastedText === "string"
+        && validateLocationSearchQuery(getValueAfterInsertion(runtime.input, pastedText)).isTooLong
+    ) {
+        event.preventDefault();
+        rejectExcessiveSearch(runtime);
+    }
+}
+
+function getValueAfterInsertion(input, insertedText) {
+    const selectionStart = Number.isInteger(input.selectionStart)
+        ? input.selectionStart
+        : input.value.length;
+    const selectionEnd = Number.isInteger(input.selectionEnd)
+        ? input.selectionEnd
+        : selectionStart;
+
+    return `${input.value.slice(0, selectionStart)}${insertedText}${input.value.slice(selectionEnd)}`;
 }
 
 function handleSearchKeydown(event, runtime) {
@@ -144,12 +188,19 @@ function handleSearchKeydown(event, runtime) {
 }
 
 async function submitSearch(runtime) {
-    const query = runtime.input.value.trim();
+    const validation = validateLocationSearchQuery(runtime.input.value);
 
-    if (query.length < 2) {
+    if (validation.isTooLong) {
+        rejectExcessiveSearch(runtime);
+        return;
+    }
+
+    if (validation.isTooShort) {
         reportInputError(runtime.input, "Saisis au moins deux caractères.");
         return;
     }
+
+    const query = validation.query;
 
     clearTimeout(runtime.debounceId);
     runtime.debounceId = null;
@@ -179,6 +230,12 @@ async function submitSearch(runtime) {
     await performSearch(query, "submit", runtime);
 }
 
+function rejectExcessiveSearch(runtime) {
+    cancelPendingSearch(runtime);
+    closeSuggestions(runtime);
+    reportInputError(runtime.input, LOCATION_SEARCH_LIMIT_MESSAGE);
+}
+
 async function performSearch(query, intent, runtime) {
     cancelPendingSearch(runtime);
 
@@ -190,9 +247,12 @@ async function performSearch(query, intent, runtime) {
 
     try {
         const plan = createLocationSearchPlan(query);
-        const results = await searchLocations(query, { signal: controller.signal });
+        const results = await runtime.searchLocations(query, { signal: controller.signal });
 
-        if (!runtime.requestGuard.isCurrent(requestId) || runtime.input.value.trim() !== query) {
+        if (
+            !runtime.requestGuard.isCurrent(requestId)
+            || validateLocationSearchQuery(runtime.input.value).query !== query
+        ) {
             return;
         }
 
@@ -351,6 +411,7 @@ function cancelPendingSearch(runtime) {
     runtime.controller?.abort();
     runtime.controller = null;
     runtime.requestGuard.invalidate();
+    setSearchState(runtime.form, "idle");
 }
 
 function reportInputError(input, message) {

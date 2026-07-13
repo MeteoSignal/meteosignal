@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 import {
+    GEOCODING_TIMEOUT_MS,
     normalizeGeocodingResults,
     searchLocations
 } from "../js/services/geocoding.service.js";
@@ -126,6 +127,119 @@ test("AbortSignal annule immédiatement la recherche active", async () => {
     await assert.rejects(promise, { name: "AbortError" });
 });
 
+test("une recherche excessive est refusee avant URL, timer et reseau", async () => {
+    let fetchCalls = 0;
+    let timerCalls = 0;
+
+    await assert.rejects(
+        searchLocations("界".repeat(121), {
+            fetchImpl: async () => {
+                fetchCalls += 1;
+            },
+            setTimeoutImpl() {
+                timerCalls += 1;
+            }
+        }),
+        { name: "LocationSearchLengthError", code: "LOCATION_SEARCH_TOO_LONG" }
+    );
+
+    assert.equal(fetchCalls, 0);
+    assert.equal(timerCalls, 0);
+});
+
+test("le timeout total de 8000 ms annule reellement le fetch", async () => {
+    const timers = createControlledTimers();
+    let fetchSignal;
+    const promise = searchLocations("Toulouse", {
+        fetchImpl: async (url, { signal }) => new Promise((resolve, reject) => {
+            fetchSignal = signal;
+            rejectOnAbort(signal, reject);
+        }),
+        setTimeoutImpl: timers.setTimeout,
+        clearTimeoutImpl: timers.clearTimeout
+    });
+
+    await Promise.resolve();
+    assert.equal(GEOCODING_TIMEOUT_MS, 8000);
+    assert.deepEqual(timers.delays, [8000]);
+    assert.equal(fetchSignal.aborted, false);
+
+    timers.fireFirst();
+
+    await assert.rejects(promise, { name: "TimeoutError", code: "GEOCODING_TIMEOUT" });
+    assert.equal(fetchSignal.aborted, true);
+    assert.deepEqual(timers.clearedIds, [1]);
+});
+
+test("une annulation externe reste un AbortError silencieux et nettoie les ressources", async () => {
+    const timers = createControlledTimers();
+    const controller = new AbortController();
+    const promise = searchLocations("Toulouse", {
+        signal: controller.signal,
+        fetchImpl: async (url, { signal }) => new Promise((resolve, reject) => {
+            rejectOnAbort(signal, reject);
+        }),
+        setTimeoutImpl: timers.setTimeout,
+        clearTimeoutImpl: timers.clearTimeout
+    });
+
+    controller.abort();
+
+    await assert.rejects(promise, { name: "AbortError" });
+    assert.deepEqual(timers.clearedIds, [1]);
+});
+
+test("le listener externe et le timer sont retires apres une recherche terminee", async () => {
+    const timers = createControlledTimers();
+    const externalSignal = createObservedSignal();
+
+    await searchLocations("Toulouse", {
+        signal: externalSignal,
+        fetchImpl: createFixtureFetch([]),
+        setTimeoutImpl: timers.setTimeout,
+        clearTimeoutImpl: timers.clearTimeout
+    });
+
+    assert.equal(externalSignal.addCalls, 1);
+    assert.equal(externalSignal.removeCalls, 1);
+    assert.equal(externalSignal.listener, null);
+    assert.deepEqual(timers.clearedIds, [1]);
+});
+
+test("la requete supplementaire partage le meme budget total", async () => {
+    const timers = createControlledTimers();
+    const requests = [];
+    const promise = searchLocations("Saint Gaudens", {
+        fetchImpl: async (input, { signal }) => {
+            const url = new URL(input);
+            requests.push(url.searchParams.get("name"));
+
+            if (requests.length === 1) {
+                return {
+                    ok: true,
+                    status: 200,
+                    async json() {
+                        return { results: fixture.saintGaudensOriginal };
+                    }
+                };
+            }
+
+            return new Promise((resolve, reject) => rejectOnAbort(signal, reject));
+        },
+        setTimeoutImpl: timers.setTimeout,
+        clearTimeoutImpl: timers.clearTimeout
+    });
+
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.deepEqual(requests, ["Saint Gaudens", "Saint-Gaudens"]);
+    assert.deepEqual(timers.delays, [8000]);
+
+    timers.fireFirst();
+
+    await assert.rejects(promise, { name: "TimeoutError", code: "GEOCODING_TIMEOUT" });
+    assert.deepEqual(timers.clearedIds, [1]);
+});
+
 test("les resultats de geocodage incomplets ou hors bornes sont ignores", () => {
     const results = normalizeGeocodingResults([
         null,
@@ -189,5 +303,69 @@ function createFixtureFetch(requests) {
                 return { results };
             }
         };
+    };
+}
+
+function createControlledTimers() {
+    const callbacks = new Map();
+    const delays = [];
+    const clearedIds = [];
+    let nextId = 0;
+
+    return {
+        delays,
+        clearedIds,
+        setTimeout(callback, delay) {
+            nextId += 1;
+            callbacks.set(nextId, callback);
+            delays.push(delay);
+            return nextId;
+        },
+        clearTimeout(id) {
+            clearedIds.push(id);
+            callbacks.delete(id);
+        },
+        fireFirst() {
+            const [entry] = callbacks.entries();
+            assert.ok(entry, "un timer doit être actif");
+            const [id, callback] = entry;
+            callbacks.delete(id);
+            callback();
+        }
+    };
+}
+
+function rejectOnAbort(signal, reject) {
+    const rejectAbort = () => {
+        const error = new Error("Recherche annulée");
+        error.name = "AbortError";
+        reject(error);
+    };
+
+    if (signal.aborted) {
+        rejectAbort();
+        return;
+    }
+
+    signal.addEventListener("abort", rejectAbort, { once: true });
+}
+
+function createObservedSignal() {
+    return {
+        aborted: false,
+        listener: null,
+        addCalls: 0,
+        removeCalls: 0,
+        addEventListener(type, listener) {
+            assert.equal(type, "abort");
+            this.addCalls += 1;
+            this.listener = listener;
+        },
+        removeEventListener(type, listener) {
+            assert.equal(type, "abort");
+            assert.equal(listener, this.listener);
+            this.removeCalls += 1;
+            this.listener = null;
+        }
     };
 }

@@ -1,5 +1,17 @@
 const INACTIVE_POPULATED_CODES = new Set(["PPLH", "PPLQ", "PPLW"]);
 const SEMANTIC_DUPLICATE_DISTANCE_KM = 1;
+export const MAX_LOCATION_SEARCH_LENGTH = 120;
+export const LOCATION_SEARCH_LIMIT_MESSAGE = `La recherche est limitée à ${MAX_LOCATION_SEARCH_LENGTH} caractères.`;
+
+export class LocationSearchLengthError extends RangeError {
+    constructor() {
+        super(LOCATION_SEARCH_LIMIT_MESSAGE);
+        this.name = "LocationSearchLengthError";
+        this.code = "LOCATION_SEARCH_TOO_LONG";
+        this.maxLength = MAX_LOCATION_SEARCH_LENGTH;
+    }
+}
+
 const COUNTRY_ALIAS_OVERRIDES = new Map([
     ["france", "FR"],
     ["etats unis", "US"],
@@ -13,6 +25,25 @@ const COUNTRY_ALIAS_OVERRIDES = new Map([
 ]);
 
 let countryAliases = null;
+
+export function normalizeLocationSearchQuery(value) {
+    return String(value ?? "").trim().replace(/\s+/gu, " ");
+}
+
+export function validateLocationSearchQuery(value) {
+    const query = normalizeLocationSearchQuery(value);
+    const length = Array.from(query).length;
+    const isTooShort = length < 2;
+    const isTooLong = length > MAX_LOCATION_SEARCH_LENGTH;
+
+    return Object.freeze({
+        query,
+        length,
+        isTooShort,
+        isTooLong,
+        isValid: !isTooShort && !isTooLong
+    });
+}
 
 export function normalizeSearchText(value) {
     return String(value ?? "")
@@ -29,7 +60,13 @@ export function normalizeSearchText(value) {
 }
 
 export function createLocationSearchPlan(query) {
-    const originalQuery = String(query ?? "").trim().replace(/\s+/g, " ");
+    const validation = validateLocationSearchQuery(query);
+
+    if (validation.isTooLong) {
+        throw new LocationSearchLengthError();
+    }
+
+    const originalQuery = validation.query;
     const parsedQuery = parseLocationQuery(originalQuery);
     const supplementalName = createSeparatorVariant(parsedQuery.place);
 
