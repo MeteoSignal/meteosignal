@@ -50,7 +50,7 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
-    assert.equal(api.CACHE_VERSION, "v1.4.1-p1b2-runtime-efficiency");
+    assert.equal(api.CACHE_VERSION, "v1.4.1-p1c-focus-visibility");
     assert.match(indexSource, /src="js\/clock\.js\?v=1\.4\.1-p1b2-runtime-efficiency"/);
     assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1b2-runtime-efficiency"/);
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
@@ -186,7 +186,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
             "meteosignal-static-v1.4.1-p1b2-css-loading",
             "meteosignal-static-v1.4.1-p1b2-weather-cancellation",
             "autre-application",
-            "meteosignal-static-v1.4.1-p1b2-runtime-efficiency"
+            "meteosignal-static-v1.4.1-p1b2-runtime-efficiency",
+            "meteosignal-static-v1.4.1-p1c-focus-visibility"
         ]
     });
     let activation;
@@ -199,7 +200,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
         "meteosignal-static-v1.4.1-pwa-reliability",
         "meteosignal-static-v1.4.1-p1b-assets",
         "meteosignal-static-v1.4.1-p1b2-css-loading",
-        "meteosignal-static-v1.4.1-p1b2-weather-cancellation"
+        "meteosignal-static-v1.4.1-p1b2-weather-cancellation",
+        "meteosignal-static-v1.4.1-p1b2-runtime-efficiency"
     ]);
     assert.equal(harness.claimCalls.length, 1);
 });

@@ -326,6 +326,11 @@
     outline: 0;
 }
 
+.search-panel input:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
+}
+
 .search-panel input::placeholder {
     color: var(--color-subtle);
 }
@@ -1086,7 +1091,6 @@
 .hourly-range-button:focus-visible {
     color: var(--color-white);
     background: rgba(47, 247, 255, 0.16);
-    outline: none;
 }
 
 .hourly-range-button.is-active {
@@ -1097,6 +1101,12 @@
     box-shadow:
         0 0 12px rgba(47, 247, 255, 0.14),
         0 0 0 1px rgba(149, 251, 255, 0.42) inset;
+}
+
+.hourly-range-button:focus-visible,
+.hourly-range-button.is-active:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
 }
 
 .hourly-range-button:disabled {
