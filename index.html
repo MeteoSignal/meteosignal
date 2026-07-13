@@ -24,7 +24,7 @@
 
 <body data-nav-open="false" data-nav-collapsed="false">
     <a class="skip-link" href="#contenu">Aller au contenu</a>
-    <span id="app-status" class="sr-only" role="status" aria-live="polite"></span>
+    <span id="app-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></span>
 
     <div class="app-shell">
         <aside id="navigation-principale" class="adaptive-nav" aria-label="Navigation principale" data-navigation>
@@ -73,7 +73,7 @@
                     <span class="favorites-count" data-favorites-count>0 ville</span>
                 </div>
 
-                <div class="favorites-list" role="list" aria-live="polite" data-favorites-list>
+                <div class="favorites-list" data-favorites-list>
                     <p class="favorites-empty">Aucune ville enregistr&eacute;e pour le moment.</p>
                 </div>
             </section>
@@ -142,7 +142,7 @@
                 <button class="icon-action" type="submit" aria-label="Lancer la recherche">
                     <span aria-hidden="true">⌕</span>
                 </button>
-                <span id="search-status" class="sr-only" aria-live="polite"></span>
+                <span id="search-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></span>
             </form>
 
             <nav class="header-actions" aria-label="Actions principales">
@@ -169,7 +169,7 @@
                 <span class="favorites-count" data-favorites-count>0 ville</span>
             </div>
 
-            <div class="favorites-list" role="list" aria-live="polite" data-favorites-list>
+            <div class="favorites-list" data-favorites-list>
                 <p class="favorites-empty">Aucune ville enregistrée pour le moment.</p>
             </div>
         </section>
@@ -223,7 +223,7 @@
                 </div>
             </section>
 
-            <section id="cartes-meteo" class="weather-grid" aria-label="Indicateurs météo" aria-live="polite" data-weather-cards>
+            <section id="cartes-meteo" class="weather-grid" aria-label="Indicateurs météo" data-weather-cards>
                 <div class="metric-card" data-card-tone="wind">
                     <span class="metric-label">Vent</span>
                     <strong>--</strong>
@@ -279,7 +279,7 @@
                             48–72 h
                         </button>
                     </div>
-                    <div class="hourly-strip" role="list" aria-label="Aperçu horaire" aria-live="polite" data-hourly-forecast>
+                    <div class="hourly-strip" role="list" aria-label="Aperçu horaire" data-hourly-forecast>
                         <div class="hourly-card" role="listitem" data-forecast-state="loading">
                             <span class="hourly-time">Maintenant</span>
                             <span class="forecast-icon" aria-hidden="true">--</span>
@@ -309,14 +309,13 @@
                         <h2 id="weekly-title">Prévisions sur 7 jours</h2>
                         <small class="data-source-label" data-source-daily hidden></small>
                     </div>
-                    <div id="forecast" class="forecast-list" aria-live="polite" data-daily-forecast></div>
+                    <div id="forecast" class="forecast-list" data-daily-forecast></div>
                 </section>
 
                 <section
                     id="soleil-lune"
                     class="astronomy-panel"
                     aria-label="Soleil et lune"
-                    aria-live="polite"
                     data-astronomy
                     data-astronomy-state="loading">
                     <article class="astro-card" data-astronomy-card="sun">
@@ -376,7 +375,7 @@
                         <h2 id="alerts-title">Alertes météo</h2>
                     </div>
 
-                    <div class="alerts-list" role="list" aria-live="polite" data-alerts-list>
+                    <div class="alerts-list" role="list" data-alerts-list>
                         <div class="alert-card" role="listitem" data-alert-type="loading" data-alert-severity="calm">
                             <span class="alert-badge">Signal local</span>
                             <h3>Analyse des signaux météo locaux</h3>
@@ -431,7 +430,7 @@
 
     <script src="js/clock.js?v=1.4.1-p1b2-runtime-efficiency"></script>
     <script src="pwa.js?v=1.4.1-search-geocoding-reliability-hotfix" defer></script>
-    <script type="module" src="js/app.js?v=1.4.1-p1c-favorite-focus"></script>
+    <script type="module" src="js/app.js?v=1.4.1-p1c-live-semantics"></script>
 </body>
 
 </html>
