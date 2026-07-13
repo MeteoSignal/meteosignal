@@ -295,6 +295,25 @@ test("le passage de un a plusieurs favoris conserve les deux listes coherentes",
     });
 });
 
+test("la limite de favoris ne declenche pas une fausse annonce de retrait", async () => {
+    const notifications = [];
+    const favorites = Array.from({ length: 100 }, (_, index) => (
+        createLocation(`city-${index}`, `Ville ${index}`, 40 + index / 1000, 1)
+    ));
+    const harness = createHarness({
+        favorites,
+        activeLocation: createLocation("city-100", "Ville 100", 41, 1),
+        onToggle: (payload) => notifications.push(payload)
+    });
+
+    await harness.favoriteButton.dispatchEvent({ type: "click", bubbles: true });
+
+    assert.equal(notifications.length, 0);
+    assert.equal(harness.desktopList.children.length, 100);
+    assert.equal(harness.mobileList.children.length, 100);
+    assert.equal(harness.favoriteButton.getAttribute("aria-pressed"), "false");
+});
+
 test("le passage de plusieurs a un favori conserve une liste valide", async () => {
     const harness = createHarness({ favorites: [TOULOUSE, PARIS] });
 
@@ -514,8 +533,9 @@ test("la revision JavaScript invalide toute la chaine menant au composant", () =
     const indexSource = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
     const appSource = fs.readFileSync(path.join(ROOT, "js", "app.js"), "utf8");
 
-    assert.match(indexSource, /js\/app\.js\?v=1\.4\.1-p1d-search-privacy/);
-    assert.match(appSource, /components\/favorites\.js\?v=1\.4\.1-p1c-live-semantics/);
+    assert.match(indexSource, /js\/app\.js\?v=1\.4\.1-p1d-storage-validation/);
+    assert.match(appSource, /components\/favorites\.js\?v=1\.4\.1-p1d-storage-validation/);
+    assert.match(appSource, /core\/storage\.js\?v=1\.4\.1-p1d-storage-validation/);
     assert.doesNotMatch(indexSource, /css\/[^"']+\?v=1\.4\.1-p1c-live-semantics/);
 });
 

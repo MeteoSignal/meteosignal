@@ -1,8 +1,8 @@
 import { APP_CONFIG } from "../config/config.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.4.1-p1d-storage-validation";
 import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.4.1-p1c-live-semantics";
+import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.4.1-p1d-storage-validation";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { initHourlyForecast, renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.4.1-p1c-live-semantics";
 import { initNavigation } from "./components/navigation.js?v=1.4.1-search-geocoding-reliability-hotfix";
