@@ -115,6 +115,24 @@ test("une erreur reelle de la demande active conserve le traitement d'erreur", a
     assert.equal(loader.getActiveSignal(), null);
 });
 
+test("une erreur de rattrapage conserve le traitement d'arrière-plan", async () => {
+    const networkError = new Error("Panne reseau");
+    const errors = [];
+    const loader = createWeatherDashboardLoader({
+        getActiveLocation: () => TOULOUSE,
+        getWeather: async () => {
+            throw networkError;
+        },
+        onError: (error, context) => errors.push({ error, context })
+    });
+
+    await loader.load({ showLoading: false });
+
+    assert.equal(errors.length, 1);
+    assert.equal(errors[0].error, networkError);
+    assert.equal(errors[0].context.showLoading, false);
+});
+
 function createAbortableWeatherLoader(requests) {
     return (location, { signal }) => {
         const promise = createDeferredRequest(requests, location, signal);

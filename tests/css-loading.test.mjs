@@ -58,6 +58,23 @@ test("style.css n'est plus reference a l'execution et la confidentialite garde s
     assert.match(fs.readFileSync(path.join(ROOT, "confidentialite.html"), "utf8"), /<style>/);
 });
 
+test("l'accueil préconnecte uniquement les deux API météo initiales avant les styles", () => {
+    const source = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+    const preconnects = [...source.matchAll(
+        /<link\s+rel="preconnect"\s+href="([^"]+)"\s+crossorigin\s*\/?>/g
+    )];
+    const origins = preconnects.map((match) => match[1]);
+
+    assert.equal((source.match(/rel="preconnect"/g) ?? []).length, 2);
+    assert.deepEqual(origins, [
+        "https://api.open-meteo.com",
+        "https://air-quality-api.open-meteo.com"
+    ]);
+    assert.equal(new Set(origins).size, origins.length);
+    assert.equal(origins.some((origin) => origin.includes("geocoding")), false);
+    assert.ok(preconnects.every((match) => match.index < source.indexOf('<link rel="stylesheet"')));
+});
+
 function readStylesheetLinks(file) {
     const source = fs.readFileSync(path.join(ROOT, file), "utf8");
 
