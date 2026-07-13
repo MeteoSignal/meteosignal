@@ -90,7 +90,8 @@ button {
 }
 
 :focus-visible {
-    outline: none;
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
     box-shadow: var(--shadow-focus);
 }
 
