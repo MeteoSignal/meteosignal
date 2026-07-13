@@ -2,9 +2,9 @@ import { APP_CONFIG } from "../config/config.js?v=1.4.1-search-geocoding-reliabi
 import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.4.1-p1c-favorite-focus";
+import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.4.1-p1c-live-semantics";
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { initHourlyForecast, renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.4.1-p1c-live-semantics";
 import { initNavigation } from "./components/navigation.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { initSearch, updateSearchInput } from "./components/search.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.4.1-search-geocoding-reliability-hotfix";
@@ -62,7 +62,10 @@ function initApp() {
     initNavigation();
     initSearch({
         onLocationSelect: handleLocationSelect,
-        onError: showInteractionError
+        onError: reportSearchError
+    });
+    initHourlyForecast({
+        onRangeChange: handleHourlyRangeChange
     });
     initFavorites({
         getActiveLocation: () => activeLocation,
@@ -263,6 +266,10 @@ function handleFavoriteRemove({ location, removedActiveLocation }) {
     setText("#app-status", `${location.name} supprimée des villes enregistrées.${suffix}`);
 }
 
+function handleHourlyRangeChange({ label }) {
+    setText("#app-status", `Prévisions horaires affichées pour la plage ${label}.`);
+}
+
 function setActiveLocation(location) {
     activeLocation = saveActiveLocation(location) ?? location;
     updateSearchInput(activeLocation);
@@ -367,8 +374,11 @@ function formatBuildDate(buildDate) {
 function showInteractionError(error) {
     console.warn(error);
     setText("#hero-status", "Action indisponible");
-    setText("#search-status", error.message ?? "Action indisponible.");
     setText("#app-status", error.message ?? "Action indisponible.");
+}
+
+function reportSearchError(error) {
+    console.warn(error);
 }
 
 function setText(selector, value) {

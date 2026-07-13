@@ -65,6 +65,7 @@ export function renderFavoritesList(activeLocation = null) {
         list.innerHTML = "";
 
         if (favorites.length === 0) {
+            list.removeAttribute("role");
             const empty = document.createElement("p");
             empty.className = "favorites-empty";
             empty.textContent = "Aucune ville enregistrée pour le moment.";
@@ -72,6 +73,7 @@ export function renderFavoritesList(activeLocation = null) {
             return;
         }
 
+        list.setAttribute("role", "list");
         favorites.forEach((favorite) => {
             list.appendChild(buildFavoriteItem(favorite, getLocationKey(favorite) === activeLocationKey));
         });

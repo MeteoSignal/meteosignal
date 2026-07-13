@@ -14,6 +14,12 @@ const HOURLY_RANGES = [
 
 let activeRangeIndex = 0;
 let currentHourly = [];
+let hourlyOptions = {};
+
+export function initHourlyForecast(options = {}) {
+    hourlyOptions = options;
+    bindHourlyRangeControls();
+}
 
 export function renderHourlyForecastLoading() {
     bindHourlyRangeControls();
@@ -166,7 +172,7 @@ function renderHourlyMessage(message) {
     }
 
     container.innerHTML = "";
-    container.setAttribute("role", "status");
+    container.removeAttribute("role");
     container.setAttribute("aria-busy", "false");
     container.style.setProperty("--hourly-card-count", "1");
     container.dataset.hourlyTotal = String(currentHourly.length);
@@ -198,6 +204,7 @@ function bindHourlyRangeControls() {
 
             activeRangeIndex = rangeIndex;
             renderActiveHourlyRange(false);
+            hourlyOptions.onRangeChange?.(getActiveRange());
         });
     });
 }
