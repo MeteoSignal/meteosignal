@@ -156,13 +156,13 @@ test("l'etat HTML initial des favoris vides ne declare aucune liste", () => {
     assert.equal(countOccurrences(INDEX_SOURCE, "Aucune ville enregistr&eacute;e pour le moment."), 1);
 });
 
-test("les revisions JavaScript et PWA changent sans toucher la revision CSS publique", () => {
+test("les revisions JavaScript, CSS et PWA restent coherentes", () => {
     assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.1-p1c-live-semantics/);
     assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.4\.1-p1c-live-semantics/);
     assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.4\.1-p1c-live-semantics/);
     assert.match(SW_SOURCE, /const CACHE_PREFIX = "meteosignal-static"/);
-    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{APP_VERSION\}-p1c-live-semantics`/);
-    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-p1c-focus-visibility/);
+    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{APP_VERSION\}-p1c-semantic-structure`/);
+    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-p1c-semantic-structure/);
     assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-p1c-live-semantics/);
 });
 
