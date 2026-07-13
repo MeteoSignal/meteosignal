@@ -15,11 +15,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
     <link rel="apple-touch-icon" href="assets/logo/icon-192.png">
-    <link rel="stylesheet" href="css/tokens.css?v=1.4.1-p1c-focus-visibility">
-    <link rel="stylesheet" href="css/base.css?v=1.4.1-p1c-focus-visibility">
-    <link rel="stylesheet" href="css/layout.css?v=1.4.1-p1c-focus-visibility">
-    <link rel="stylesheet" href="css/components.css?v=1.4.1-p1c-focus-visibility">
-    <link rel="stylesheet" href="css/responsive.css?v=1.4.1-p1c-focus-visibility">
+    <link rel="stylesheet" href="css/tokens.css?v=1.4.1-p1c-semantic-structure">
+    <link rel="stylesheet" href="css/base.css?v=1.4.1-p1c-semantic-structure">
+    <link rel="stylesheet" href="css/layout.css?v=1.4.1-p1c-semantic-structure">
+    <link rel="stylesheet" href="css/components.css?v=1.4.1-p1c-semantic-structure">
+    <link rel="stylesheet" href="css/responsive.css?v=1.4.1-p1c-semantic-structure">
 </head>
 
 <body data-nav-open="false" data-nav-collapsed="false">
@@ -68,7 +68,7 @@
                 <div class="favorites-heading">
                     <div>
                         <p class="eyebrow">Acc&egrave;s rapide</p>
-                        <h2 id="sidebar-favorites-title">Villes enregistr&eacute;es</h2>
+                        <p id="sidebar-favorites-title" class="favorites-title">Villes enregistr&eacute;es</p>
                     </div>
                     <span class="favorites-count" data-favorites-count>0 ville</span>
                 </div>
@@ -145,7 +145,7 @@
                 <span id="search-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></span>
             </form>
 
-            <nav class="header-actions" aria-label="Actions principales">
+            <div class="header-actions" role="group" aria-label="Actions principales">
                 <button id="geolocation-button" class="icon-action" type="button" aria-label="Utiliser ma position">
                     <span aria-hidden="true">⌖</span>
                 </button>
@@ -157,14 +157,14 @@
                     aria-pressed="false">
                     <span aria-hidden="true">★</span>
                 </button>
-            </nav>
+            </div>
         </header>
 
         <section class="favorites-panel favorites-panel--inline" aria-labelledby="inline-favorites-title" data-favorites-panel>
             <div class="favorites-heading">
                 <div>
                     <p class="eyebrow">Accès rapide</p>
-                    <h2 id="inline-favorites-title">Villes enregistrées</h2>
+                    <p id="inline-favorites-title" class="favorites-title">Villes enregistrées</p>
                 </div>
                 <span class="favorites-count" data-favorites-count>0 ville</span>
             </div>

@@ -527,10 +527,11 @@
     gap: var(--space-3);
 }
 
-.favorites-heading h2 {
+.favorites-title {
     margin: 0;
     color: var(--color-white);
     font-size: 1.02rem;
+    font-weight: 700;
     line-height: 1.2;
     text-shadow: 0 0 18px rgba(47, 247, 255, 0.22);
 }

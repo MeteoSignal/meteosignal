@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const CSS_REVISION = "1.4.1-p1c-focus-visibility";
+const CSS_REVISION = "1.4.1-p1c-semantic-structure";
 const EXPECTED_STYLESHEETS = [
     "css/tokens.css",
     "css/base.css",
