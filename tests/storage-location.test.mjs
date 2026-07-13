@@ -53,7 +53,7 @@ test("la ville active conserve featureCode, postcodes et population", () => {
             timezone: "Europe/Paris",
             featureCode: "PPLA3",
             postcodes: ["31800", "31800"],
-            population: "12193"
+            population: 12193
         });
 
         assert.equal(saved.countryCode, "FR");

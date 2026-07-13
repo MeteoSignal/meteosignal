@@ -4,7 +4,7 @@ import {
     readFavorites,
     removeFavoriteLocation,
     toggleFavoriteLocation
-} from "../core/storage.js?v=1.4.1-search-geocoding-reliability-hotfix";
+} from "../core/storage.js?v=1.4.1-p1d-storage-validation";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";
@@ -28,13 +28,17 @@ export function initFavorites(options = {}) {
                 return;
             }
 
+            const wasFavorite = isFavoriteLocation(location);
             const result = toggleFavoriteLocation(location);
             renderFavoriteButton(location);
             renderFavoritesList(location);
-            favoriteOptions.onToggle?.({
-                ...result,
-                location
-            });
+
+            if (result.isFavorite !== wasFavorite) {
+                favoriteOptions.onToggle?.({
+                    ...result,
+                    location
+                });
+            }
         });
     }
 
