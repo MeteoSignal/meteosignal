@@ -623,9 +623,10 @@
     }
 
     .forecast-meta span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        overflow: visible;
+        overflow-wrap: anywhere;
+        text-overflow: clip;
+        white-space: normal;
     }
 
     .forecast-temperature-range strong {

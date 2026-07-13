@@ -111,6 +111,7 @@
             border: 1px solid rgba(119, 218, 255, 0.24);
             border-radius: 28px;
             background: rgba(5, 25, 47, 0.88);
+            overflow-wrap: anywhere;
             box-shadow:
                 0 28px 80px rgba(0, 0, 0, 0.34),
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -209,7 +210,7 @@
     <a class="skip-link" href="#contenu">Aller au contenu</a>
 
     <header class="page-header">
-        <a class="brand" href="./" aria-label="Retour à l’accueil de MeteoSignal">
+        <a class="brand" href="./" aria-label="Retour à l’accueil de MeteoSignal" data-privacy-return>
             <img
                 src="assets/logo/logo-meteosignal-sans-slogan.webp"
                 alt="MeteoSignal">
@@ -217,7 +218,7 @@
 
         <br>
 
-        <a class="back-link" href="./">← Retour à MeteoSignal</a>
+        <a class="back-link" href="./" data-privacy-return>← Retour à MeteoSignal</a>
     </header>
 
     <main id="contenu" class="page-main">
@@ -421,5 +422,7 @@
     <footer class="page-footer">
         MeteoSignal © 2026 - Prévisions et alertes météo
     </footer>
+
+    <script type="module" src="js/privacy-return.js?v=1.4.1-p1c-final-accessibility"></script>
 </body>
 </html>
