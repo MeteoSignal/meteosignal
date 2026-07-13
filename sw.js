@@ -1,6 +1,6 @@
 const APP_VERSION = "1.4.1";
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = `v${APP_VERSION}-p1c-focus-visibility`;
+const CACHE_VERSION = `v${APP_VERSION}-p1c-favorite-focus`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([

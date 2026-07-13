@@ -106,6 +106,10 @@ async function handleFavoritesListClick(event) {
     const selectButton = target.closest(FAVORITE_SELECT_SELECTOR);
 
     if (removeButton) {
+        const sourceList = removeButton.closest(FAVORITES_LIST_SELECTOR);
+        const removedIndex = sourceList
+            ? Array.from(sourceList.querySelectorAll(FAVORITE_REMOVE_SELECTOR)).indexOf(removeButton)
+            : -1;
         const location = getFavoriteByKey(removeButton.dataset.favoriteKey);
 
         if (!location) {
@@ -120,6 +124,11 @@ async function handleFavoritesListClick(event) {
             location,
             favorites,
             removedActiveLocation: getLocationKey(location) === getLocationKey(activeLocation)
+        });
+        restoreFavoriteFocus({
+            sourceList,
+            removedIndex,
+            remainingCount: favorites.length
         });
         return;
     }
@@ -137,6 +146,73 @@ async function handleFavoritesListClick(event) {
             favoriteOptions.onError?.(error);
         }
     }
+}
+
+export function getFavoriteFocusIndex(removedIndex, remainingCount) {
+    if (!Number.isInteger(removedIndex) || removedIndex < 0 || remainingCount <= 0) {
+        return -1;
+    }
+
+    return Math.min(removedIndex, remainingCount - 1);
+}
+
+export function restoreFavoriteFocus({ sourceList, removedIndex, remainingCount }) {
+    const targetIndex = getFavoriteFocusIndex(removedIndex, remainingCount);
+
+    if (sourceList?.isConnected && targetIndex >= 0) {
+        const removeButtons = sourceList.querySelectorAll(FAVORITE_REMOVE_SELECTOR);
+
+        if (focusFavoriteControl(removeButtons[targetIndex])) {
+            return removeButtons[targetIndex];
+        }
+    }
+
+    const favoriteButton = document.querySelector(FAVORITE_BUTTON_SELECTOR);
+    return focusFavoriteControl(favoriteButton) ? favoriteButton : null;
+}
+
+function focusFavoriteControl(control) {
+    if (!isAvailableFocusTarget(control)) {
+        return false;
+    }
+
+    try {
+        control.focus({ preventScroll: true });
+    } catch {
+        try {
+            control.focus();
+        } catch {
+            return false;
+        }
+    }
+
+    return document.activeElement === control && isAvailableFocusTarget(control);
+}
+
+function isAvailableFocusTarget(control) {
+    if (!control?.isConnected || control.disabled || typeof control.focus !== "function") {
+        return false;
+    }
+
+    let current = control;
+
+    while (current) {
+        if (current.hidden) {
+            return false;
+        }
+
+        if (typeof window !== "undefined" && typeof window.getComputedStyle === "function") {
+            const style = window.getComputedStyle(current);
+
+            if (style.display === "none" || style.visibility === "hidden") {
+                return false;
+            }
+        }
+
+        current = current.parentElement;
+    }
+
+    return true;
 }
 
 function buildFavoriteItem(location, isActive) {
