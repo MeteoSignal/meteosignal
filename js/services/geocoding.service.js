@@ -3,7 +3,17 @@ import {
     createLocationSearchPlan,
     rankLocationResults,
     shouldRequestSupplemental
-} from "../core/location-search.js?v=1.4.1-search-geocoding-reliability-hotfix";
+} from "../core/location-search.js?v=1.4.1-p1d-search-privacy";
+
+export const GEOCODING_TIMEOUT_MS = 8000;
+
+export class GeocodingTimeoutError extends Error {
+    constructor() {
+        super("La recherche de ville a dépassé le délai autorisé.");
+        this.name = "TimeoutError";
+        this.code = "GEOCODING_TIMEOUT";
+    }
+}
 
 export async function searchLocations(query, options = {}) {
     const plan = createLocationSearchPlan(query);
@@ -12,30 +22,97 @@ export async function searchLocations(query, options = {}) {
         return [];
     }
 
-    const fetchImpl = options.fetchImpl ?? ((input, init) => fetch(input, init));
-    const resultLimit = normalizeCount(options.limit, 8, 1, 20);
-    const apiCount = normalizeCount(options.count, 16, resultLimit, 100);
-    const requestOptions = {
-        count: apiCount,
-        language: options.language ?? "fr",
-        signal: options.signal,
-        fetchImpl
-    };
-    const primaryResults = await fetchGeocodingQuery(plan.primary, requestOptions);
-    let results = primaryResults;
+    const requestScope = createGeocodingRequestScope(options);
 
-    if (shouldRequestSupplemental(plan, primaryResults)) {
-        try {
-            const supplementalResults = await fetchGeocodingQuery(plan.supplemental, requestOptions);
-            results = [...primaryResults, ...supplementalResults];
-        } catch (error) {
-            if (isAbortError(error) || primaryResults.length === 0) {
-                throw error;
+    try {
+        const fetchImpl = options.fetchImpl ?? ((input, init) => fetch(input, init));
+        const resultLimit = normalizeCount(options.limit, 8, 1, 20);
+        const apiCount = normalizeCount(options.count, 16, resultLimit, 100);
+        const requestOptions = {
+            count: apiCount,
+            language: options.language ?? "fr",
+            signal: requestScope.signal,
+            fetchImpl
+        };
+        const primaryResults = await fetchGeocodingQuery(plan.primary, requestOptions);
+        let results = primaryResults;
+
+        requestScope.throwIfTimedOut();
+
+        if (shouldRequestSupplemental(plan, primaryResults)) {
+            try {
+                const supplementalResults = await fetchGeocodingQuery(plan.supplemental, requestOptions);
+                requestScope.throwIfTimedOut();
+                results = [...primaryResults, ...supplementalResults];
+            } catch (error) {
+                if (isAbortError(error) || requestScope.didTimeOut() || primaryResults.length === 0) {
+                    throw error;
+                }
             }
         }
+
+        const rankedResults = rankLocationResults(results, plan).slice(0, resultLimit);
+        requestScope.throwIfTimedOut();
+        return rankedResults;
+    } catch (error) {
+        if (requestScope.didTimeOut() && error?.code !== "GEOCODING_TIMEOUT") {
+            throw new GeocodingTimeoutError();
+        }
+
+        throw error;
+    } finally {
+        requestScope.cleanup();
+    }
+}
+
+function createGeocodingRequestScope(options) {
+    const controller = new AbortController();
+    const externalSignal = options.signal;
+    const timeoutMs = normalizeTimeout(options.timeoutMs);
+    const setTimer = options.setTimeoutImpl ?? setTimeout;
+    const clearTimer = options.clearTimeoutImpl ?? clearTimeout;
+    let timedOut = false;
+    let timeoutId = null;
+    let externalListenerAttached = false;
+
+    const abortFromExternalSignal = () => {
+        controller.abort();
+    };
+
+    if (externalSignal?.aborted) {
+        abortFromExternalSignal();
+    } else {
+        if (externalSignal) {
+            externalSignal.addEventListener("abort", abortFromExternalSignal, { once: true });
+            externalListenerAttached = true;
+        }
+
+        timeoutId = setTimer(() => {
+            timedOut = true;
+            controller.abort();
+        }, timeoutMs);
     }
 
-    return rankLocationResults(results, plan).slice(0, resultLimit);
+    return {
+        signal: controller.signal,
+        didTimeOut: () => timedOut,
+        throwIfTimedOut() {
+            if (timedOut) {
+                throw new GeocodingTimeoutError();
+            }
+        },
+        cleanup() {
+            if (timeoutId !== null) {
+                clearTimer(timeoutId);
+                timeoutId = null;
+            }
+
+            if (externalListenerAttached) {
+                externalSignal.removeEventListener("abort", abortFromExternalSignal);
+                externalListenerAttached = false;
+            }
+        }
+    };
 }
 
 async function fetchGeocodingQuery(searchQuery, options) {
@@ -115,6 +192,10 @@ function normalizeCount(value, fallback, minimum, maximum) {
     }
 
     return Math.min(Math.max(count, minimum), maximum);
+}
+
+function normalizeTimeout(value) {
+    return Number.isFinite(value) && value > 0 ? value : GEOCODING_TIMEOUT_MS;
 }
 
 function normalizeCountryCode(value) {

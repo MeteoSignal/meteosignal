@@ -8,8 +8,12 @@ import {
     findUniqueExactInhabitedLocation,
     getAutomaticLocationSelection,
     getNextSuggestionIndex,
+    LocationSearchLengthError,
+    MAX_LOCATION_SEARCH_LENGTH,
+    normalizeLocationSearchQuery,
     normalizeSearchText,
-    rankLocationResults
+    rankLocationResults,
+    validateLocationSearchQuery
 } from "../js/core/location-search.js";
 import { normalizeGeocodingResults } from "../js/services/geocoding.service.js";
 
@@ -20,6 +24,51 @@ test("la comparaison ignore casse, accents, tirets, apostrophes et espaces", () 
     assert.equal(normalizeSearchText("  SAINT--Gaudéns  "), "saint gaudens");
     assert.equal(normalizeSearchText("L’Haÿ-les-Roses"), "l hay les roses");
     assert.equal(normalizeSearchText("Saint Gaudens"), normalizeSearchText("Saint-Gaudens"));
+});
+
+test("la limite de recherche est centralisee a 120 caracteres Unicode", () => {
+    assert.equal(MAX_LOCATION_SEARCH_LENGTH, 120);
+    assert.equal(normalizeLocationSearchQuery("  Saint   Gaudens  "), "Saint Gaudens");
+
+    [
+        "Évry",
+        "L'Haÿ-les-Roses",
+        "L’Haÿ-les-Roses",
+        "Saint-Gaudens",
+        "東京",
+        "😀😀"
+    ].forEach((query) => {
+        const validation = validateLocationSearchQuery(query);
+        assert.equal(validation.isValid, true, query);
+        assert.equal(validation.length, Array.from(query).length, query);
+    });
+});
+
+test("120 caracteres Unicode sont acceptes et 121 sont refuses", () => {
+    const accepted = "😀".repeat(120);
+    const refused = `${accepted}😀`;
+
+    assert.deepEqual(
+        validateLocationSearchQuery(accepted),
+        {
+            query: accepted,
+            length: 120,
+            isTooShort: false,
+            isTooLong: false,
+            isValid: true
+        }
+    );
+    assert.equal(validateLocationSearchQuery(refused).length, 121);
+    assert.equal(validateLocationSearchQuery(refused).isTooLong, true);
+    assert.doesNotThrow(() => createLocationSearchPlan(accepted));
+    assert.throws(
+        () => createLocationSearchPlan(refused),
+        (error) => (
+            error instanceof LocationSearchLengthError
+            && error.code === "LOCATION_SEARCH_TOO_LONG"
+            && !error.message.includes(refused)
+        )
+    );
 });
 
 test("un pays explicite est reconnu sans retirer arbitrairement un mot", () => {
