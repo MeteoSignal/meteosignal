@@ -209,7 +209,7 @@ test("les deux retours gardent href et le marquage progressif", () => {
 });
 
 test("le module partage est charge sur les deux pages avec la meme revision", () => {
-    const reference = /js\/privacy-return\.js\?v=1\.4\.1-p1d-api-cache-privacy/g;
+    const reference = /js\/privacy-return\.js\?v=1\.4\.1-p1d-browser-security/g;
     assert.equal((INDEX_SOURCE.match(reference) ?? []).length, 1);
     assert.equal((PRIVACY_SOURCE.match(reference) ?? []).length, 1);
     assert.match(SW_SOURCE, /"\.\/js\/privacy-return\.js"/);
@@ -223,7 +223,7 @@ test("le contexte temporaire n'utilise ni localStorage ni restauration globale m
 });
 
 test("les deux corrections d'espacement autorisent les retours a la ligne", () => {
-    assert.match(PRIVACY_SOURCE, /\.privacy-card\s*\{[^}]*overflow-wrap:\s*anywhere;/s);
+    assert.match(read("css/privacy.css"), /\.privacy-card\s*\{[^}]*overflow-wrap:\s*anywhere;/s);
     assert.match(RESPONSIVE_SOURCE, /\.forecast-meta span\s*\{[^}]*overflow:\s*visible;[^}]*overflow-wrap:\s*anywhere;[^}]*white-space:\s*normal;/s);
 });
 

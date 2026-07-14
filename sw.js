@@ -1,6 +1,6 @@
 const APP_VERSION = "1.4.1";
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = `v${APP_VERSION}-p1d-api-cache-privacy`;
+const CACHE_VERSION = `v${APP_VERSION}-p1d-browser-security`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -51,6 +51,7 @@ const ESSENTIAL_ASSETS = [
 
 const OPTIONAL_ASSETS = [
     "./confidentialite.html",
+    "./css/privacy.css",
     "./manifest.json",
     "./assets/backgrounds/clear.jpg",
     "./assets/backgrounds/meteosignal-lightning-bg.webp",

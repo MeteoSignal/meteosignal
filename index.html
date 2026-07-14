@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://api.open-meteo.com https://geocoding-api.open-meteo.com https://air-quality-api.open-meteo.com; manifest-src 'self'; worker-src 'self'; frame-src 'none'; media-src 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="description" content="MeteoSignal - La météo, partout avec vous.">
     <meta name="theme-color" content="#07182c">
 
@@ -436,8 +440,8 @@
 
     <script src="js/clock.js?v=1.4.1-p1b2-runtime-efficiency"></script>
     <script src="pwa.js?v=1.4.1-search-geocoding-reliability-hotfix" defer></script>
-    <script type="module" src="js/app.js?v=1.4.1-p1d-api-cache-privacy"></script>
-    <script type="module" src="js/privacy-return.js?v=1.4.1-p1d-api-cache-privacy"></script>
+    <script type="module" src="js/app.js?v=1.4.1-p1d-browser-security"></script>
+    <script type="module" src="js/privacy-return.js?v=1.4.1-p1d-browser-security"></script>
 </body>
 
 </html>
