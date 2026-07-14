@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CSS_REVISION = "1.4.1-p1c-final-accessibility";
+const PRIVACY_CSS_REVISION = "1.4.1-p1d-browser-security";
 const EXPECTED_STYLESHEETS = [
     "css/tokens.css",
     "css/base.css",
@@ -38,7 +39,7 @@ test("le chemin de chargement initial ne contient plus aucun import CSS", () => 
     assert.equal(/@import\b/.test(historicalEntryPoint), false, "css/style.css");
 });
 
-test("style.css n'est plus reference a l'execution et la confidentialite garde son style autonome", () => {
+test("style.css n'est plus reference a l'execution et la confidentialite charge son style externe", () => {
     const runtimeFiles = [
         "index.html",
         "confidentialite.html",
@@ -54,8 +55,12 @@ test("style.css n'est plus reference a l'execution et la confidentialite garde s
         assert.equal(source.includes("css/style.css"), false, file);
     }
 
-    assert.deepEqual(readStylesheetLinks("confidentialite.html"), []);
-    assert.match(fs.readFileSync(path.join(ROOT, "confidentialite.html"), "utf8"), /<style>/);
+    assert.deepEqual(readStylesheetLinks("confidentialite.html"), [{
+        href: `css/privacy.css?v=${PRIVACY_CSS_REVISION}`,
+        pathname: "css/privacy.css",
+        revision: PRIVACY_CSS_REVISION
+    }]);
+    assert.doesNotMatch(fs.readFileSync(path.join(ROOT, "confidentialite.html"), "utf8"), /<style\b/i);
 });
 
 test("l'accueil préconnecte uniquement les deux API météo initiales avant les styles", () => {

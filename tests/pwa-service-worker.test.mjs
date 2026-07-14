@@ -14,13 +14,14 @@ test("le precache contient une seule URL canonique par fichier local", () => {
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
 
     assert.equal(api.ESSENTIAL_ASSETS.length, 36);
-    assert.equal(api.OPTIONAL_ASSETS.length, 19);
-    assert.equal(assets.length, 55);
+    assert.equal(api.OPTIONAL_ASSETS.length, 20);
+    assert.equal(assets.length, 56);
     assert.equal(new Set(assets).size, assets.length);
     assert.equal(assets.some((asset) => asset.includes("open-meteo.com")), false);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.webp"), true);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.png"), false);
     assert.equal(assets.includes("./css/style.css"), false);
+    assert.equal(assets.includes("./css/privacy.css"), true);
     assert.equal(manifest.start_url, "./");
     assert.equal(manifest.scope, "./");
 
@@ -50,9 +51,9 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
-    assert.equal(api.CACHE_VERSION, "v1.4.1-p1d-api-cache-privacy");
+    assert.equal(api.CACHE_VERSION, "v1.4.1-p1d-browser-security");
     assert.match(indexSource, /src="js\/clock\.js\?v=1\.4\.1-p1b2-runtime-efficiency"/);
-    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1d-api-cache-privacy"/);
+    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1d-browser-security"/);
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
     assert.ok(cacheBusterVersions.length > 0);
     assert.deepEqual(new Set(cacheBusterVersions), new Set([packageVersion]));
@@ -229,7 +230,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
         "meteosignal-static-v1.4.1-p1c-semantic-structure",
         "meteosignal-static-v1.4.1-p1c-final-accessibility",
         "meteosignal-static-v1.4.1-p1d-search-privacy",
-        "meteosignal-static-v1.4.1-p1d-storage-validation"
+        "meteosignal-static-v1.4.1-p1d-storage-validation",
+        "meteosignal-static-v1.4.1-p1d-api-cache-privacy"
     ]);
     assert.equal(harness.claimCalls.length, 1);
 });

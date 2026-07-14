@@ -533,7 +533,7 @@ test("la revision JavaScript invalide toute la chaine menant au composant", () =
     const indexSource = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
     const appSource = fs.readFileSync(path.join(ROOT, "js", "app.js"), "utf8");
 
-    assert.match(indexSource, /js\/app\.js\?v=1\.4\.1-p1d-api-cache-privacy/);
+    assert.match(indexSource, /js\/app\.js\?v=1\.4\.1-p1d-browser-security/);
     assert.match(appSource, /components\/favorites\.js\?v=1\.4\.1-p1d-storage-validation/);
     assert.match(appSource, /core\/storage\.js\?v=1\.4\.1-p1d-storage-validation/);
     assert.doesNotMatch(indexSource, /css\/[^"']+\?v=1\.4\.1-p1c-live-semantics/);

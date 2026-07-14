@@ -194,7 +194,7 @@ test("la combobox et les deux regions live P1C sont conservees", () => {
 });
 
 test("la revision P1D invalide toute la chaine de recherche sans toucher au CSS", () => {
-    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.1-p1d-api-cache-privacy/);
+    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.1-p1d-browser-security/);
     assert.match(APP_SOURCE, /components\/search\.js\?v=1\.4\.1-p1d-api-cache-privacy/);
     assert.match(SEARCH_SOURCE, /core\/location-search\.js\?v=1\.4\.1-p1d-search-privacy/);
     assert.match(SEARCH_SOURCE, /services\/geocoding\.service\.js\?v=1\.4\.1-p1d-api-cache-privacy/);
