@@ -28,7 +28,7 @@ const PRIVACY_HEADING_IDS = [
     "evolution"
 ];
 const EXPECTED_VISIBLE_HASHES = {
-    index: "e9e86b10d8fd0cbe31e76df47308359e1057add2b71101dc022ab31959cff433",
+    index: "91c16e11fc41ce6122d5377c7813af58b5d1f3b27cc7e1c773bebedce38bcfd6",
     privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 
@@ -68,6 +68,8 @@ test("les panneaux de favoris conservent le nom accessible Villes enregistrees",
     assert.equal(panels.length, 2);
     panels.forEach((panel) => {
         const label = elementById(INDEX_DOCUMENT, panel.attributes["aria-labelledby"]);
+        assert.equal(panel.tagName, "div");
+        assert.equal(panel.attributes.role, "group");
         assert.equal(normalizeText(textContent(label)), "Villes enregistrées");
     });
 });

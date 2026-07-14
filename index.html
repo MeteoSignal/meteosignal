@@ -68,7 +68,7 @@
                 </a>
             </nav>
 
-            <section class="favorites-panel favorites-panel--sidebar" aria-labelledby="sidebar-favorites-title" data-favorites-panel>
+            <div class="favorites-panel favorites-panel--sidebar" role="group" aria-labelledby="sidebar-favorites-title" data-favorites-panel>
                 <div class="favorites-heading">
                     <div>
                         <p class="eyebrow">Acc&egrave;s rapide</p>
@@ -80,7 +80,7 @@
                 <div class="favorites-list" data-favorites-list>
                     <p class="favorites-empty">Aucune ville enregistr&eacute;e pour le moment.</p>
                 </div>
-            </section>
+            </div>
 
             <button
                 class="nav-collapse"
@@ -170,7 +170,7 @@
             </div>
         </header>
 
-        <section class="favorites-panel favorites-panel--inline" aria-labelledby="inline-favorites-title" data-favorites-panel>
+        <div class="favorites-panel favorites-panel--inline" role="group" aria-labelledby="inline-favorites-title" data-favorites-panel>
             <div class="favorites-heading">
                 <div>
                     <p class="eyebrow">Accès rapide</p>
@@ -182,7 +182,7 @@
             <div class="favorites-list" data-favorites-list>
                 <p class="favorites-empty">Aucune ville enregistrée pour le moment.</p>
             </div>
-        </section>
+        </div>
 
         <main id="contenu" class="dashboard" tabindex="-1" data-dashboard aria-busy="true">
             <section
@@ -409,7 +409,15 @@
                 <span id="project-status-build">Build : --</span>
                 <span id="project-status-updated">Dernière mise à jour : --</span>
                 <span id="project-status-copyright">MeteoSignal © 2026</span>
-                <a id="privacy-footer-link" class="privacy-footer-link" href="confidentialite.html">Règles de confidentialité</a>
+                <a
+                    id="feedback-footer-link"
+                    class="footer-link footer-link--feedback"
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSfOQypJBgcKy1KcQ187O_vd8rf65cAhotRveU4s7kMgogfQVw/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    Votre avis compte<span class="sr-only"> (ouvre dans un nouvel onglet)</span>
+                </a>
+                <a id="privacy-footer-link" class="footer-link" href="confidentialite.html">Règles de confidentialité</a>
             </aside>
         </footer>
         </div>
