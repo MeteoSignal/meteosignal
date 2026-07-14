@@ -2,6 +2,8 @@
 
 Statut : validée le 5 juillet 2026.
 
+Cette architecture reste la fondation historique. L'état effectivement audité de la version 1.4.1, incluant l'orchestrateur multi-fournisseur, la page de confidentialité, la CI et Android/TWA, est synthétisé dans [le rapport final v1.4.1](audit-final-v1.4.1.md). En cas d'écart descriptif, le code testé et les décisions plus récentes font référence.
+
 Ce document décrit l'architecture de référence de MeteoSignal v1.0. Toute nouvelle fonctionnalité doit s'y intégrer sans modifier les fondations, sauf décision documentée dans `docs/decisions.md`.
 
 ## Objectif architectural

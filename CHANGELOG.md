@@ -6,6 +6,46 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [Unreleased]
+
+### Fiabilité
+
+- Audit complet de la chaîne météo, des annulations, timeouts, fallbacks et données invalides sans modification du modèle métier validé.
+- Rafraîchissement en arrière-plan regroupé et protégé contre les réponses obsolètes.
+
+### Accessibilité
+
+- Navigation clavier, focus visible, structure des titres et landmarks, régions live, reflow et restauration du contexte renforcés.
+- Recherche et favoris conservés utilisables avec des rôles et états accessibles cohérents.
+
+### Sécurité et confidentialité
+
+- Recherche retirée de l'URL de secours, saisie limitée et géocodage borné par un timeout total.
+- Stockage local validé, normalisé et réparé défensivement.
+- CSP stricte et politique de référent cohérentes sur les deux pages.
+- Appels Forecast, Air Quality et Geocoding configurés avec `cache: "no-store"` et maintenus hors Cache Storage.
+- Politique de confidentialité alignée sur le comportement réel au 14 juillet 2026.
+
+### PWA et performance
+
+- Service worker, précache, ressources graphiques, chargement CSS, horloge et gestion de visibilité audités et stabilisés.
+- Cache statique versionné sans doublon ni endpoint Open-Meteo.
+
+### CI
+
+- Workflow GitHub Actions limité à la lecture, sans installation ni publication, avec actions tierces épinglées par SHA.
+
+### Android/TWA
+
+- Digital Asset Links conserve le certificat local/de téléversement et ajoute le certificat Google Play App Signing pour `fr.meteosignal.app`.
+
+### Documentation
+
+- Documentation de référence mise en cohérence avec l'état stable v1.4.1.
+- Rapport officiel de clôture ajouté dans `docs/audit-final-v1.4.1.md`.
+
+---
+
 ## [1.4.1] - 2026-07-10
 
 ### Ajouté

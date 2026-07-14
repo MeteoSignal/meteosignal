@@ -8,14 +8,19 @@ Le projet est conçu comme un véritable produit logiciel : simple à utiliser, 
 
 ## État actuel
 
-MeteoSignal est publié en version **1.4.1**. Le produit propose déjà la météo actuelle, les prévisions horaires sur 72 heures, les prévisions sur 7 jours, la recherche géographique, la géolocalisation, les favoris, l'astronomie, la qualité de l'air et des alertes locales indicatives.
+MeteoSignal est publié en version **1.4.1**. Le produit propose la météo actuelle, les prévisions horaires sur 72 heures, les prévisions sur 7 jours, la recherche géographique, la géolocalisation, les favoris, l'astronomie, la qualité de l'air et des alertes locales indicatives.
 
 La v1.4.0 a introduit une fondation multi-fournisseur avec registre par capacités, orchestration et provenance des données. Open-Meteo reste l'unique fournisseur actif en v1.4.1 ; aucun mélange automatique de données entre fournisseurs n'est réalisé.
+
+Au 14 juillet 2026, le socle v1.4.1 a été audité de bout en bout. Les protections suivantes sont intégrées et testées : données météo normalisées, appels annulables sans cache applicatif, stockage local validé, accessibilité structurelle et clavier, PWA statique versionnée, CSP, politique de référent, CI en lecture seule et association Digital Asset Links avec les certificats local et Google Play.
+
+La clôture technique ne vaut pas achèvement de la distribution Google Play ni validation physique sur chaque plateforme. Ces étapes restent suivies séparément dans le [TODO](TODO.md).
 
 ## Référence officielle
 
 Ce fichier résume la vision du projet. Les documents techniques de référence sont :
 
+- [Rapport final d'audit v1.4.1](docs/audit-final-v1.4.1.md)
 - [Architecture](docs/architecture.md)
 - [Architecture multi-fournisseur](docs/multi-provider-architecture.md)
 - [Décisions techniques](docs/decisions.md)
@@ -39,14 +44,16 @@ MeteoSignal ne copie pas une application existante. Le projet s'inspire des meil
 
 ## Principes
 
-Le développement suit quatre principes :
+Le développement suit désormais six principes validés par l'audit v1.4.1 :
 
-- simplicité ;
-- élégance ;
-- performance ;
-- évolutivité.
+- simplicité et lisibilité du code natif ;
+- élégance sans dégrader l'accessibilité ou les petits appareils ;
+- performance mesurée sans optimisation artificielle ;
+- évolutivité par contrats et capacités ;
+- exactitude et provenance explicite des données ;
+- confidentialité, sécurité et cache prudent par défaut.
 
-Une fonctionnalité est ajoutée uniquement si elle améliore clairement l'expérience utilisateur.
+Une fonctionnalité est ajoutée uniquement si elle améliore clairement l'expérience utilisateur et conserve ces garanties.
 
 ## Technologies
 
@@ -59,7 +66,7 @@ Socle actuel en v1.4.1 :
 - Git, GitHub, GitHub Pages ;
 - Open-Meteo comme fournisseur actif au sein de l'architecture multi-fournisseur.
 
-Aucun framework JavaScript n'est utilisé.
+Aucun framework JavaScript ni outil de build applicatif n'est utilisé.
 
 ## Périmètre historique de la version 1.0
 
@@ -115,8 +122,8 @@ Un composant validé reste stable. Il n'est modifié ensuite que pour corriger u
 - `main` : version publique stable ;
 - `develop` : préparation de la prochaine version ;
 - `feature/*` : développement d'une évolution précise ;
-- `hotfix/*` : correction urgente d'une version publiée ;
-- `docs/*` : mise à jour documentaire isolée.
+- `fix/*` ou `hotfix/*` : correction ciblée ;
+- `docs/*` ou `audit/*` : documentation et validation isolées.
 
 Le développement ne se fait pas directement sur `main`.
 
@@ -127,6 +134,8 @@ MeteoSignal privilégie toujours :
 - la qualité à la quantité ;
 - la stabilité aux nouveautés inutiles ;
 - la lisibilité à la complexité ;
-- l'expérience utilisateur aux effets décoratifs.
+- l'expérience utilisateur aux effets décoratifs ;
+- les preuves reproductibles aux affirmations générales ;
+- la séparation claire entre défaut du code et étape de publication externe.
 
 Objectif final : construire une application météo dont l'architecture, l'interface et la qualité pourront rester solides pendant plusieurs années.
