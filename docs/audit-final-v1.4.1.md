@@ -1,8 +1,11 @@
 # Rapport final d'audit — MeteoSignal v1.4.1
 
-Date de clôture : **14 juillet 2026**  
-Version auditée : **1.4.1**  
-SHA de référence avant P1E : `e96f9a1a6003f2f7bc58953e42954b989ab68068`  
+Date de clôture : **14 juillet 2026**
+
+Version auditée : **1.4.1**
+
+SHA de référence avant P1E : `e96f9a1a6003f2f7bc58953e42954b989ab68068`
+
 Décision proposée : **audit validé avec réserves de validation physique et de distribution**.
 
 ## 1. Objet et périmètre
