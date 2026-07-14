@@ -9,7 +9,7 @@ import { createWeatherError, createWeatherState } from "../core/state.js?v=1.4.1
 import {
     WEATHER_CAPABILITIES,
     weatherProviderRegistry
-} from "./weather-provider.js?v=1.4.1-search-geocoding-reliability-hotfix";
+} from "./weather-provider.js?v=1.4.1-p1d-api-cache-privacy";
 
 const WEATHER_ENDPOINT_CAPABILITIES = Object.freeze([
     "current",

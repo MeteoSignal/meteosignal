@@ -10,7 +10,10 @@ const AIR_QUALITY_VARIABLES = [
 
 export async function fetchAirQuality(location, options = {}) {
     const url = buildAirQualityUrl(location, options);
-    const response = await fetch(url, { signal: options.signal });
+    const response = await fetch(url, {
+        signal: options.signal,
+        cache: "no-store"
+    });
 
     if (!response.ok) {
         throw new Error("La qualité de l'air est momentanément indisponible.");

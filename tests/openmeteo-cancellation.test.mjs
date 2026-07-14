@@ -13,8 +13,8 @@ const LOCATION = Object.freeze({
 test("le signal externe atteint Forecast et Air Quality sans declencher de nouvel appel", async (t) => {
     const originalFetch = globalThis.fetch;
     const calls = [];
-    globalThis.fetch = (url, { signal } = {}) => new Promise((resolve, reject) => {
-        calls.push({ url: new URL(url), signal });
+    globalThis.fetch = (url, { signal, cache } = {}) => new Promise((resolve, reject) => {
+        calls.push({ url: new URL(url), signal, cache });
 
         if (signal.aborted) {
             reject(signal.reason);
@@ -42,4 +42,31 @@ test("le signal externe atteint Forecast et Air Quality sans declencher de nouve
         "api.open-meteo.com"
     ]);
     assert.equal(calls.every(({ signal }) => signal.aborted), true);
+    assert.equal(calls.every(({ cache }) => cache === "no-store"), true);
+});
+
+test("le fallback Forecast conserve le signal et le mode no-store", async (t) => {
+    const originalFetch = globalThis.fetch;
+    const calls = [];
+    globalThis.fetch = async (url, options = {}) => {
+        calls.push({ url: new URL(url), options });
+
+        if (calls.length === 1) {
+            return { ok: false, status: 400, json: async () => ({}) };
+        }
+
+        return { ok: true, status: 200, json: async () => ({}) };
+    };
+    t.after(() => {
+        globalThis.fetch = originalFetch;
+    });
+
+    const controller = new AbortController();
+    await openMeteoProvider.getWeather(LOCATION, { signal: controller.signal });
+
+    assert.equal(calls.length, 2);
+    assert.equal(calls[0].url.searchParams.has("forecast_hours"), true);
+    assert.equal(calls[1].url.searchParams.has("forecast_hours"), false);
+    assert.equal(calls.every(({ options }) => options.signal === controller.signal), true);
+    assert.equal(calls.every(({ options }) => options.cache === "no-store"), true);
 });
