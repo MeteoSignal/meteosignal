@@ -1,6 +1,6 @@
 # ROADMAP
 
-MeteoSignal évolue par versions courtes et publiables. Chaque étape doit préserver la simplicité, l'élégance, la performance et la maintenabilité du produit.
+MeteoSignal évolue par versions courtes et publiables. Chaque étape doit préserver la simplicité, l'élégance, la performance, l'accessibilité et la maintenabilité du produit.
 
 ## Historique terminé
 
@@ -13,36 +13,16 @@ Statut : terminée.
 - [x] Météo actuelle, prévisions horaires et prévisions sur 7 jours.
 - [x] Recherche, géolocalisation, ville active sauvegardée et premiers favoris.
 - [x] Soleil, Lune, UV, qualité de l'air et indicateurs météo.
-- [x] PWA, navigation adaptative et validation initiale mobile, tablette, desktop et TV.
+- [x] PWA et navigation adaptative initiales.
 
-### Version 1.1 - Identité visuelle et confort
+### Versions 1.1 à 1.3 - Identité, alertes et favoris
 
-Statut : terminée.
+Statut : terminées.
 
-- [x] Identité visuelle officielle MeteoSignal et fond météo premium.
-- [x] Expérience mobile avec navigation basse et hero compact.
-- [x] Icônes météo SVG personnalisées, Phase 1.
-- [x] Prévisions horaires étendues à 72 heures.
-- [x] Stabilisation PWA, accessibilité HTML et compatibilité Safari.
-
-### Version 1.2 - Alertes météo locales
-
-Statut : terminée.
-
-- [x] Moteur d'alertes locales indicatives MeteoSignal.
-- [x] Signaux chaleur, vent, pluie, orage, UV et qualité de l'air.
-- [x] Wording pédagogique, priorisation et gestion des données absentes.
-
-La vigilance officielle externe n'est pas encore intégrée.
-
-### Version 1.3 - Favoris et expérience quotidienne
-
-Statut : terminée.
-
-- [x] Gestion visible des villes favorites avec stockage local.
-- [x] Sélection, suppression et conservation de la ville active.
-- [x] Favoris compacts dans la sidebar desktop et accessibles sur mobile.
-- [x] Polish des prévisions et de la lisibilité générale.
+- [x] Identité visuelle officielle et expérience mobile.
+- [x] Icônes météo SVG et prévisions horaires étendues à 72 heures.
+- [x] Moteur d'alertes locales indicatives avec gestion des données absentes.
+- [x] Favoris visibles, sélection, suppression et conservation de la ville active.
 
 ### Version 1.4.0 - Fondation multi-fournisseur
 
@@ -63,24 +43,41 @@ Statut : terminée.
 - [x] Annulation des recherches obsolètes et sélection explicite en cas d'ambiguïté.
 - [x] Déduplication sémantique et correction tactile mobile.
 
-## Prochaine étape - Publication Reliability & Documentation
+### Publication Reliability & Documentation
 
-Statut : en cours.
+Statut : terminée pour le socle Web v1.4.1.
 
-- [ ] Finaliser le certificat HTTPS du domaine personnalisé.
-- [ ] Vérifier l'accès direct au service worker sans redirection.
-- [ ] Confirmer le remplacement des anciens caches et services workers publiés.
-- [ ] Valider la documentation v1.4.1 et les procédures de publication.
-- [ ] Retester la géolocalisation et l'installation PWA une fois HTTPS actif.
+- [x] Domaine personnalisé disponible directement en HTTPS.
+- [x] Service worker, manifeste et Digital Asset Links servis en HTTP 200 sans redirection.
+- [x] Cache statique versionné, nettoyage des anciens caches et API météo hors Cache Storage.
+- [x] Accessibilité essentielle, responsive, sécurité navigateur et confidentialité audités.
+- [x] Workflow CI durci avec permissions minimales et actions épinglées par SHA.
+- [x] Association Android/TWA déclarant les certificats local et Google Play.
+- [x] Documentation v1.4.1 et rapport final d'audit mis en cohérence.
 
-## Étapes suivantes
+## Audit final v1.4.1
+
+Statut : clôture technique validée avec réserves de validation physique.
+
+Les phases P0 à P1E ont couvert l'exactitude du modèle météo, la PWA, les performances, l'accessibilité, la sécurité, la confidentialité, la CI et Android/TWA. Le [rapport officiel](docs/audit-final-v1.4.1.md) distingue les contrôles automatiques, les contrôles publics et les essais restant à réaliser sur appareils ou services externes.
+
+## Publication et validations externes ouvertes
+
+Ces étapes ne sont pas des défauts du code v1.4.1 :
+
+- test fermé Google Play avec douze testeurs continus pendant quatorze jours ;
+- vérification finale de la fiche « Sécurité des données » dans Play Console ;
+- test de la TWA installée depuis Google Play, sans barre de navigateur ;
+- installation PWA réelle sur les plateformes et appareils non encore physiquement testés ;
+- essais avec lecteurs d'écran réels, notamment NVDA et TalkBack ;
+- contrôle périodique des SHA des actions GitHub.
+
+## Étapes futures
 
 Les éléments ci-dessous sont prévus, mais ne sont pas terminés :
 
-- validation PWA sur Chrome, Edge, Android et iOS ;
-- tests de géolocalisation réelle et sur appareils physiques ;
-- amélioration de l'accessibilité après tests clavier et lecteurs d'écran ;
 - intégration progressive d'un second fournisseur météo ;
 - radar météo et vigilance officielle, avec attribution et sources clairement identifiées ;
 - préférences d'unités et paramètres utilisateur simples ;
-- futur Mode Expert avec données détaillées, comparaison de sources et visualisations avancées.
+- futur Mode Expert avec données détaillées, comparaison de sources et visualisations avancées ;
+- amélioration éventuelle des en-têtes HTTP si l'hébergement permet un jour de les configurer.

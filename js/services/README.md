@@ -17,7 +17,7 @@ Les composants ne doivent jamais appeler directement les APIs.
 
 Chaque fournisseur déclare ses capacités, reçoit une localisation et renvoie uniquement le modèle météo interne de MeteoSignal. Les réponses brutes ne quittent jamais son adaptateur.
 
-Open-Meteo est l'unique fournisseur actif en v1.4.0. Un appel Forecast couvre la météo actuelle, les prévisions horaires, les prévisions quotidiennes et les données d'astronomie disponibles. Air Quality reste un appel séparé.
+Open-Meteo est l'unique fournisseur actif en v1.4.1. Un appel Forecast couvre la météo actuelle, les prévisions horaires, les prévisions quotidiennes et les données d'astronomie disponibles. Air Quality reste un appel séparé. Forecast, Air Quality et Geocoding utilisent `cache: "no-store"`, un signal d'annulation et des délais bornés par leur orchestration.
 
 La provenance est conservée par bloc dans `weather.sources`. Aucune moyenne ou fusion automatique n'est autorisée.
 

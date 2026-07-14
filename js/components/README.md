@@ -1,8 +1,8 @@
 # JS Components
 
-Ce dossier contiendra les composants d'interface de MeteoSignal.
+Ce dossier contient les composants d'interface de MeteoSignal.
 
-Modules prévus :
+Modules principaux :
 
 - `navigation.js` : navigation adaptative mobile, tablette, desktop et TV ;
 - `search.js` : combobox accessible, suggestions et sélection explicite d'un lieu classé ;
@@ -12,5 +12,10 @@ Modules prévus :
 - `daily-forecast.js` : prévisions sur 7 jours normalisées, état de chargement et erreur ;
 - `astronomy.js` : rendu Soleil/Lune, phase lunaire, chargement et erreur ;
 - `favorites.js` : ajout/retrait de la ville active dans les favoris.
+- `data-sources.js` : provenance affichée pour les blocs météo ;
+- `weather-alerts.js` : rendu des alertes locales indicatives ;
+- `weather-cards.js` : indicateurs météo détaillés.
 
 Chaque composant reçoit des données préparées et met à jour uniquement sa zone de l'interface.
+
+Les composants conservent les contrats d'accessibilité validés : focus visible, annonces live limitées, contrôles nommés et contenu dynamique rendu depuis des données normalisées.
