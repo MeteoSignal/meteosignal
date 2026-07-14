@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DOCUMENTS = ["index.html", "confidentialite.html"];
-const DEPLOYMENT_REVISION = "1.4.1-p1d-browser-security";
+const DEPLOYMENT_REVISION = "1.4.2-w3c-feedback";
 const EXPECTED_CSP = new Map([
     ["default-src", ["'self'"]],
     ["base-uri", ["'self'"]],
@@ -160,7 +160,7 @@ test("la page et sa feuille sont precachees ensemble sans API ni doublon", () =>
     const assets = [...essential, ...optional];
     const privacyPageIndex = optional.indexOf("./confidentialite.html");
 
-    assert.match(sw, /const CACHE_VERSION = `v\$\{APP_VERSION\}-p1d-browser-security`/);
+    assert.match(sw, /const CACHE_VERSION = `v\$\{APP_VERSION\}-w3c-feedback`/);
     assert.ok(privacyPageIndex >= 0);
     assert.equal(optional[privacyPageIndex + 1], "./css/privacy.css");
     assert.equal(new Set(assets).size, assets.length);
@@ -194,8 +194,8 @@ test("les parcours confidentialite et la version publique restent inchanges", ()
     assert.match(privacy, /href="https:\/\/open-meteo\.com\/en\/terms"[^>]*rel="noopener noreferrer"/);
     assert.match(index, new RegExp(`js/app\\.js\\?v=${DEPLOYMENT_REVISION}`));
     assert.equal((`${index}\n${privacy}`.match(new RegExp(`js/privacy-return\\.js\\?v=${DEPLOYMENT_REVISION}`, "g")) ?? []).length, 2);
-    assert.equal(JSON.parse(read("package.json")).version, "1.4.1");
-    assert.match(read("config/config.js"), /version:\s*"1\.4\.1"/);
+    assert.equal(JSON.parse(read("package.json")).version, "1.4.2");
+    assert.match(read("config/config.js"), /version:\s*"1\.4\.2"/);
 });
 
 function read(relativePath) {

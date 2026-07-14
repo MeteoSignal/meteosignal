@@ -1,5 +1,5 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { openMeteoProvider } from "./openmeteo.service.js?v=1.4.1-p1d-api-cache-privacy";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.2-w3c-feedback";
+import { openMeteoProvider } from "./openmeteo.service.js?v=1.4.2-w3c-feedback";
 
 export const WEATHER_CAPABILITIES = Object.freeze([
     "current",

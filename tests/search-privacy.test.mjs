@@ -194,16 +194,16 @@ test("la combobox et les deux regions live P1C sont conservees", () => {
 });
 
 test("la revision P1D invalide toute la chaine de recherche sans toucher au CSS", () => {
-    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.1-p1d-browser-security/);
-    assert.match(APP_SOURCE, /components\/search\.js\?v=1\.4\.1-p1d-api-cache-privacy/);
-    assert.match(SEARCH_SOURCE, /core\/location-search\.js\?v=1\.4\.1-p1d-search-privacy/);
-    assert.match(SEARCH_SOURCE, /services\/geocoding\.service\.js\?v=1\.4\.1-p1d-api-cache-privacy/);
-    assert.match(GEOCODING_SOURCE, /core\/location-search\.js\?v=1\.4\.1-p1d-search-privacy/);
+    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.2-w3c-feedback/);
+    assert.match(APP_SOURCE, /components\/search\.js\?v=1\.4\.2-w3c-feedback/);
+    assert.match(SEARCH_SOURCE, /core\/location-search\.js\?v=1\.4\.2-w3c-feedback/);
+    assert.match(SEARCH_SOURCE, /services\/geocoding\.service\.js\?v=1\.4\.2-w3c-feedback/);
+    assert.match(GEOCODING_SOURCE, /core\/location-search\.js\?v=1\.4\.2-w3c-feedback/);
     assert.equal(
-        (INDEX_SOURCE.match(/css\/[^"']+\?v=1\.4\.1-p1c-final-accessibility/g) ?? []).length,
+        (INDEX_SOURCE.match(/css\/[^"']+\?v=1\.4\.2-w3c-feedback/g) ?? []).length,
         5
     );
-    assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-p1d-search-privacy/);
+    assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-/);
 });
 
 function createSearchHarness(t, searchLocationsImpl, onError = () => {}) {

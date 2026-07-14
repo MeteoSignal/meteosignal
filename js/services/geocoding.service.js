@@ -1,9 +1,9 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.2-w3c-feedback";
 import {
     createLocationSearchPlan,
     rankLocationResults,
     shouldRequestSupplemental
-} from "../core/location-search.js?v=1.4.1-p1d-search-privacy";
+} from "../core/location-search.js?v=1.4.2-w3c-feedback";
 
 export const GEOCODING_TIMEOUT_MS = 8000;
 

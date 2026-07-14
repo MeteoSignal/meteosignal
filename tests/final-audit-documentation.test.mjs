@@ -27,22 +27,25 @@ test("le rapport final identifie la version, la date et le SHA de reference", ()
     assert.match(REPORT, /audit validé avec réserves/i);
 });
 
-test("la documentation conserve uniquement la version publique 1.4.1", () => {
+test("la documentation distingue la version publique 1.4.2 de l'audit historique 1.4.1", () => {
     const packageVersion = JSON.parse(read("package.json")).version;
     const combined = KEY_DOCUMENTS.map(read).join("\n");
 
-    assert.equal(packageVersion, "1.4.1");
-    assert.match(read("config/config.js"), /version:\s*"1\.4\.1"/);
+    assert.equal(packageVersion, "1.4.2");
+    assert.match(read("config/config.js"), /version:\s*"1\.4\.2"/);
+    assert.match(read("README.md"), /Version publique : 1\.4\.2/);
+    assert.match(read("PROJECT.md"), /publié en version \*\*1\.4\.2\*\*/);
     assert.match(combined, /1\.4\.1/);
-    assert.doesNotMatch(combined, /1\.4\.2/);
+    assert.match(combined, /1\.4\.2/);
     assert.match(read("CHANGELOG.md"), /^## \[Unreleased\]$/m);
+    assert.match(read("CHANGELOG.md"), /^## \[1\.4\.2\] - 2026-07-14$/m);
 });
 
 test("la roadmap et le TODO distinguent clôture technique et publication externe", () => {
     const roadmap = read("ROADMAP.md");
     const todo = read("TODO.md");
 
-    assert.match(roadmap, /Publication Reliability & Documentation[\s\S]*Statut : terminée pour le socle Web v1\.4\.1/);
+    assert.match(roadmap, /Publication Reliability & Documentation[\s\S]*Statut : terminée pour le socle Web v1\.4\.2/);
     assert.match(roadmap, /clôture technique validée avec réserves de validation physique/i);
     assert.match(todo, /\[x\] HTTPS public, accès direct au service worker et deux certificats Digital Asset Links/);
     assert.match(todo, /\[ \] Terminer le test fermé avec douze testeurs continus pendant quatorze jours/);

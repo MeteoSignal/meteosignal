@@ -8,11 +8,11 @@ Le projet est conçu comme un véritable produit logiciel : simple à utiliser, 
 
 ## État actuel
 
-MeteoSignal est publié en version **1.4.1**. Le produit propose la météo actuelle, les prévisions horaires sur 72 heures, les prévisions sur 7 jours, la recherche géographique, la géolocalisation, les favoris, l'astronomie, la qualité de l'air et des alertes locales indicatives.
+MeteoSignal est publié en version **1.4.2**. Le produit propose la météo actuelle, les prévisions horaires sur 72 heures, les prévisions sur 7 jours, la recherche géographique, la géolocalisation, les favoris, l'astronomie, la qualité de l'air et des alertes locales indicatives.
 
-La v1.4.0 a introduit une fondation multi-fournisseur avec registre par capacités, orchestration et provenance des données. Open-Meteo reste l'unique fournisseur actif en v1.4.1 ; aucun mélange automatique de données entre fournisseurs n'est réalisé.
+La v1.4.0 a introduit une fondation multi-fournisseur avec registre par capacités, orchestration et provenance des données. Open-Meteo reste l'unique fournisseur actif en v1.4.2 ; aucun mélange automatique de données entre fournisseurs n'est réalisé.
 
-Au 14 juillet 2026, le socle v1.4.1 a été audité de bout en bout. Les protections suivantes sont intégrées et testées : données météo normalisées, appels annulables sans cache applicatif, stockage local validé, accessibilité structurelle et clavier, PWA statique versionnée, CSP, politique de référent, CI en lecture seule et association Digital Asset Links avec les certificats local et Google Play.
+Au 14 juillet 2026, la v1.4.2 officialise les corrections du socle v1.4.1 audité de bout en bout. Les protections suivantes sont intégrées et testées : données météo normalisées, appels annulables sans cache applicatif, stockage local validé, accessibilité structurelle et clavier, PWA statique versionnée, CSP, politique de référent, CI en lecture seule et association Digital Asset Links avec les certificats local et Google Play.
 
 La clôture technique ne vaut pas achèvement de la distribution Google Play ni validation physique sur chaque plateforme. Ces étapes restent suivies séparément dans le [TODO](TODO.md).
 
@@ -57,7 +57,7 @@ Une fonctionnalité est ajoutée uniquement si elle améliore clairement l'expé
 
 ## Technologies
 
-Socle actuel en v1.4.1 :
+Socle actuel en v1.4.2 :
 
 - HTML5 ;
 - CSS3 ;
@@ -88,7 +88,7 @@ La version 1.0 a établi une expérience complète, stable et simple :
 
 ## Évolutions futures
 
-Les fonctionnalités suivantes restent prévues au-delà de la v1.4.1 :
+Les fonctionnalités suivantes restent prévues au-delà de la v1.4.2 :
 
 - mode Expert ;
 - radar météo ;

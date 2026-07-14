@@ -1,4 +1,4 @@
-import { createWeatherSources } from "./provenance.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { createWeatherSources } from "./provenance.js?v=1.4.2-w3c-feedback";
 
 export function createWeatherState(overrides = {}) {
     const state = {
