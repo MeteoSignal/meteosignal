@@ -51,9 +51,9 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
-    assert.equal(api.CACHE_VERSION, "v1.4.1-p1d-browser-security");
-    assert.match(indexSource, /src="js\/clock\.js\?v=1\.4\.1-p1b2-runtime-efficiency"/);
-    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1d-browser-security"/);
+    assert.equal(api.CACHE_VERSION, "v1.4.2-w3c-feedback");
+    assert.match(indexSource, /src="js\/clock\.js\?v=1\.4\.2-w3c-feedback"/);
+    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.2-w3c-feedback"/);
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
     assert.ok(cacheBusterVersions.length > 0);
     assert.deepEqual(new Set(cacheBusterVersions), new Set([packageVersion]));

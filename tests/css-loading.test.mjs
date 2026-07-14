@@ -5,8 +5,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const CSS_REVISION = "1.4.1-p1c-final-accessibility";
-const PRIVACY_CSS_REVISION = "1.4.1-p1d-browser-security";
+const CSS_REVISION = "1.4.2-w3c-feedback";
+const PRIVACY_CSS_REVISION = "1.4.2-w3c-feedback";
 const EXPECTED_STYLESHEETS = [
     "css/tokens.css",
     "css/base.css",

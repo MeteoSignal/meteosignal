@@ -17,10 +17,10 @@ const PROVIDER_SOURCE = read("js/services/weather-provider.js");
 const ORCHESTRATOR_SOURCE = read("js/services/weather-orchestrator.service.js");
 const SW_SOURCE = read("sw.js");
 
-test("la politique porte la date du 14 juillet 2026 sans changer la version publique", () => {
+test("la politique porte la date du 14 juillet 2026 avec la version publique 1.4.2", () => {
     assert.match(PRIVACY_TEXT, /Dernière mise à jour : 14 juillet 2026/);
-    assert.equal(JSON.parse(read("package.json")).version, "1.4.1");
-    assert.match(read("config/config.js"), /version:\s*"1\.4\.1"/);
+    assert.equal(JSON.parse(read("package.json")).version, "1.4.2");
+    assert.match(read("config/config.js"), /version:\s*"1\.4\.2"/);
 });
 
 test("la recherche est decrite sans historique applicatif ni terme dans l'URL de secours", () => {
@@ -71,12 +71,12 @@ test("les douze titres, les deux retours et le module partage sont preserves", (
     assert.equal((PRIVACY_SOURCE.match(/<h2\b/g) ?? []).length, 12);
     assert.equal((PRIVACY_SOURCE.match(/data-privacy-return/g) ?? []).length, 2);
     assert.match(INDEX_SOURCE, /id="privacy-footer-link"[^>]*href="confidentialite\.html"/);
-    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.4\.1-p1d-browser-security/);
+    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.4\.2-w3c-feedback/);
 });
 
 test("la revision P1D-4 invalide les entrees sans perdre la chaine P1D-3", () => {
-    const deploymentRevision = "1\\.4\\.1-p1d-browser-security";
-    const apiRevision = "1\\.4\\.1-p1d-api-cache-privacy";
+    const deploymentRevision = "1\\.4\\.2-w3c-feedback";
+    const apiRevision = deploymentRevision;
 
     assert.match(INDEX_SOURCE, new RegExp(`js/app\\.js\\?v=${deploymentRevision}`));
     assert.match(INDEX_SOURCE, new RegExp(`js/privacy-return\\.js\\?v=${deploymentRevision}`));
@@ -86,7 +86,7 @@ test("la revision P1D-4 invalide les entrees sans perdre la chaine P1D-3", () =>
     assert.match(ORCHESTRATOR_SOURCE, new RegExp(`weather-provider\\.js\\?v=${apiRevision}`));
     assert.match(PROVIDER_SOURCE, new RegExp(`openmeteo\\.service\\.js\\?v=${apiRevision}`));
     assert.match(FORECAST_SOURCE, new RegExp(`air-quality\\.service\\.js\\?v=${apiRevision}`));
-    assert.match(SW_SOURCE, /p1d-browser-security/);
+    assert.match(SW_SOURCE, /w3c-feedback/);
 });
 
 function read(relativePath) {

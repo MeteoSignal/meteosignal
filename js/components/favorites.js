@@ -4,7 +4,7 @@ import {
     readFavorites,
     removeFavoriteLocation,
     toggleFavoriteLocation
-} from "../core/storage.js?v=1.4.1-p1d-storage-validation";
+} from "../core/storage.js?v=1.4.2-w3c-feedback";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";

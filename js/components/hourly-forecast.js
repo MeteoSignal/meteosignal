@@ -1,5 +1,5 @@
-import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { createWeatherIconElement } from "../core/weather-icons.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.4.2-w3c-feedback";
+import { createWeatherIconElement } from "../core/weather-icons.js?v=1.4.2-w3c-feedback";
 
 const HOURLY_SELECTOR = "[data-hourly-forecast]";
 const HOURLY_RANGE_SELECTOR = "button[data-hourly-range]";
