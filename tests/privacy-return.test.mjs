@@ -209,7 +209,7 @@ test("les deux retours gardent href et le marquage progressif", () => {
 });
 
 test("le module partage est charge sur les deux pages avec la meme revision", () => {
-    const reference = /js\/privacy-return\.js\?v=1\.4\.1-p1c-final-accessibility/g;
+    const reference = /js\/privacy-return\.js\?v=1\.4\.1-p1d-api-cache-privacy/g;
     assert.equal((INDEX_SOURCE.match(reference) ?? []).length, 1);
     assert.equal((PRIVACY_SOURCE.match(reference) ?? []).length, 1);
     assert.match(SW_SOURCE, /"\.\/js\/privacy-return\.js"/);

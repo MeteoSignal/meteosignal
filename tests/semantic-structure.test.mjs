@@ -29,7 +29,7 @@ const PRIVACY_HEADING_IDS = [
 ];
 const EXPECTED_VISIBLE_HASHES = {
     index: "e9e86b10d8fd0cbe31e76df47308359e1057add2b71101dc022ab31959cff433",
-    privacy: "4811d663cbc03f534d3265afd64af78685a23d639ee3b76844261c2b8e05c5b9"
+    privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 
 test("index.html contient un seul H1", () => {
@@ -168,7 +168,7 @@ test("la semantique dynamique et le focus des favoris restent branches", () => {
     assert.match(FAVORITES_SOURCE, /restoreFavoriteFocus/);
 });
 
-test("les contenus textuels visibles des deux pages restent identiques a main", () => {
+test("les contenus textuels visibles des deux pages correspondent aux references validees", () => {
     assert.equal(visibleTextHash(INDEX_DOCUMENT), EXPECTED_VISIBLE_HASHES.index);
     assert.equal(visibleTextHash(PRIVACY_DOCUMENT), EXPECTED_VISIBLE_HASHES.privacy);
 });

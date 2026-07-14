@@ -234,7 +234,7 @@
             <div class="meta" role="group" aria-label="Informations principales">
                 <span>MeteoSignal</span>
                 <span>Application Android : fr.meteosignal.app</span>
-                <span>Dernière mise à jour : 11 juillet 2026</span>
+                <span>Dernière mise à jour : 14 juillet 2026</span>
             </div>
 
             <p class="notice">
@@ -294,6 +294,13 @@
                     correspondants. La météo active ne change qu’après la
                     sélection ou la validation d’un lieu.
                 </p>
+                <p>
+                    MeteoSignal ne conserve aucun historique applicatif des
+                    recherches. Le formulaire HTML de secours ne place plus le
+                    terme recherché dans l’URL envoyée à l’hébergeur. Un éventuel
+                    historique de saisie du clavier ou du navigateur dépend des
+                    réglages de l’appareil et du logiciel utilisé.
+                </p>
             </section>
 
             <section>
@@ -303,12 +310,40 @@
                     dans le <code>localStorage</code> de l’appareil. Si la
                     position actuelle devient la ville active, ses coordonnées
                     peuvent également être conservées dans ce stockage local.
+                    Ces données y restent jusqu’à leur modification, au retrait
+                    des favoris, à l’effacement des données du site ou de
+                    l’application, ou à la désinstallation de l’application. La
+                    validation et la réparation locales des valeurs peuvent
+                    supprimer une entrée invalide.
                 </p>
                 <p>
-                    Le cache de la PWA conserve des fichiers statiques
-                    nécessaires au chargement et au fonctionnement hors ligne.
-                    Les réponses des API météo ne sont pas enregistrées dans ce
-                    précache.
+                    Lors de la consultation des règles de confidentialité, un
+                    contexte technique temporaire peut être enregistré dans le
+                    <code>sessionStorage</code>. Il contient uniquement le chemin
+                    interne de retour, la position de défilement, la cible de
+                    focus et un horodatage, afin de restaurer le contexte de
+                    lecture au retour dans MeteoSignal.
+                </p>
+                <p>
+                    Ce contexte est conservé au maximum cinq minutes, supprimé
+                    après une restauration réussie et supprimé à la fin de la
+                    session selon le fonctionnement du navigateur. Aucune ville,
+                    coordonnée ou réponse météo n’est enregistrée dans ce
+                    contexte temporaire.
+                </p>
+                <p>
+                    Le Cache Storage de la PWA contient des fichiers statiques
+                    publics nécessaires au chargement et au fonctionnement hors
+                    ligne. Les réponses Forecast, Air Quality et Geocoding ne
+                    sont pas enregistrées dans ce cache.
+                </p>
+                <p>
+                    Pour les requêtes Open-Meteo, MeteoSignal demande également
+                    au navigateur de ne pas conserver les réponses dans son cache
+                    HTTP avec l’option <code>cache: "no-store"</code>. Ce réglage
+                    ne permet pas de promettre l’absence de tout traitement
+                    technique par le système d’exploitation, le fournisseur
+                    d’accès ou le serveur distant.
                 </p>
             </section>
 
@@ -358,10 +393,21 @@
             <section>
                 <h2 id="conservation">8. Conservation et suppression</h2>
                 <p>
-                    Les données locales restent sur l’appareil jusqu’à leur
-                    modification, l’effacement des données du site ou de
-                    l’application, ou la désinstallation de l’application.
-                    Les favoris peuvent aussi être retirés depuis MeteoSignal.
+                    Les données persistantes du <code>localStorage</code> restent
+                    sur l’appareil jusqu’à leur modification, au retrait des
+                    favoris, à l’effacement des données du site ou de
+                    l’application, ou à la désinstallation de l’application.
+                </p>
+                <p>
+                    Le contexte temporaire du <code>sessionStorage</code> est
+                    limité à cinq minutes et supprimé après une restauration
+                    réussie ou à la fin de la session selon le fonctionnement du
+                    navigateur.
+                </p>
+                <p>
+                    Les fichiers publics du cache PWA peuvent être supprimés en
+                    effaçant les données du site ou de l’application, ou en
+                    désinstallant l’application.
                 </p>
                 <p>
                     Les éventuelles données techniques traitées par Open-Meteo
@@ -423,6 +469,6 @@
         MeteoSignal © 2026 - Prévisions et alertes météo
     </footer>
 
-    <script type="module" src="js/privacy-return.js?v=1.4.1-p1c-final-accessibility"></script>
+    <script type="module" src="js/privacy-return.js?v=1.4.1-p1d-api-cache-privacy"></script>
 </body>
 </html>

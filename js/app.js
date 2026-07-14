@@ -6,12 +6,12 @@ import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./comp
 import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { initHourlyForecast, renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.4.1-p1c-live-semantics";
 import { initNavigation } from "./components/navigation.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { initSearch, updateSearchInput } from "./components/search.js?v=1.4.1-p1d-search-privacy";
+import { initSearch, updateSearchInput } from "./components/search.js?v=1.4.1-p1d-api-cache-privacy";
 import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { renderDataSources, renderDataSourcesEmpty } from "./components/data-sources.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { weatherOrchestrator } from "./services/weather-orchestrator.service.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { weatherOrchestrator } from "./services/weather-orchestrator.service.js?v=1.4.1-p1d-api-cache-privacy";
 
 const DASHBOARD_SELECTOR = "[data-dashboard]";
 let activeLocation = readActiveLocation(APP_CONFIG.defaultLocation);

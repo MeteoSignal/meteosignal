@@ -50,9 +50,9 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
-    assert.equal(api.CACHE_VERSION, "v1.4.1-p1d-storage-validation");
+    assert.equal(api.CACHE_VERSION, "v1.4.1-p1d-api-cache-privacy");
     assert.match(indexSource, /src="js\/clock\.js\?v=1\.4\.1-p1b2-runtime-efficiency"/);
-    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1d-storage-validation"/);
+    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.1-p1d-api-cache-privacy"/);
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
     assert.ok(cacheBusterVersions.length > 0);
     assert.deepEqual(new Set(cacheBusterVersions), new Set([packageVersion]));
@@ -156,25 +156,39 @@ test("les ressources statiques ignorent le cache-buster et preservent les 404 en
     assert.equal(offlineResult.status, 504);
 });
 
-test("les appels meteo restent strictement network-only", async () => {
-    const apiResponse = new Response("donnees");
-    const harness = createServiceWorkerHarness({ fetchImpl: async () => apiResponse });
-    let responsePromise;
-    const request = {
-        method: "GET",
-        mode: "cors",
-        url: "https://api.open-meteo.com/v1/forecast"
-    };
-
-    harness.events.get("fetch")({
-        request,
-        respondWith(value) {
-            responsePromise = value;
-        }
+test("les trois familles d'appels Open-Meteo restent network-only et hors Cache Storage", async () => {
+    const apiHosts = [
+        "api.open-meteo.com",
+        "air-quality-api.open-meteo.com",
+        "geocoding-api.open-meteo.com"
+    ];
+    const harness = createServiceWorkerHarness({
+        fetchImpl: async (request) => new Response(request.url)
     });
 
-    assert.equal(await responsePromise, apiResponse);
+    for (const hostname of apiHosts) {
+        let responsePromise;
+        const request = {
+            method: "GET",
+            mode: "cors",
+            url: `https://${hostname}/v1/test`
+        };
+
+        harness.events.get("fetch")({
+            request,
+            respondWith(value) {
+                responsePromise = value;
+            }
+        });
+
+        assert.equal(await (await responsePromise).text(), request.url);
+    }
+
     assert.equal(harness.matchRequests.length, 0);
+    assert.equal(harness.openedCaches.length, 0);
+    assert.equal(harness.addAllCalls.length, 0);
+    assert.equal(harness.addCalls.length, 0);
+    assert.doesNotMatch(SW_SOURCE, /\bcache\.put\s*\(/);
 });
 
 test("l'activation supprime seulement les anciens caches MeteoSignal", async () => {
@@ -193,7 +207,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
             "meteosignal-static-v1.4.1-p1c-semantic-structure",
             "meteosignal-static-v1.4.1-p1c-final-accessibility",
             "meteosignal-static-v1.4.1-p1d-search-privacy",
-            "meteosignal-static-v1.4.1-p1d-storage-validation"
+            "meteosignal-static-v1.4.1-p1d-storage-validation",
+            "meteosignal-static-v1.4.1-p1d-api-cache-privacy"
         ]
     });
     let activation;
@@ -213,7 +228,8 @@ test("l'activation supprime seulement les anciens caches MeteoSignal", async () 
         "meteosignal-static-v1.4.1-p1c-live-semantics",
         "meteosignal-static-v1.4.1-p1c-semantic-structure",
         "meteosignal-static-v1.4.1-p1c-final-accessibility",
-        "meteosignal-static-v1.4.1-p1d-search-privacy"
+        "meteosignal-static-v1.4.1-p1d-search-privacy",
+        "meteosignal-static-v1.4.1-p1d-storage-validation"
     ]);
     assert.equal(harness.claimCalls.length, 1);
 });
@@ -234,6 +250,7 @@ function createServiceWorkerHarness({
     const claimCalls = [];
     const matchRequests = [];
     const matchOptions = [];
+    const openedCaches = [];
     const warnings = [];
     const cache = {
         async addAll(assets) {
@@ -256,7 +273,7 @@ function createServiceWorkerHarness({
         }
     };
     const caches = {
-        async open() { return cache; },
+        async open(name) { openedCaches.push(name); return cache; },
         async delete(name) { deletedCaches.push(name); return true; },
         async keys() { return cacheNames; }
     };
@@ -289,6 +306,7 @@ function createServiceWorkerHarness({
         claimCalls,
         matchRequests,
         matchOptions,
+        openedCaches,
         warnings
     };
 }

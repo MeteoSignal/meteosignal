@@ -25,6 +25,21 @@ test("Saint Gaudens utilise au maximum une variante complémentaire", async () =
     assert.deepEqual(results[0].postcodes.slice(0, 2), ["31800", "31801 CEDEX"]);
 });
 
+test("les requetes principale et supplementaire utilisent no-store et le meme signal", async () => {
+    const requests = [];
+    const requestOptions = [];
+
+    await searchLocations("Saint Gaudens", {
+        fetchImpl: createFixtureFetch(requests, requestOptions)
+    });
+
+    assert.equal(requests.length, 2);
+    assert.equal(requestOptions.length, 2);
+    assert.equal(requestOptions.every(({ cache }) => cache === "no-store"), true);
+    assert.ok(requestOptions[0].signal instanceof AbortSignal);
+    assert.equal(requestOptions[1].signal, requestOptions[0].signal);
+});
+
 test("la fusion retire le doublon semantique du site historique", async () => {
     const results = await searchLocations("Saint Gaudens", {
         fetchImpl: createFixtureFetch([])
@@ -269,12 +284,13 @@ test("une reponse JSON geocodage inattendue devient une liste vide", async () =>
     assert.deepEqual(results, []);
 });
 
-function createFixtureFetch(requests) {
-    return async (input) => {
+function createFixtureFetch(requests, requestOptions = null) {
+    return async (input, options) => {
         const url = new URL(input);
         const name = url.searchParams.get("name");
         const countryCode = url.searchParams.get("countryCode");
         requests.push(url);
+        requestOptions?.push(options);
 
         let results = [];
 

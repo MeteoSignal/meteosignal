@@ -3,7 +3,7 @@ import { getMoonPhase } from "../core/moon.js?v=1.4.1-search-geocoding-reliabili
 import { createSourceMetadata } from "../core/provenance.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { createWeatherState } from "../core/state.js?v=1.4.1-search-geocoding-reliability-hotfix";
 import { getWeatherCondition } from "../core/weather-codes.js?v=1.4.1-search-geocoding-reliability-hotfix";
-import { fetchAirQuality } from "./air-quality.service.js?v=1.4.1-search-geocoding-reliability-hotfix";
+import { fetchAirQuality } from "./air-quality.service.js?v=1.4.1-p1d-api-cache-privacy";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",
@@ -357,7 +357,10 @@ function normalizeAstronomy(today) {
 }
 
 async function fetchJson(url, options = {}) {
-    const response = await fetch(url, { signal: options.signal });
+    const response = await fetch(url, {
+        signal: options.signal,
+        cache: "no-store"
+    });
 
     if (!response.ok) {
         const error = new Error("La météo est momentanément indisponible.");

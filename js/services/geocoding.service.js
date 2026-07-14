@@ -126,7 +126,10 @@ async function fetchGeocodingQuery(searchQuery, options) {
         url.searchParams.set("countryCode", searchQuery.countryCode);
     }
 
-    const response = await options.fetchImpl(url, { signal: options.signal });
+    const response = await options.fetchImpl(url, {
+        signal: options.signal,
+        cache: "no-store"
+    });
 
     if (!response.ok) {
         const error = new Error("La recherche de ville est momentanément indisponible.");
