@@ -8,6 +8,12 @@ Le projet suit le versionnement sémantique.
 
 ## [Unreleased]
 
+_Aucune modification documentée._
+
+---
+
+## [1.4.2] - 2026-07-14
+
 ### Fiabilité
 
 - Audit complet de la chaîne météo, des annulations, timeouts, fallbacks et données invalides sans modification du modèle métier validé.
@@ -17,6 +23,12 @@ Le projet suit le versionnement sémantique.
 
 - Navigation clavier, focus visible, structure des titres et landmarks, régions live, reflow et restauration du contexte renforcés.
 - Recherche et favoris conservés utilisables avec des rôles et états accessibles cohérents.
+- Panneaux « Villes enregistrées » convertis en groupes nommés afin de supprimer les avertissements HTML W3C sans perdre leur nom accessible.
+
+### Interface
+
+- Lien externe « Votre avis compte » ajouté au footer avec ouverture sécurisée dans un nouvel onglet et indication accessible.
+- Token CSS inexistant `--color-cyan-200` remplacé par le token officiel `--color-cyan-300`.
 
 ### Sécurité et confidentialité
 
@@ -30,6 +42,7 @@ Le projet suit le versionnement sémantique.
 
 - Service worker, précache, ressources graphiques, chargement CSS, horloge et gestion de visibilité audités et stabilisés.
 - Cache statique versionné sans doublon ni endpoint Open-Meteo.
+- Application et cache PWA passés à `1.4.2` et `v1.4.2-w3c-feedback`.
 
 ### CI
 

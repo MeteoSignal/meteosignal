@@ -1,6 +1,6 @@
 # TODO
 
-## Terminé pour la v1.4.1
+## Terminé pour la v1.4.2
 
 - [x] Fondation stable, identité visuelle, alertes locales et favoris.
 - [x] Fondation multi-fournisseur avec provenance des données.
@@ -13,6 +13,9 @@
 - [x] CI en lecture seule avec actions épinglées par SHA.
 - [x] HTTPS public, accès direct au service worker et deux certificats Digital Asset Links.
 - [x] Documentation et rapport final d'audit v1.4.1.
+- [x] Corrections P0 à P1E officialisées dans la v1.4.2.
+- [x] Validation HTML W3C des groupes de favoris et token CSS du footer corrigés.
+- [x] Accès externe « Votre avis compte » ajouté et sécurisé.
 
 ## P0 - Publication Google Play
 

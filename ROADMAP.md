@@ -43,9 +43,18 @@ Statut : terminée.
 - [x] Annulation des recherches obsolètes et sélection explicite en cas d'ambiguïté.
 - [x] Déduplication sémantique et correction tactile mobile.
 
+### Version 1.4.2 - Validation et retours utilisateurs
+
+Statut : terminée.
+
+- [x] Corrections de l'audit P0 à P1E officialisées dans une version publique.
+- [x] Validation HTML W3C finalisée pour les groupes de favoris.
+- [x] Lien externe « Votre avis compte » ajouté au footer.
+- [x] Cache Web/PWA versionné pour la publication v1.4.2.
+
 ### Publication Reliability & Documentation
 
-Statut : terminée pour le socle Web v1.4.1.
+Statut : terminée pour le socle Web v1.4.2.
 
 - [x] Domaine personnalisé disponible directement en HTTPS.
 - [x] Service worker, manifeste et Digital Asset Links servis en HTTP 200 sans redirection.
