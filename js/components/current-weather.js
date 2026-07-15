@@ -1,11 +1,13 @@
 import { formatTemperature, formatTime } from "../core/formatters.js?v=1.4.2-w3c-feedback";
 import { renderWeatherIcon } from "../core/weather-icons.js?v=1.4.2-w3c-feedback";
+import { resolveWeatherScene } from "../core/weather-scenes.js?v=1.4.2-w3c-feedback";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";
+const DEFAULT_SCENE = "default";
 
 export function renderCurrentWeatherLoading(location = null) {
-    setHeroState("loading", DEFAULT_TONE);
+    setHeroState("loading", DEFAULT_TONE, DEFAULT_SCENE);
     setText("#city", location?.name ?? "Chargement");
     setText("#temp", "--");
     setText("#description", "Chargement de la météo...");
@@ -19,7 +21,7 @@ export function renderCurrentWeather(weather) {
     const today = weather.daily[0];
     const condition = current.condition;
 
-    setHeroState("ready", condition.tone);
+    setHeroState("ready", condition.tone, resolveWeatherScene(condition, current.isDay));
     setText("#city", weather.location.name);
     setText("#temp", formatTemperature(current.temperature));
     setText("#description", condition.label);
@@ -32,7 +34,7 @@ export function renderCurrentWeather(weather) {
 }
 
 export function renderCurrentWeatherError(message = "Données météo indisponibles.", location = null) {
-    setHeroState("error", "unknown");
+    setHeroState("error", DEFAULT_TONE, DEFAULT_SCENE);
     setText("#city", location?.name ?? "Position indisponible");
     setText("#temp", "--");
     setText("#description", message);
@@ -41,7 +43,7 @@ export function renderCurrentWeatherError(message = "Données météo indisponib
     renderWeatherIcon("#icon", null, "--", "weather-icon-img weather-icon-img--hero");
 }
 
-function setHeroState(state, tone) {
+function setHeroState(state, tone, scene) {
     const hero = document.querySelector(HERO_SELECTOR);
 
     if (!hero) {
@@ -50,6 +52,7 @@ function setHeroState(state, tone) {
 
     hero.dataset.weatherState = state;
     hero.dataset.weatherTone = tone || DEFAULT_TONE;
+    hero.dataset.weatherScene = scene || DEFAULT_SCENE;
     hero.setAttribute("aria-busy", state === "loading" ? "true" : "false");
 }
 
