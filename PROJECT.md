@@ -1,6 +1,6 @@
 # MeteoSignal
 
-> La météo, partout avec vous.
+> Phrase secondaire : « La météo, partout avec vous. »
 
 MeteoSignal est une Progressive Web App météo moderne, élégante, rapide et intuitive.
 
@@ -14,13 +14,16 @@ La v1.4.0 a introduit une fondation multi-fournisseur avec registre par capacit�
 
 Au 14 juillet 2026, la v1.4.2 officialise les corrections du socle v1.4.1 audité de bout en bout. Les protections suivantes sont intégrées et testées : données météo normalisées, appels annulables sans cache applicatif, stockage local validé, accessibilité structurelle et clavier, PWA statique versionnée, CSP, politique de référent, CI en lecture seule et association Digital Asset Links avec les certificats local et Google Play.
 
-La clôture technique ne vaut pas achèvement de la distribution Google Play ni validation physique sur chaque plateforme. Ces étapes restent suivies séparément dans le [TODO](TODO.md).
+MeteoSignal Android/TWA v1.4.2 (`versionCode 2`) a été acceptée sur la piste de test fermé Google Play. Cette validation ne signifie pas encore que l'application est disponible publiquement en production. Le test physique de la version distribuée, la demande d'accès à la production et la cohérence de la fiche « Sécurité des données » restent suivis séparément dans le [TODO](TODO.md).
+
+La version 1.5.0 est en préparation. Elle doit unifier la navigation, rendre la carte météo principale plus immersive et optimiser l'utilisation du desktop sans fragiliser le socle Web, PWA ou TWA. Sa [spécification officielle](docs/v1.5.0-specification.md) fixe le périmètre avant l'implémentation.
 
 ## Référence officielle
 
 Ce fichier résume la vision du projet. Les documents techniques de référence sont :
 
 - [Rapport final d'audit v1.4.1](docs/audit-final-v1.4.1.md)
+- [Spécification MeteoSignal v1.5.0](docs/v1.5.0-specification.md)
 - [Architecture](docs/architecture.md)
 - [Architecture multi-fournisseur](docs/multi-provider-architecture.md)
 - [Décisions techniques](docs/decisions.md)

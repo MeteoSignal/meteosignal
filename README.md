@@ -49,7 +49,7 @@ La v1.4.2 officialise les corrections issues de l'audit technique v1.4.1 couvran
 - limites, timeout et annulation des recherches ;
 - deux certificats publics déclarés pour l'application Android `fr.meteosignal.app`.
 
-Les essais physiques sur toutes les plateformes, les lecteurs d'écran réels et le processus de test fermé Google Play restent des validations de distribution distinctes.
+MeteoSignal Android/TWA v1.4.2 (`versionCode 2`) a été acceptée sur la piste de test fermé Google Play. Cette acceptation ne correspond pas à une publication publique en production. Le test physique de la version installée depuis Google Play, la demande d'accès à la production et la vérification continue de la fiche « Sécurité des données » restent des validations distinctes.
 
 ## Technologies
 

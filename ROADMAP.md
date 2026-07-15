@@ -52,6 +52,23 @@ Statut : terminée.
 - [x] Lien externe « Votre avis compte » ajouté au footer.
 - [x] Cache Web/PWA versionné pour la publication v1.4.2.
 
+### Version 1.5.0 - Navigation unifiée et carte météo immersive
+
+Statut : en préparation.
+
+- [x] Spécification de la version.
+- [ ] Navigation unifiée.
+- [ ] Panneau canonique de villes enregistrées.
+- [ ] Fonds météo contextuels.
+- [ ] Distinction jour/nuit.
+- [ ] Optimisation desktop.
+- [ ] Responsive.
+- [ ] Accessibilité.
+- [ ] Performance.
+- [ ] Cache PWA dynamique et prudent.
+- [ ] Tests automatiques et manuels.
+- [ ] Publication Web, puis mise à jour Android après validation.
+
 ### Publication Reliability & Documentation
 
 Statut : terminée pour le socle Web v1.4.2.
@@ -72,11 +89,13 @@ Les phases P0 à P1E ont couvert l'exactitude du modèle météo, la PWA, les pe
 
 ## Publication et validations externes ouvertes
 
-Ces étapes ne sont pas des défauts du code v1.4.1 :
+MeteoSignal Android/TWA v1.4.2, `versionName 1.4.2` et `versionCode 2`, a été acceptée sur la piste de test fermé Google Play. Cette acceptation reste distincte d'une publication publique en production.
 
-- test fermé Google Play avec douze testeurs continus pendant quatorze jours ;
+Les validations suivantes restent ouvertes et ne sont pas des défauts du code Web :
+
 - vérification finale de la fiche « Sécurité des données » dans Play Console ;
 - test de la TWA installée depuis Google Play, sans barre de navigateur ;
+- demande d'accès à la production et publication publique, lorsqu'elles seront autorisées ;
 - installation PWA réelle sur les plateformes et appareils non encore physiquement testés ;
 - essais avec lecteurs d'écran réels, notamment NVDA et TalkBack ;
 - contrôle périodique des SHA des actions GitHub.

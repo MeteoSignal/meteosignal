@@ -8,7 +8,10 @@ Le projet suit le versionnement sémantique.
 
 ## [Unreleased]
 
-_Aucune modification documentée._
+### Documentation
+
+- Spécification officielle de MeteoSignal v1.5.0 ajoutée pour cadrer la navigation unifiée, les scènes météo contextuelles, les budgets et les validations avant implémentation.
+- Feuille de route, tâches et statut Android/TWA actualisés sans modifier la version publique 1.4.2.
 
 ---
 
