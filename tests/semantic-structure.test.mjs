@@ -28,7 +28,7 @@ const PRIVACY_HEADING_IDS = [
     "evolution"
 ];
 const EXPECTED_VISIBLE_HASHES = {
-    index: "91c16e11fc41ce6122d5377c7813af58b5d1f3b27cc7e1c773bebedce38bcfd6",
+    index: "a7169fe7c1c193fd086ba61e8e7151d51ef4cd2d89f3e61268bbd636f42ac96d",
     privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 
@@ -51,27 +51,23 @@ test("aucun H2 ou H3 ne precede le H1 de l'accueil", () => {
     assert.equal(headings.slice(0, h1Index).some((element) => ["h2", "h3"].includes(element.tagName)), false);
 });
 
-test("les deux titres visuels de favoris ne sont plus des headings", () => {
-    ["sidebar-favorites-title", "inline-favorites-title"].forEach((id) => {
-        const title = elementById(INDEX_DOCUMENT, id);
+test("le titre visuel canonique des favoris n'est pas un heading", () => {
+    const title = elementById(INDEX_DOCUMENT, "saved-cities-title");
 
-        assert.equal(title.tagName, "p");
-        assert.equal(hasClass(title, "favorites-title"), true);
-        assert.equal(title.attributes.role, undefined);
-        assert.equal(title.attributes["aria-level"], undefined);
-    });
+    assert.equal(title.tagName, "span");
+    assert.equal(hasClass(title, "favorites-title"), true);
+    assert.equal(title.attributes.role, undefined);
+    assert.equal(title.attributes["aria-level"], undefined);
 });
 
-test("les panneaux de favoris conservent le nom accessible Villes enregistrees", () => {
+test("le panneau canonique conserve le nom accessible Villes enregistrees", () => {
     const panels = elementsWithAttribute(INDEX_DOCUMENT, "data-favorites-panel");
 
-    assert.equal(panels.length, 2);
-    panels.forEach((panel) => {
-        const label = elementById(INDEX_DOCUMENT, panel.attributes["aria-labelledby"]);
-        assert.equal(panel.tagName, "div");
-        assert.equal(panel.attributes.role, "group");
-        assert.equal(normalizeText(textContent(label)), "Villes enregistrées");
-    });
+    assert.equal(panels.length, 1);
+    const label = elementById(INDEX_DOCUMENT, panels[0].attributes["aria-labelledby"]);
+    assert.equal(panels[0].tagName, "div");
+    assert.equal(panels[0].attributes.role, "group");
+    assert.equal(normalizeText(textContent(label)), "Villes enregistrées");
 });
 
 test("header-actions n'est plus un element nav", () => {
@@ -162,8 +158,8 @@ test("les deux regions live de P1C-3 restent les seules regions live", () => {
 test("la semantique dynamique et le focus des favoris restent branches", () => {
     const lists = elementsWithAttribute(INDEX_DOCUMENT, "data-favorites-list");
 
-    assert.equal(lists.length, 2);
-    lists.forEach((list) => assert.equal(list.attributes.role, undefined));
+    assert.equal(lists.length, 1);
+    assert.equal(lists[0].attributes.role, undefined);
     assert.match(FAVORITES_SOURCE, /list\.removeAttribute\("role"\)/);
     assert.match(FAVORITES_SOURCE, /list\.setAttribute\("role", "list"\)/);
     assert.match(FAVORITES_SOURCE, /item\.setAttribute\("role", "listitem"\)/);
@@ -208,7 +204,7 @@ test("la classe favorites-title reprend exactement le style du titre precedent",
 test("aucune regle CSS morte ne cible encore favorites-heading h2", () => {
     assert.doesNotMatch(`${COMPONENTS_SOURCE}\n${RESPONSIVE_SOURCE}`, /\.favorites-heading\s+h2/);
     assert.match(RESPONSIVE_SOURCE, /\.favorites-title\s*\{/);
-    assert.match(RESPONSIVE_SOURCE, /\.favorites-panel--sidebar\s+\.favorites-title\s*\{/);
+    assert.match(RESPONSIVE_SOURCE, /\.favorites-panel\[data-favorites-placement="desktop"\]\s+\.favorites-title\s*\{/);
 });
 
 function read(relativePath) {

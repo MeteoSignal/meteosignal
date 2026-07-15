@@ -56,11 +56,11 @@ test("les grands conteneurs meteo ne sont plus des regions live", () => {
     });
 });
 
-test("les deux representations de favoris ne sont plus des regions live", () => {
+test("la representation canonique des favoris n'est pas une region live", () => {
     const tags = getTagsByDataAttribute(INDEX_SOURCE, "favorites-list");
 
-    assert.equal(tags.length, 2);
-    tags.forEach((tag) => assert.doesNotMatch(tag, /aria-live=/));
+    assert.equal(tags.length, 1);
+    assert.doesNotMatch(tags[0], /aria-live=/);
 });
 
 test("aucun composant n'ajoute un role status ou alert pendant un rendu", () => {
@@ -150,10 +150,9 @@ test("la notification PWA utilise uniquement le statut global", () => {
 test("l'etat HTML initial des favoris vides ne declare aucune liste", () => {
     const tags = getTagsByDataAttribute(INDEX_SOURCE, "favorites-list");
 
-    assert.equal(tags.length, 2);
-    tags.forEach((tag) => assert.doesNotMatch(tag, /role="list"/));
+    assert.equal(tags.length, 1);
+    assert.doesNotMatch(tags[0], /role="list"/);
     assert.equal(countOccurrences(INDEX_SOURCE, "Aucune ville enregistrée pour le moment."), 1);
-    assert.equal(countOccurrences(INDEX_SOURCE, "Aucune ville enregistr&eacute;e pour le moment."), 1);
 });
 
 test("les revisions JavaScript, CSS et PWA restent coherentes", () => {

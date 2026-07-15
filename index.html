@@ -68,19 +68,7 @@
                 </a>
             </nav>
 
-            <div class="favorites-panel favorites-panel--sidebar" role="group" aria-labelledby="sidebar-favorites-title" data-favorites-panel>
-                <div class="favorites-heading">
-                    <div>
-                        <p class="eyebrow">Acc&egrave;s rapide</p>
-                        <p id="sidebar-favorites-title" class="favorites-title">Villes enregistr&eacute;es</p>
-                    </div>
-                    <span class="favorites-count" data-favorites-count>0 ville</span>
-                </div>
-
-                <div class="favorites-list" data-favorites-list>
-                    <p class="favorites-empty">Aucune ville enregistr&eacute;e pour le moment.</p>
-                </div>
-            </div>
+            <div class="favorites-host favorites-host--desktop" data-favorites-host="desktop"></div>
 
             <button
                 class="nav-collapse"
@@ -170,17 +158,35 @@
             </div>
         </header>
 
-        <div class="favorites-panel favorites-panel--inline" role="group" aria-labelledby="inline-favorites-title" data-favorites-panel>
-            <div class="favorites-heading">
-                <div>
-                    <p class="eyebrow">Accès rapide</p>
-                    <p id="inline-favorites-title" class="favorites-title">Villes enregistrées</p>
-                </div>
-                <span class="favorites-count" data-favorites-count>0 ville</span>
-            </div>
+        <div class="favorites-host favorites-host--compact" data-favorites-host="compact">
+            <div
+                id="saved-cities-panel"
+                class="favorites-panel"
+                role="group"
+                aria-labelledby="saved-cities-title"
+                data-favorites-panel
+                data-favorites-placement="compact">
+                <button
+                    class="favorites-disclosure"
+                    type="button"
+                    aria-label="Villes enregistrées, aucune ville"
+                    aria-expanded="false"
+                    aria-controls="saved-cities-content"
+                    data-favorites-toggle>
+                    <span class="favorites-disclosure-icon" aria-hidden="true">★</span>
+                    <span class="favorites-heading">
+                        <span class="eyebrow">Accès rapide</span>
+                        <span id="saved-cities-title" class="favorites-title">Villes enregistrées</span>
+                    </span>
+                    <span class="favorites-count" data-favorites-count>0 ville</span>
+                    <span class="favorites-disclosure-indicator" aria-hidden="true">⌄</span>
+                </button>
 
-            <div class="favorites-list" data-favorites-list>
-                <p class="favorites-empty">Aucune ville enregistrée pour le moment.</p>
+                <div id="saved-cities-content" class="favorites-content" data-favorites-content hidden>
+                    <div class="favorites-list" data-favorites-list>
+                        <p class="favorites-empty">Aucune ville enregistrée pour le moment.</p>
+                    </div>
+                </div>
             </div>
         </div>
 

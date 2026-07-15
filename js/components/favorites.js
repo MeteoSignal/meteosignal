@@ -9,15 +9,24 @@ import {
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";
 const FAVORITES_COUNT_SELECTOR = "[data-favorites-count]";
+const FAVORITES_TOGGLE_SELECTOR = "[data-favorites-toggle]";
 const FAVORITE_SELECT_SELECTOR = "[data-favorite-select]";
 const FAVORITE_REMOVE_SELECTOR = "[data-favorite-remove]";
+const initializedFavoritesDocuments = new WeakSet();
 
 let favoriteOptions = {};
 
 export function initFavorites(options = {}) {
     favoriteOptions = options;
+
+    if (initializedFavoritesDocuments.has(document)) {
+        return false;
+    }
+
+    initializedFavoritesDocuments.add(document);
+
     const button = document.querySelector(FAVORITE_BUTTON_SELECTOR);
-    const lists = document.querySelectorAll(FAVORITES_LIST_SELECTOR);
+    const list = document.querySelector(FAVORITES_LIST_SELECTOR);
 
     if (button) {
         button.addEventListener("click", () => {
@@ -42,45 +51,44 @@ export function initFavorites(options = {}) {
         });
     }
 
-    lists.forEach((list) => {
-        list.addEventListener("click", handleFavoritesListClick);
-    });
+    list?.addEventListener("click", handleFavoritesListClick);
 
     renderFavoritesList(favoriteOptions.getActiveLocation?.());
+    return true;
 }
 
 export function renderFavoritesList(activeLocation = null) {
-    const lists = document.querySelectorAll(FAVORITES_LIST_SELECTOR);
-    const counts = document.querySelectorAll(FAVORITES_COUNT_SELECTOR);
+    const list = document.querySelector(FAVORITES_LIST_SELECTOR);
+    const count = document.querySelector(FAVORITES_COUNT_SELECTOR);
 
-    if (lists.length === 0) {
+    if (!list) {
         return;
     }
 
     const favorites = readFavorites();
     const activeLocationKey = getLocationKey(activeLocation);
 
-    counts.forEach((count) => {
+    if (count) {
         count.textContent = formatFavoritesCount(favorites.length);
         count.dataset.favoritesTotal = String(favorites.length);
-    });
+    }
 
-    lists.forEach((list) => {
-        list.innerHTML = "";
+    renderFavoritesToggleLabel(favorites.length);
 
-        if (favorites.length === 0) {
-            list.removeAttribute("role");
-            const empty = document.createElement("p");
-            empty.className = "favorites-empty";
-            empty.textContent = "Aucune ville enregistrée pour le moment.";
-            list.appendChild(empty);
-            return;
-        }
+    list.innerHTML = "";
 
-        list.setAttribute("role", "list");
-        favorites.forEach((favorite) => {
-            list.appendChild(buildFavoriteItem(favorite, getLocationKey(favorite) === activeLocationKey));
-        });
+    if (favorites.length === 0) {
+        list.removeAttribute("role");
+        const empty = document.createElement("p");
+        empty.className = "favorites-empty";
+        empty.textContent = "Aucune ville enregistrée pour le moment.";
+        list.appendChild(empty);
+        return;
+    }
+
+    list.setAttribute("role", "list");
+    favorites.forEach((favorite) => {
+        list.appendChild(buildFavoriteItem(favorite, getLocationKey(favorite) === activeLocationKey));
     });
 }
 
@@ -173,8 +181,12 @@ export function restoreFavoriteFocus({ sourceList, removedIndex, remainingCount 
         }
     }
 
-    const favoriteButton = document.querySelector(FAVORITE_BUTTON_SELECTOR);
-    return focusFavoriteControl(favoriteButton) ? favoriteButton : null;
+    const fallbackControls = [
+        document.querySelector(FAVORITE_BUTTON_SELECTOR),
+        document.querySelector(FAVORITES_TOGGLE_SELECTOR)
+    ];
+
+    return fallbackControls.find((control) => focusFavoriteControl(control)) ?? null;
 }
 
 function focusFavoriteControl(control) {
@@ -270,6 +282,17 @@ function getFavoriteByKey(locationKey) {
 
 function formatFavoritesCount(count) {
     return count <= 1 ? `${count} ville` : `${count} villes`;
+}
+
+function renderFavoritesToggleLabel(count) {
+    const toggle = document.querySelector(FAVORITES_TOGGLE_SELECTOR);
+
+    if (!toggle) {
+        return;
+    }
+
+    const countLabel = count === 0 ? "aucune ville" : formatFavoritesCount(count);
+    toggle.setAttribute("aria-label", `Villes enregistrées, ${countLabel}`);
 }
 
 function formatFavoriteMeta(location) {

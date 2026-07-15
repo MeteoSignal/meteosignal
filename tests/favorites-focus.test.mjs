@@ -253,15 +253,50 @@ const BORDEAUX = createLocation("bordeaux", "Bordeaux", 44.8378, -0.5792);
 test("une liste de favoris vide ne porte pas une semantique de liste", () => {
     const harness = createHarness({ favorites: [] });
 
-    [harness.desktopList, harness.mobileList].forEach((list) => {
-        assert.equal(list.getAttribute("role"), null);
-        assert.equal(list.children.length, 1);
-        assert.equal(list.children[0].tagName, "P");
-        assert.equal(list.children[0].getAttribute("role"), null);
-    });
+    assert.equal(harness.list.getAttribute("role"), null);
+    assert.equal(harness.list.children.length, 1);
+    assert.equal(harness.list.children[0].tagName, "P");
+    assert.equal(harness.list.children[0].getAttribute("role"), null);
+    assert.equal(harness.toggle.getAttribute("aria-label"), "Villes enregistrées, aucune ville");
 });
 
-test("le passage de zero a un favori restaure les deux listes et leurs elements", async () => {
+test("le nom accessible annonce une ou plusieurs villes sans dupliquer le compteur", () => {
+    const singleHarness = createHarness({ favorites: [TOULOUSE] });
+
+    assert.equal(singleHarness.toggle.getAttribute("aria-label"), "Villes enregistrées, 1 ville");
+    assert.doesNotMatch(singleHarness.toggle.getAttribute("aria-label"), /1\s+1/);
+
+    const multipleHarness = createHarness({ favorites: [TOULOUSE, PARIS, LYON] });
+
+    assert.equal(multipleHarness.toggle.getAttribute("aria-label"), "Villes enregistrées, 3 villes");
+    assert.doesNotMatch(multipleHarness.toggle.getAttribute("aria-label"), /3\s+3/);
+});
+
+test("deux initialisations des favoris conservent un seul rendu et un seul ecouteur", async () => {
+    const notifications = [];
+    const onToggle = (payload) => notifications.push(payload);
+    const harness = createHarness({
+        favorites: [],
+        activeLocation: TOULOUSE,
+        onToggle
+    });
+    const renderGeneration = document.renderGeneration;
+
+    assert.equal(initFavorites({
+        getActiveLocation: () => TOULOUSE,
+        onToggle
+    }), false);
+    assert.equal(harness.favoriteButton.listeners.get("click").length, 1);
+    assert.equal(harness.list.listeners.get("click").length, 1);
+    assert.equal(document.renderGeneration, renderGeneration);
+
+    await harness.favoriteButton.dispatchEvent({ type: "click", bubbles: true });
+
+    assert.equal(notifications.length, 1);
+    assert.equal(harness.list.children.length, 1);
+});
+
+test("le passage de zero a un favori restaure la liste canonique et ses elements", async () => {
     const notifications = [];
     const harness = createHarness({
         favorites: [],
@@ -271,16 +306,14 @@ test("le passage de zero a un favori restaure les deux listes et leurs elements"
 
     await harness.favoriteButton.dispatchEvent({ type: "click", bubbles: true });
 
-    [harness.desktopList, harness.mobileList].forEach((list) => {
-        assert.equal(list.getAttribute("role"), "list");
-        assert.equal(list.children.length, 1);
-        assert.equal(list.children[0].getAttribute("role"), "listitem");
-    });
+    assert.equal(harness.list.getAttribute("role"), "list");
+    assert.equal(harness.list.children.length, 1);
+    assert.equal(harness.list.children[0].getAttribute("role"), "listitem");
     assert.equal(notifications.length, 1);
     assert.equal(notifications[0].isFavorite, true);
 });
 
-test("le passage de un a plusieurs favoris conserve les deux listes coherentes", async () => {
+test("le passage de un a plusieurs favoris conserve la liste canonique coherente", async () => {
     const harness = createHarness({
         favorites: [TOULOUSE],
         activeLocation: PARIS
@@ -288,11 +321,9 @@ test("le passage de un a plusieurs favoris conserve les deux listes coherentes",
 
     await harness.favoriteButton.dispatchEvent({ type: "click", bubbles: true });
 
-    [harness.desktopList, harness.mobileList].forEach((list) => {
-        assert.equal(list.getAttribute("role"), "list");
-        assert.equal(list.children.length, 2);
-        list.children.forEach((item) => assert.equal(item.getAttribute("role"), "listitem"));
-    });
+    assert.equal(harness.list.getAttribute("role"), "list");
+    assert.equal(harness.list.children.length, 2);
+    harness.list.children.forEach((item) => assert.equal(item.getAttribute("role"), "listitem"));
 });
 
 test("la limite de favoris ne declenche pas une fausse annonce de retrait", async () => {
@@ -309,24 +340,21 @@ test("la limite de favoris ne declenche pas une fausse annonce de retrait", asyn
     await harness.favoriteButton.dispatchEvent({ type: "click", bubbles: true });
 
     assert.equal(notifications.length, 0);
-    assert.equal(harness.desktopList.children.length, 100);
-    assert.equal(harness.mobileList.children.length, 100);
+    assert.equal(harness.list.children.length, 100);
     assert.equal(harness.favoriteButton.getAttribute("aria-pressed"), "false");
 });
 
 test("le passage de plusieurs a un favori conserve une liste valide", async () => {
     const harness = createHarness({ favorites: [TOULOUSE, PARIS] });
 
-    await removeAt(harness.desktopList, 1);
+    await removeAt(harness.list, 1);
 
-    [harness.desktopList, harness.mobileList].forEach((list) => {
-        assert.equal(list.getAttribute("role"), "list");
-        assert.equal(list.children.length, 1);
-        assert.equal(list.children[0].getAttribute("role"), "listitem");
-    });
+    assert.equal(harness.list.getAttribute("role"), "list");
+    assert.equal(harness.list.children.length, 1);
+    assert.equal(harness.list.children[0].getAttribute("role"), "listitem");
 });
 
-test("le passage de un a zero favori retire les deux roles list", async () => {
+test("le passage de un a zero favori retire le role list", async () => {
     const notifications = [];
     const harness = createHarness({
         favorites: [TOULOUSE],
@@ -334,24 +362,23 @@ test("le passage de un a zero favori retire les deux roles list", async () => {
         onRemove: (payload) => notifications.push(payload)
     });
 
-    await removeAt(harness.desktopList, 0);
+    await removeAt(harness.list, 0);
 
-    assert.equal(harness.desktopList.getAttribute("role"), null);
-    assert.equal(harness.mobileList.getAttribute("role"), null);
+    assert.equal(harness.list.getAttribute("role"), null);
     assert.equal(notifications.length, 1);
     assert.equal(notifications[0].location.id, TOULOUSE.id);
 });
 
 test("un favori central transfere le focus au favori suivant sans faire defiler la liste", async () => {
     const harness = createHarness({ favorites: [TOULOUSE, PARIS, LYON], activeLocation: TOULOUSE });
-    harness.desktopList.scrollTop = 160;
+    harness.list.scrollTop = 160;
 
-    await removeAt(harness.desktopList, 1);
+    await removeAt(harness.list, 1);
 
     assert.equal(document.activeElement.dataset.favoriteKey, LYON.id);
-    assert.equal(document.activeElement.closest("[data-favorites-list]"), harness.desktopList);
+    assert.equal(document.activeElement.closest("[data-favorites-list]"), harness.list);
     assert.deepEqual(document.activeElement.focusCalls.at(-1).options, { preventScroll: true });
-    assert.equal(harness.desktopList.scrollTop, 160);
+    assert.equal(harness.list.scrollTop, 160);
 });
 
 test("une longue liste conserve son defilement lors d'une suppression vers le bas", async () => {
@@ -359,20 +386,20 @@ test("une longue liste conserve son defilement lors d'une suppression vers le ba
         createLocation(`ville-${index}`, `Ville ${index}`, 40 + index / 10, 1 + index / 10)
     ));
     const harness = createHarness({ favorites: longFavorites, activeLocation: longFavorites[0] });
-    harness.desktopList.scrollTop = 240;
+    harness.list.scrollTop = 240;
 
-    await removeAt(harness.desktopList, 9);
+    await removeAt(harness.list, 9);
 
     assert.equal(document.activeElement.dataset.favoriteKey, longFavorites[10].id);
-    assert.equal(document.activeElement.closest("[data-favorites-list]"), harness.desktopList);
-    assert.equal(harness.desktopList.scrollTop, 240);
+    assert.equal(document.activeElement.closest("[data-favorites-list]"), harness.list);
+    assert.equal(harness.list.scrollTop, 240);
     assert.deepEqual(document.activeElement.focusCalls.at(-1).options, { preventScroll: true });
 });
 
 test("le dernier favori transfere le focus au favori precedent", async () => {
     const harness = createHarness({ favorites: [TOULOUSE, PARIS, LYON] });
 
-    await removeAt(harness.desktopList, 2);
+    await removeAt(harness.list, 2);
 
     assert.equal(document.activeElement.dataset.favoriteKey, PARIS.id);
     assert.equal(getFavoriteFocusIndex(2, 2), 1);
@@ -381,7 +408,7 @@ test("le dernier favori transfere le focus au favori precedent", async () => {
 test("le premier favori transfere le focus au nouveau premier", async () => {
     const harness = createHarness({ favorites: [TOULOUSE, PARIS, LYON] });
 
-    await removeAt(harness.desktopList, 0);
+    await removeAt(harness.list, 0);
 
     assert.equal(document.activeElement.dataset.favoriteKey, PARIS.id);
     assert.equal(getFavoriteFocusIndex(0, 2), 0);
@@ -390,7 +417,7 @@ test("le premier favori transfere le focus au nouveau premier", async () => {
 test("le favori unique transfere le focus au bouton global", async () => {
     const harness = createHarness({ favorites: [TOULOUSE], activeLocation: TOULOUSE });
 
-    await removeAt(harness.mobileList, 0);
+    await removeAt(harness.list, 0);
 
     assert.equal(document.activeElement, harness.favoriteButton);
     assert.deepEqual(harness.favoriteButton.focusCalls.at(-1).options, { preventScroll: true });
@@ -399,7 +426,7 @@ test("le favori unique transfere le focus au bouton global", async () => {
 test("plusieurs suppressions successives conservent une progression logique", async () => {
     const harness = createHarness({ favorites: [TOULOUSE, PARIS, LYON, BORDEAUX] });
 
-    await removeAt(harness.desktopList, 1);
+    await removeAt(harness.list, 1);
     assert.equal(document.activeElement.dataset.favoriteKey, LYON.id);
     await activateFocusedRemove();
     assert.equal(document.activeElement.dataset.favoriteKey, BORDEAUX.id);
@@ -408,19 +435,15 @@ test("plusieurs suppressions successives conservent une progression logique", as
     assert.notEqual(document.activeElement, document.body);
 });
 
-test("deux listes sont reconstruites mais seule la representation source recoit le focus", async () => {
-    const harness = createHarness({
-        favorites: [TOULOUSE, PARIS, LYON],
-        desktopDisplay: "none",
-        mobileDisplay: "block"
-    });
+test("la liste canonique reconstruite conserve le focus dans le meme panneau", async () => {
+    const harness = createHarness({ favorites: [TOULOUSE, PARIS, LYON] });
 
-    await removeAt(harness.mobileList, 1);
+    await removeAt(harness.list, 1);
 
     assert.equal(document.activeElement.dataset.favoriteKey, LYON.id);
-    assert.equal(document.activeElement.closest("[data-favorites-list]"), harness.mobileList);
-    assert.equal(harness.desktopList.contains(document.activeElement), false);
-    assert.equal(harness.desktopList.querySelectorAll("[data-favorite-remove]").length, 2);
+    assert.equal(document.activeElement.closest("[data-favorites-list]"), harness.list);
+    assert.equal(harness.list.contains(document.activeElement), true);
+    assert.equal(harness.list.querySelectorAll("[data-favorite-remove]").length, 2);
 });
 
 test("la suppression de la ville active conserve le message et le comportement metier existants", async () => {
@@ -436,7 +459,7 @@ test("la suppression de la ville active conserve le message et le comportement m
         }
     });
 
-    await removeAt(harness.desktopList, 0);
+    await removeAt(harness.list, 0);
 
     assert.equal(payload.location.id, TOULOUSE.id);
     assert.equal(payload.removedActiveLocation, true);
@@ -456,25 +479,25 @@ test("la suppression d'une ville non active conserve l'indicateur metier", async
         }
     });
 
-    await removeAt(harness.desktopList, 1);
+    await removeAt(harness.list, 1);
 
     assert.equal(payload.location.id, PARIS.id);
     assert.equal(payload.removedActiveLocation, false);
 });
 
-test("l'absence du bouton global ne provoque aucune exception", async () => {
+test("l'absence du bouton global restaure le focus sur le disclosure", async () => {
     const harness = createHarness({ favorites: [TOULOUSE], includeFavoriteButton: false });
 
-    await assert.doesNotReject(removeAt(harness.desktopList, 0));
-    assert.equal(document.activeElement, document.body);
+    await assert.doesNotReject(removeAt(harness.list, 0));
+    assert.equal(document.activeElement, harness.toggle);
 });
 
 test("le focus cible un controle du nouveau rendu et jamais le bouton detruit", async () => {
     const harness = createHarness({ favorites: [TOULOUSE, PARIS, LYON] });
-    const oldButton = harness.desktopList.querySelectorAll("[data-favorite-remove]")[1];
+    const oldButton = harness.list.querySelectorAll("[data-favorite-remove]")[1];
     const generationBeforeRemoval = document.renderGeneration;
 
-    await removeAt(harness.desktopList, 1);
+    await removeAt(harness.list, 1);
 
     assert.notEqual(document.activeElement, oldButton);
     assert.ok(document.activeElement.focusCalls.at(-1).renderGeneration > generationBeforeRemoval);
@@ -487,7 +510,7 @@ test("le nouveau controle conserve aria-label, aria-pressed et data-favorite-key
         activeLocation: LYON
     });
 
-    await removeAt(harness.desktopList, 1);
+    await removeAt(harness.list, 1);
 
     const removeButton = document.activeElement;
     const selectButton = removeButton.parentElement.querySelector("[data-favorite-select]");
@@ -499,18 +522,18 @@ test("le nouveau controle conserve aria-label, aria-pressed et data-favorite-key
 
 test("une cible masquee, desactivee ou deconnectee n'est jamais focalisee", () => {
     const hiddenHarness = createHarness({ favorites: [TOULOUSE, PARIS] });
-    hiddenHarness.desktopPanel.style.visibility = "hidden";
+    hiddenHarness.panel.style.visibility = "hidden";
     const hiddenResult = restoreFavoriteFocus({
-        sourceList: hiddenHarness.desktopList,
+        sourceList: hiddenHarness.list,
         removedIndex: 0,
         remainingCount: 2
     });
     assert.equal(hiddenResult, hiddenHarness.favoriteButton);
 
     const disabledHarness = createHarness({ favorites: [TOULOUSE, PARIS] });
-    disabledHarness.desktopList.querySelectorAll("[data-favorite-remove]")[0].disabled = true;
+    disabledHarness.list.querySelectorAll("[data-favorite-remove]")[0].disabled = true;
     const disabledResult = restoreFavoriteFocus({
-        sourceList: disabledHarness.desktopList,
+        sourceList: disabledHarness.list,
         removedIndex: 0,
         remainingCount: 2
     });
@@ -520,13 +543,13 @@ test("une cible masquee, desactivee ou deconnectee n'est jamais focalisee", () =
         favorites: [TOULOUSE, PARIS],
         includeFavoriteButton: false
     });
-    disconnectedHarness.desktopList.forceDisconnected = true;
+    disconnectedHarness.list.forceDisconnected = true;
     assert.doesNotThrow(() => restoreFavoriteFocus({
-        sourceList: disconnectedHarness.desktopList,
+        sourceList: disconnectedHarness.list,
         removedIndex: 0,
         remainingCount: 2
     }));
-    assert.equal(document.activeElement, document.body);
+    assert.equal(document.activeElement, disconnectedHarness.toggle);
 });
 
 test("la revision JavaScript invalide toute la chaine menant au composant", () => {
@@ -543,8 +566,6 @@ function createHarness({
     favorites,
     activeLocation = TOULOUSE,
     includeFavoriteButton = true,
-    desktopDisplay = "block",
-    mobileDisplay = "block",
     onRemove = () => {},
     onToggle = () => {}
 }) {
@@ -558,14 +579,10 @@ function createHarness({
     const favoriteButton = includeFavoriteButton
         ? appendElement(fakeDocument.body, "button", { id: "favorite-button" })
         : null;
-    const desktopPanel = appendElement(fakeDocument.body, "section", { className: "desktop-panel" });
-    const desktopCount = appendElement(desktopPanel, "span", { dataset: { favoritesCount: "" } });
-    const desktopList = appendElement(desktopPanel, "div", { dataset: { favoritesList: "" } });
-    const mobilePanel = appendElement(fakeDocument.body, "section", { className: "mobile-panel" });
-    const mobileCount = appendElement(mobilePanel, "span", { dataset: { favoritesCount: "" } });
-    const mobileList = appendElement(mobilePanel, "div", { dataset: { favoritesList: "" } });
-    desktopPanel.style.display = desktopDisplay;
-    mobilePanel.style.display = mobileDisplay;
+    const toggle = appendElement(fakeDocument.body, "button", { dataset: { favoritesToggle: "" } });
+    const panel = appendElement(fakeDocument.body, "section", { className: "favorites-panel" });
+    const count = appendElement(panel, "span", { dataset: { favoritesCount: "" } });
+    const list = appendElement(panel, "div", { dataset: { favoritesList: "" } });
 
     initFavorites({
         getActiveLocation: () => activeLocation,
@@ -574,13 +591,11 @@ function createHarness({
     });
 
     return {
-        desktopCount,
-        desktopList,
-        desktopPanel,
+        count,
         favoriteButton,
-        mobileCount,
-        mobileList,
-        mobilePanel
+        list,
+        panel,
+        toggle
     };
 }
 
