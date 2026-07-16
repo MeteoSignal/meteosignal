@@ -25,10 +25,14 @@ test("le voile de contraste reste present au-dessus de la scene", () => {
 
     assert.match(declarations, /z-index:\s*1\s*;/);
     assert.match(declarations, /linear-gradient\(90deg/);
-    assert.match(declarations, /var\(--hero-overlay-left\)/);
-    assert.match(declarations, /var\(--hero-overlay-center\)/);
-    assert.match(declarations, /var\(--hero-overlay-right\)/);
+    assert.match(declarations, /rgb\(1 8 24 \/ 0\.8\)\s+0%/);
+    assert.match(declarations, /rgb\(1 10 29 \/ 0\.6\)\s+24%/);
+    assert.match(declarations, /rgb\(1 10 29 \/ 0\.24\)\s+43%/);
+    assert.match(declarations, /rgb\(1 10 29 \/ 0\.06\)\s+61%/);
+    assert.match(declarations, /transparent\s+76%/);
     assert.match(declarations, /linear-gradient\(180deg/);
+    assert.match(declarations, /rgb\(2 18 48 \/ 0\.02\)/);
+    assert.match(declarations, /rgb\(1 8 24 \/ 0\.1\)/);
 });
 
 test("la scene conserve son positionnement France et Europe", () => {
