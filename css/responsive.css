@@ -1042,11 +1042,20 @@
 
     .hero-weather,
     .hero-content {
-        min-height: 35rem;
+        min-height: clamp(32rem, 34vw, 34rem);
     }
 
     .hero-content {
-        padding: var(--space-10);
+        gap: 1.5rem;
+        padding: 2rem 2.5rem;
+    }
+
+    .hero-metrics {
+        width: min(100%, 56rem);
+    }
+
+    .weather-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .current-weather {
@@ -1117,15 +1126,6 @@
         --content-max: 1560px;
     }
 
-    .weather-grid {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
-
-    .hero-weather,
-    .hero-content {
-        min-height: 36.5rem;
-    }
-
     .temperature-line {
         font-size: 6.55rem;
     }
@@ -1140,12 +1140,12 @@
 }
 
 @media (min-width: 1600px) {
-    .hero-content {
-        padding: var(--space-10);
-    }
-
     :root {
         --content-max: 1640px;
+    }
+
+    .weather-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
     }
 
     .content-grid {
