@@ -188,7 +188,11 @@ test("le HTML initialise une scene default unique sans changer le contrat du her
     assert.match(heroTags[0], /data-weather-state="loading"/);
     assert.match(heroTags[0], /data-weather-tone="unknown"/);
     assert.match(heroTags[0], /data-weather-scene="default"/);
+    assert.match(heroTags[0], /data-weather-scene-status="fallback"/);
     assert.equal((source.match(/data-weather-scene=/g) ?? []).length, 1);
+    assert.equal((source.match(/data-weather-scene-image/g) ?? []).length, 1);
+    assert.match(source, /data-weather-scene-image\s+alt=""\s+aria-hidden="true"\s+decoding="async"/);
+    assert.doesNotMatch(source, /data-weather-scene-image[^>]+\ssrc=/);
 });
 
 function createWeather(code, isDay) {

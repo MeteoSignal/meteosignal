@@ -197,8 +197,16 @@
                 data-weather-hero
                 data-weather-state="loading"
                 data-weather-tone="unknown"
-                data-weather-scene="default">
-                <div class="hero-media" aria-hidden="true"></div>
+                data-weather-scene="default"
+                data-weather-scene-status="fallback">
+                <div class="hero-media" aria-hidden="true">
+                    <img
+                        class="hero-scene-image"
+                        data-weather-scene-image
+                        alt=""
+                        aria-hidden="true"
+                        decoding="async">
+                </div>
 
                 <div class="hero-content">
                     <div class="hero-status">

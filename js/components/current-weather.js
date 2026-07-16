@@ -1,6 +1,7 @@
 import { formatTemperature, formatTime } from "../core/formatters.js?v=1.4.2-w3c-feedback";
 import { renderWeatherIcon } from "../core/weather-icons.js?v=1.4.2-w3c-feedback";
 import { resolveWeatherScene } from "../core/weather-scenes.js?v=1.4.2-w3c-feedback";
+import { updateHeroWeatherScene } from "./weather-scene-loader.js?v=1.4.2-w3c-feedback";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";
@@ -54,6 +55,7 @@ function setHeroState(state, tone, scene) {
     hero.dataset.weatherTone = tone || DEFAULT_TONE;
     hero.dataset.weatherScene = scene || DEFAULT_SCENE;
     hero.setAttribute("aria-busy", state === "loading" ? "true" : "false");
+    void updateHeroWeatherScene(hero, hero.dataset.weatherScene, state);
 }
 
 function setText(selector, value) {

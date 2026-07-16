@@ -7,28 +7,78 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SW_SOURCE = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
+const LEGACY_HERO_ASSETS = [
+    "./assets/backgrounds/clear.jpg",
+    "./assets/backgrounds/night.jpg"
+];
+const IMMERSIVE_HERO_FILENAMES = [
+    "hero-clear-day.webp",
+    "hero-clear-night.webp",
+    "hero-cloudy.webp",
+    "hero-rain.webp",
+    "hero-storm.webp",
+    "hero-snow.webp",
+    "hero-fog.webp"
+];
 
 test("le precache contient une seule URL canonique par fichier local", () => {
     const { api } = createServiceWorkerHarness();
     const assets = [...api.ESSENTIAL_ASSETS, ...api.OPTIONAL_ASSETS];
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
 
-    assert.equal(api.ESSENTIAL_ASSETS.length, 36);
-    assert.equal(api.OPTIONAL_ASSETS.length, 20);
-    assert.equal(assets.length, 56);
+    assert.equal(api.ESSENTIAL_ASSETS.length, 39);
+    assert.equal(api.OPTIONAL_ASSETS.length, 18);
+    assert.equal(assets.length, 57);
     assert.equal(new Set(assets).size, assets.length);
     assert.equal(assets.some((asset) => asset.includes("open-meteo.com")), false);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.webp"), true);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.png"), false);
     assert.equal(assets.includes("./css/style.css"), false);
     assert.equal(assets.includes("./css/privacy.css"), true);
+    assert.equal(api.ESSENTIAL_ASSETS.includes("./js/components/current-weather.js"), true);
+    assert.equal(api.ESSENTIAL_ASSETS.includes("./js/components/weather-scene-loader.js"), true);
+    assert.equal(api.ESSENTIAL_ASSETS.includes("./js/core/weather-scene-assets.js"), true);
+    assert.equal(api.ESSENTIAL_ASSETS.includes("./js/core/weather-scenes.js"), true);
     assert.equal(manifest.start_url, "./");
     assert.equal(manifest.scope, "./");
+
+    for (const asset of LEGACY_HERO_ASSETS) {
+        assert.equal(api.ESSENTIAL_ASSETS.includes(asset), false, asset);
+        assert.equal(api.OPTIONAL_ASSETS.includes(asset), false, asset);
+    }
+
+    for (const filename of IMMERSIVE_HERO_FILENAMES) {
+        assert.equal(assets.some((asset) => asset.includes(filename)), false, filename);
+    }
 
     for (const asset of assets) {
         assert.match(asset, /^\.\//);
         assert.equal(asset.includes("?"), false, asset);
         assert.equal(fs.existsSync(path.join(ROOT, asset.slice(2))), true, asset);
+    }
+});
+
+test("chaque import JavaScript local du socle reste disponible hors ligne", () => {
+    const { api } = createServiceWorkerHarness();
+    const essentialAssets = new Set(api.ESSENTIAL_ASSETS);
+    const essentialModules = api.ESSENTIAL_ASSETS.filter((asset) => asset.endsWith(".js"));
+
+    for (const moduleAsset of essentialModules) {
+        const moduleFile = path.join(ROOT, moduleAsset.slice(2));
+        const moduleSource = fs.readFileSync(moduleFile, "utf8");
+
+        for (const specifier of readStaticModuleSpecifiers(moduleSource)) {
+            if (!specifier.startsWith("./") && !specifier.startsWith("../")) {
+                continue;
+            }
+
+            const dependency = specifier.split(/[?#]/, 1)[0];
+            const dependencyFile = path.resolve(path.dirname(moduleFile), dependency);
+            const dependencyAsset = `./${path.relative(ROOT, dependencyFile).split(path.sep).join("/")}`;
+
+            assert.equal(fs.existsSync(dependencyFile), true, `${moduleAsset} -> ${specifier}`);
+            assert.equal(essentialAssets.has(dependencyAsset), true, `${moduleAsset} -> ${dependencyAsset}`);
+        }
     }
 });
 
@@ -322,4 +372,10 @@ function listFiles(directory, predicate) {
 
 function escapeRegExp(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function readStaticModuleSpecifiers(source) {
+    const pattern = /\b(?:import|export)\s+(?:[^"';()]*?\s+from\s+)?["']([^"']+)["']/g;
+
+    return [...source.matchAll(pattern)].map((match) => match[1]);
 }
