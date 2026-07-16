@@ -686,6 +686,15 @@
         font-size: 2.68rem;
     }
 
+    .weather-summary h1,
+    .weather-description,
+    .data-source-label--hero {
+        overflow: visible;
+        overflow-wrap: anywhere;
+        text-overflow: clip;
+        white-space: normal;
+    }
+
     .brand-lockup-header .brand-mark {
         width: 2.35rem;
         height: 2.35rem;
@@ -1163,5 +1172,31 @@
     .nav-link,
     .nav-collapse {
         min-height: 3.2rem;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .search-panel input,
+    .hourly-range-button,
+    .mobile-bottom-link {
+        min-height: 2.75rem;
+    }
+
+    .site-header .icon-action,
+    .search-panel .icon-action {
+        width: 2.75rem;
+        min-width: 2.75rem;
+        height: 2.75rem;
+    }
+
+    .hourly-range-button {
+        min-width: 2.75rem;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) and (min-width: 1180px) and (max-width: 1599px) {
+    .nav-link,
+    .nav-collapse {
+        min-height: 2.75rem;
     }
 }
