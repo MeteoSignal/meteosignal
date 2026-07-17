@@ -182,6 +182,33 @@ test("la bottom navigation conserve exactement ses cinq entrees", () => {
     assert.equal((INDEX_SOURCE.match(/class="mobile-bottom-link(?: [^"]*)?"/g) ?? []).length, 5);
 });
 
+test("le header place la recherche entre le logo et les actions", () => {
+    const header = INDEX_SOURCE.match(/<header class="site-header"[\s\S]*?<\/header>/)?.[0] ?? "";
+    const brandIndex = header.indexOf("brand-lockup-header");
+    const searchIndex = header.indexOf('class="search-panel"');
+    const actionsIndex = header.indexOf('class="header-actions"');
+
+    assert.ok(brandIndex >= 0);
+    assert.ok(searchIndex > brandIndex);
+    assert.ok(actionsIndex > searchIndex);
+});
+
+test("la navigation basse couvre mobile et tablette jusqu au breakpoint desktop", () => {
+    assert.match(
+        RESPONSIVE_SOURCE,
+        /@media \(max-width: 1179px\) \{[\s\S]*?\.mobile-bottom-nav\s*\{[\s\S]*?display:\s*grid;/
+    );
+    assert.match(
+        RESPONSIVE_SOURCE,
+        /@media \(min-width: 721px\) and \(max-width: 1179px\) \{[\s\S]*?\.adaptive-nav\s*\{\s*display:\s*none;/
+    );
+    assert.match(RESPONSIVE_SOURCE, /@media \(min-width: 1180px\)/);
+    assert.match(
+        RESPONSIVE_SOURCE,
+        /@media \(max-width: 720px\) \{[\s\S]*?\.dashboard\s*\{[^}]*padding-top:\s*var\(--space-4\);/
+    );
+});
+
 test("le rendu cible une seule liste et conserve le stockage historique", () => {
     assert.match(FAVORITES_SOURCE, /document\.querySelector\(FAVORITES_LIST_SELECTOR\)/);
     assert.doesNotMatch(FAVORITES_SOURCE, /querySelectorAll\(FAVORITES_LIST_SELECTOR\)/);

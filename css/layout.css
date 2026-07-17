@@ -51,7 +51,7 @@ body[data-nav-open="true"] .nav-overlay {
     top: var(--space-4);
     z-index: 10;
     display: grid;
-    grid-template-columns: auto auto minmax(12rem, 1fr) auto;
+    grid-template-columns: auto minmax(12rem, 1fr) auto;
     gap: var(--space-4);
     align-items: center;
     margin-bottom: var(--space-6);
