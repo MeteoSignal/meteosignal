@@ -291,8 +291,10 @@ function renderFavoritesToggleLabel(count) {
         return;
     }
 
-    const countLabel = count === 0 ? "aucune ville" : formatFavoritesCount(count);
-    toggle.setAttribute("aria-label", `Villes enregistrées, ${countLabel}`);
+    const countLabel = count === 0
+        ? "aucune ville enregistrée"
+        : `${formatFavoritesCount(count)} enregistrée${count > 1 ? "s" : ""}`;
+    toggle.setAttribute("aria-label", `Accès rapide, ${countLabel}`);
 }
 
 function formatFavoriteMeta(location) {

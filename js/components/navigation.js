@@ -1,6 +1,5 @@
 const NAV_OPEN_ATTRIBUTE = "navOpen";
 const NAV_COLLAPSED_ATTRIBUTE = "navCollapsed";
-export const FAVORITES_DESKTOP_MEDIA_QUERY = "(min-width: 1180px)";
 const initializedNavigationDocuments = new WeakSet();
 
 export function initNavigation() {
@@ -21,15 +20,10 @@ export function initNavigation() {
     const updateNavigationCollapsed = (isCollapsed) => {
         setNavigationCollapsed(isCollapsed, collapseButton);
 
-        if (isCollapsed) {
-            favoritesController?.close({ restoreFocus: true });
-        }
+        favoritesController?.close({ restoreFocus: isCollapsed });
     };
 
-    favoritesController = initFavoritesPanelNavigation({
-        isNavigationCollapsed: () => body.dataset[NAV_COLLAPSED_ATTRIBUTE] === "true",
-        expandNavigation: () => updateNavigationCollapsed(false)
-    });
+    favoritesController = initFavoritesPanelNavigation();
 
     setMenuOpen(false, toggleButton);
     updateNavigationCollapsed(false);
@@ -66,85 +60,62 @@ export function initNavigation() {
     return true;
 }
 
-function initFavoritesPanelNavigation({ isNavigationCollapsed, expandNavigation }) {
+function initFavoritesPanelNavigation() {
     const panel = document.querySelector("[data-favorites-panel]");
-    const desktopHost = document.querySelector('[data-favorites-host="desktop"]');
-    const compactHost = document.querySelector('[data-favorites-host="compact"]');
     const toggleButton = document.querySelector("[data-favorites-toggle]");
-    const content = document.querySelector("[data-favorites-content]");
+    const closeButton = document.querySelector("[data-favorites-close]");
 
-    if (!panel || !desktopHost || !compactHost || !toggleButton || !content) {
+    if (!panel || !toggleButton || !closeButton) {
         return null;
     }
 
-    const desktopMedia = window.matchMedia(FAVORITES_DESKTOP_MEDIA_QUERY);
-    const syncPlacement = () => {
-        const placement = desktopMedia.matches ? "desktop" : "compact";
-        const host = desktopMedia.matches ? desktopHost : compactHost;
-        const focusedControl = panel.contains(document.activeElement) ? document.activeElement : null;
-        const wasMoved = moveCanonicalFavoritesPanel(panel, host, placement);
-
-        if (wasMoved && focusedControl?.isConnected && document.activeElement !== focusedControl) {
-            focusWithoutScroll(focusedControl);
-        }
-    };
     const setExpanded = (isExpanded, options) => {
-        setFavoritesPanelExpanded(toggleButton, content, isExpanded, options);
+        setFavoritesPanelExpanded(toggleButton, panel, isExpanded, options);
     };
 
-    setExpanded(toggleButton.getAttribute("aria-expanded") === "true" && !content.hidden);
-    syncPlacement();
+    setExpanded(toggleButton.getAttribute("aria-expanded") === "true" && !panel.hidden);
 
     toggleButton.addEventListener("click", () => {
         const shouldExpand = toggleButton.getAttribute("aria-expanded") !== "true";
-
-        if (shouldExpand && desktopMedia.matches && isNavigationCollapsed()) {
-            expandNavigation();
-        }
-
         setExpanded(shouldExpand);
     });
 
-    if (typeof desktopMedia.addEventListener === "function") {
-        desktopMedia.addEventListener("change", syncPlacement);
-    } else if (typeof desktopMedia.addListener === "function") {
-        desktopMedia.addListener(syncPlacement);
-    }
+    closeButton.addEventListener("click", () => setExpanded(false, { restoreFocus: true }));
+
+    panel.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (typeof target?.closest === "function" && target.closest("[data-favorite-select]")) {
+            setExpanded(false, { restoreFocus: true });
+        }
+    });
+
+    document.addEventListener("pointerdown", (event) => {
+        const target = event.target;
+
+        if (toggleButton.getAttribute("aria-expanded") === "true"
+            && target
+            && !panel.contains(target)
+            && !toggleButton.contains(target)) {
+            setExpanded(false);
+        }
+    });
 
     return {
-        close: (options) => setExpanded(false, options),
-        syncPlacement
+        close: (options) => setExpanded(false, options)
     };
 }
 
-export function moveCanonicalFavoritesPanel(panel, host, placement) {
-    if (!panel || !host || !["compact", "desktop"].includes(placement)) {
-        return false;
-    }
-
-    const wasMoved = panel.parentElement !== host;
-
-    if (wasMoved) {
-        host.append(panel);
-    }
-
-    panel.dataset.favoritesPlacement = placement;
-    return wasMoved;
-}
-
-export function setFavoritesPanelExpanded(toggleButton, content, isExpanded, { restoreFocus = false } = {}) {
-    if (!toggleButton || !content) {
+export function setFavoritesPanelExpanded(toggleButton, panel, isExpanded, { restoreFocus = false } = {}) {
+    if (!toggleButton || !panel) {
         return;
     }
 
-    const activeElement = toggleButton.ownerDocument?.activeElement ?? null;
-    const shouldRestoreFocus = !isExpanded
-        && restoreFocus
-        && activeElement
-        && content.contains(activeElement);
+    const wasExpanded = toggleButton.getAttribute("aria-expanded") === "true" && !panel.hidden;
+    const shouldRestoreFocus = !isExpanded && restoreFocus && wasExpanded;
 
     toggleButton.setAttribute("aria-expanded", String(isExpanded));
-    content.hidden = !isExpanded;
+    panel.hidden = !isExpanded;
 
     if (shouldRestoreFocus) {
         focusWithoutScroll(toggleButton);

@@ -28,7 +28,7 @@ const PRIVACY_HEADING_IDS = [
     "evolution"
 ];
 const EXPECTED_VISIBLE_HASHES = {
-    index: "a7169fe7c1c193fd086ba61e8e7151d51ef4cd2d89f3e61268bbd636f42ac96d",
+    index: "55b581c03f556abfbeab8ec99ccab7ed3b62a5f17036f560628fbc1a66dfe4b4",
     privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 
@@ -60,14 +60,14 @@ test("le titre visuel canonique des favoris n'est pas un heading", () => {
     assert.equal(title.attributes["aria-level"], undefined);
 });
 
-test("le panneau canonique conserve le nom accessible Villes enregistrees", () => {
+test("le panneau canonique conserve le nom accessible Acces rapide", () => {
     const panels = elementsWithAttribute(INDEX_DOCUMENT, "data-favorites-panel");
 
     assert.equal(panels.length, 1);
     const label = elementById(INDEX_DOCUMENT, panels[0].attributes["aria-labelledby"]);
     assert.equal(panels[0].tagName, "div");
-    assert.equal(panels[0].attributes.role, "group");
-    assert.equal(normalizeText(textContent(label)), "Villes enregistrées");
+    assert.equal(panels[0].attributes.role, "region");
+    assert.equal(normalizeText(textContent(label)), "Accès rapide");
 });
 
 test("header-actions n'est plus un element nav", () => {
@@ -77,14 +77,20 @@ test("header-actions n'est plus un element nav", () => {
     assert.equal(elementsByTag(actions, "a").length, 0);
 });
 
-test("header-actions est un groupe nomme contenant les deux boutons existants", () => {
+test("header-actions est un groupe nomme contenant les trois actions attendues", () => {
     const actions = elementByClass(INDEX_DOCUMENT, "header-actions");
     const buttons = elementsByTag(actions, "button");
 
     assert.equal(actions.attributes.role, "group");
     assert.equal(actions.attributes["aria-label"], "Actions principales");
-    assert.deepEqual(buttons.map((button) => button.attributes.id), ["geolocation-button", "favorite-button"]);
-    assert.equal(buttons[1].attributes["aria-pressed"], "false");
+    assert.deepEqual(buttons.map((button) => button.attributes.id), [
+        "quick-access-button",
+        "geolocation-button",
+        "favorite-button"
+    ]);
+    assert.equal(buttons[0].attributes["aria-controls"], "saved-cities-panel");
+    assert.equal(buttons[0].attributes["aria-expanded"], "false");
+    assert.equal(buttons[2].attributes["aria-pressed"], "false");
 });
 
 test("les deux vraies navigations de l'accueil sont conservees", () => {
@@ -201,10 +207,10 @@ test("la classe favorites-title reprend exactement le style du titre precedent",
     });
 });
 
-test("aucune regle CSS morte ne cible encore favorites-heading h2", () => {
+test("aucune regle CSS morte ne cible les anciennes variantes des favoris", () => {
     assert.doesNotMatch(`${COMPONENTS_SOURCE}\n${RESPONSIVE_SOURCE}`, /\.favorites-heading\s+h2/);
     assert.match(RESPONSIVE_SOURCE, /\.favorites-title\s*\{/);
-    assert.match(RESPONSIVE_SOURCE, /\.favorites-panel\[data-favorites-placement="desktop"\]\s+\.favorites-title\s*\{/);
+    assert.doesNotMatch(`${COMPONENTS_SOURCE}\n${RESPONSIVE_SOURCE}`, /data-favorites-placement|favorites-disclosure/);
 });
 
 function read(relativePath) {

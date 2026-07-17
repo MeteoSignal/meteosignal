@@ -82,7 +82,15 @@ test("les commandes tactiles principales disposent d une cible de 44 pixels", ()
 });
 
 test("les controles deja conformes conservent leurs dimensions existantes", () => {
-    assert.match(declarationsForRules(COMPONENT_RULES, ".favorites-disclosure"), /min-height:\s*2\.75rem\s*;/);
+    const quickAccessDeclarations = declarationsForRules(COMPONENT_RULES, ".quick-access-button");
+    assert.match(quickAccessDeclarations, /min-width:\s*2\.75rem\s*;/);
+    assert.match(quickAccessDeclarations, /min-height:\s*2\.75rem\s*;/);
+
+    const closeDeclarations = declarationsForRules(COMPONENT_RULES, ".favorites-close");
+    assert.match(closeDeclarations, /width:\s*2\.75rem\s*;/);
+    assert.match(closeDeclarations, /min-width:\s*2\.75rem\s*;/);
+    assert.match(closeDeclarations, /height:\s*2\.75rem\s*;/);
+
     assert.match(declarationsForRules(COMPONENT_RULES, ".favorite-select"), /min-height:\s*2\.75rem\s*;/);
 
     const removeDeclarations = declarationsForRules(COMPONENT_RULES, ".favorite-remove");

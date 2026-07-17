@@ -257,19 +257,32 @@ test("une liste de favoris vide ne porte pas une semantique de liste", () => {
     assert.equal(harness.list.children.length, 1);
     assert.equal(harness.list.children[0].tagName, "P");
     assert.equal(harness.list.children[0].getAttribute("role"), null);
-    assert.equal(harness.toggle.getAttribute("aria-label"), "Villes enregistrées, aucune ville");
+    assert.equal(harness.toggle.getAttribute("aria-label"), "Accès rapide, aucune ville enregistrée");
 });
 
 test("le nom accessible annonce une ou plusieurs villes sans dupliquer le compteur", () => {
     const singleHarness = createHarness({ favorites: [TOULOUSE] });
 
-    assert.equal(singleHarness.toggle.getAttribute("aria-label"), "Villes enregistrées, 1 ville");
+    assert.equal(singleHarness.toggle.getAttribute("aria-label"), "Accès rapide, 1 ville enregistrée");
     assert.doesNotMatch(singleHarness.toggle.getAttribute("aria-label"), /1\s+1/);
 
     const multipleHarness = createHarness({ favorites: [TOULOUSE, PARIS, LYON] });
 
-    assert.equal(multipleHarness.toggle.getAttribute("aria-label"), "Villes enregistrées, 3 villes");
+    assert.equal(multipleHarness.toggle.getAttribute("aria-label"), "Accès rapide, 3 villes enregistrées");
     assert.doesNotMatch(multipleHarness.toggle.getAttribute("aria-label"), /3\s+3/);
+});
+
+test("les volumes de validation 0, 2, 3, 20 et 100 utilisent toujours la liste canonique", () => {
+    for (const count of [0, 2, 3, 20, 100]) {
+        const favorites = Array.from({ length: count }, (_, index) => (
+            createLocation(`volume-${count}-${index}`, `Ville ${index + 1}`, 40 + index / 1000, 1)
+        ));
+        const harness = createHarness({ favorites });
+
+        assert.equal(harness.list.children.length, Math.max(1, count));
+        assert.equal(harness.list.getAttribute("role"), count === 0 ? null : "list");
+        assert.equal(harness.count.textContent, count > 1 ? `${count} villes` : `${count} ville`);
+    }
 });
 
 test("deux initialisations des favoris conservent un seul rendu et un seul ecouteur", async () => {
