@@ -28,7 +28,7 @@ const PRIVACY_HEADING_IDS = [
     "evolution"
 ];
 const EXPECTED_VISIBLE_HASHES = {
-    index: "8571adbac406859b11ac858bdd0f5a8fca8ec6e0f2d940c4b386a5f851312996",
+    index: "617822597d31a66a514d383d99f55240206faadc068bd461f39305de4f93b6a0",
     privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 
@@ -109,20 +109,18 @@ test("chaque vraie navigation contient des liens", () => {
     });
 });
 
-test("le footer distingue la version en preparation de la version publique", () => {
+test("le footer affiche la version publique finale", () => {
     const status = elementByClass(INDEX_DOCUMENT, "development-status");
     const text = normalizeText(textContent(status));
 
-    assert.match(text, /Développement en cours/);
-    assert.match(text, /Version en préparation : v1\.5\.0/);
-    assert.match(text, /Version publique : v1\.4\.2/);
+    assert.match(text, /Version : v1\.5\.0/);
     assert.match(text, /Build : 2026-07-17/);
     assert.match(text, /Dernière mise à jour : 17 juillet 2026/);
     assert.match(text, /MeteoSignal © 2026/);
     assert.equal((text.match(/v1\.5\.0/g) ?? []).length, 1);
-    assert.doesNotMatch(text, /immersive-dashboard-p6f/);
+    assert.doesNotMatch(text, /Développement en cours|Version en préparation|Version publique : v1\.4\.2|1\.5\.0-release/);
     assert.doesNotMatch(text, /14 juillet 2026|Version : --|Build : --|Dernière mise à jour : --/);
-    assert.doesNotMatch(INDEX_SOURCE, /id="project-status-(?:version|build|updated)"/);
+    assert.match(INDEX_SOURCE, /id="project-status-version"/);
 });
 
 test("confidentialite.html contient un seul H1", () => {

@@ -8,10 +8,37 @@ Le projet suit le versionnement sémantique.
 
 ## [Unreleased]
 
-### Documentation
+---
 
-- Spécification officielle de MeteoSignal v1.5.0 ajoutée pour cadrer la navigation unifiée, les scènes météo contextuelles, les budgets et les validations avant implémentation.
-- Feuille de route, tâches et statut Android/TWA actualisés sans modifier la version publique 1.4.2.
+## [1.5.0] - 2026-07-17
+
+### Navigation et villes enregistrées
+
+- Navigation des villes unifiée autour d'un panneau canonique unique, sans migration du stockage existant.
+- Accès rapide intégré au header avec ouverture, fermeture et restitution du focus accessibles.
+- Sélection et suppression des villes enregistrées préservées sur mobile, tablette et ordinateur.
+
+### Carte météo immersive
+
+- Sept scènes météo WebP ajoutées pour le ciel dégagé de jour et de nuit, les nuages, la pluie, l'orage, la neige et le brouillard.
+- France, Europe, ciel et lumière naturelle mieux mis en valeur grâce à un voile de contraste localisé derrière les textes.
+- Chargement atomique des scènes avec fallback CSS, protection contre les réponses obsolètes et respect du mouvement réduit.
+
+### Interface et accessibilité
+
+- Dashboard desktop optimisé sans réduire la largeur globale ni dégrader les cartes internes.
+- Responsive, cibles tactiles et textes longs sur mobile améliorés.
+- Lisibilité, focus clavier, rôles accessibles et comportement du panneau Accès rapide renforcés.
+
+### PWA et fiabilité
+
+- Mise à jour atomique du cache PWA avec rechargement réseau du précache, correspondance exacte des ressources et conservation du fonctionnement hors ligne.
+- Problème de ressources obsolètes dans les nouveaux onglets corrigé, avec rechargement unique après changement de contrôleur.
+- Révision technique finale alignée sur `1.5.0-release`.
+
+### Qualité
+
+- Suite automatisée portée à 351 tests réussis couvrant navigation, scènes, responsive, accessibilité et cohérence PWA.
 
 ---
 

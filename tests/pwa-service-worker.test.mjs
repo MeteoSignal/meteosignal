@@ -7,8 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SW_SOURCE = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-const DEPLOYMENT_REVISION = "1.4.2-immersive-dashboard-p6f";
-const LEGACY_DEPLOYMENT_MARKERS = ["immersive-dashboard-p6d", "w3c-feedback"];
+const DEPLOYMENT_REVISION = "1.5.0-release";
+const LEGACY_DEPLOYMENT_MARKERS = ["immersive-dashboard-p6d", "immersive-dashboard-p6f", "w3c-feedback"];
 const LEGACY_HERO_ASSETS = [
     "./assets/backgrounds/clear.jpg",
     "./assets/backgrounds/night.jpg"
@@ -131,7 +131,7 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
     assert.deepEqual(new Set(cacheBusterVersions), new Set([packageVersion]));
 });
 
-test("la revision p6f est unique dans tous les fichiers servis", () => {
+test("la revision de release est unique dans tous les fichiers servis", () => {
     const servedFiles = [
         path.join(ROOT, "index.html"),
         path.join(ROOT, "confidentialite.html"),
@@ -237,12 +237,12 @@ test("une navigation hors ligne inconnue sert index.html depuis le cache courant
 
 test("les ressources statiques respectent exactement la revision demandee", async () => {
     const cachedAsset = new Response("cache");
-    const p6fUrl = `https://example.test/app/app.js?v=${DEPLOYMENT_REVISION}`;
+    const releaseUrl = `https://example.test/app/app.js?v=${DEPLOYMENT_REVISION}`;
     const cachedHarness = createServiceWorkerHarness({
-        matches: new Map([[p6fUrl, cachedAsset]])
+        matches: new Map([[releaseUrl, cachedAsset]])
     });
     const cachedResult = await cachedHarness.api.handleStaticAsset({
-        url: p6fUrl
+        url: releaseUrl
     });
 
     assert.equal(cachedResult, cachedAsset);
@@ -250,7 +250,7 @@ test("les ressources statiques respectent exactement la revision demandee", asyn
 
     const oldRevisionUrl = "https://example.test/app/app.js?v=1.4.2-immersive-dashboard-p6d";
     const oldRevisionHarness = createServiceWorkerHarness({
-        matches: new Map([[p6fUrl, cachedAsset]]),
+        matches: new Map([[releaseUrl, cachedAsset]]),
         fetchImpl: async () => new Response("ancienne URL demandee au reseau")
     });
     const oldRevisionResult = await oldRevisionHarness.api.handleStaticAsset({ url: oldRevisionUrl });

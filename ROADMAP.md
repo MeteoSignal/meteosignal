@@ -54,20 +54,20 @@ Statut : terminée.
 
 ### Version 1.5.0 - Navigation unifiée et carte météo immersive
 
-Statut : en préparation.
+Statut : terminée, publication Web préparée.
 
 - [x] Spécification de la version.
-- [ ] Navigation unifiée.
-- [ ] Panneau canonique de villes enregistrées.
-- [ ] Fonds météo contextuels.
-- [ ] Distinction jour/nuit.
-- [ ] Optimisation desktop.
-- [ ] Responsive.
-- [ ] Accessibilité.
-- [ ] Performance.
-- [ ] Cache PWA dynamique et prudent.
-- [ ] Tests automatiques et manuels.
-- [ ] Publication Web, puis mise à jour Android après validation.
+- [x] Navigation unifiée.
+- [x] Panneau canonique de villes enregistrées.
+- [x] Fonds météo contextuels.
+- [x] Distinction jour/nuit.
+- [x] Optimisation desktop.
+- [x] Responsive.
+- [x] Accessibilité.
+- [x] Performance.
+- [x] Cache PWA dynamique et prudent.
+- [x] Tests automatiques et manuels.
+- [x] Publication Web préparée ; mise à jour Android maintenue dans une étape séparée après validation.
 
 ### Publication Reliability & Documentation
 

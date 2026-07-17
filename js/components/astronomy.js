@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.4.2-immersive-dashboard-p6f";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.5.0-release";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";

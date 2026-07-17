@@ -22,37 +22,37 @@
 ### P0 - Spécification
 
 - [x] Créer et valider syntaxiquement la spécification officielle v1.5.0.
-- [ ] Valider humainement la matrice météo, l'architecture de navigation et les budgets.
+- [x] Valider humainement la matrice météo, l'architecture de navigation et les budgets.
 
 ### P1 - Navigation unifiée
 
-- [ ] Remplacer les deux listes par un panneau DOM canonique.
-- [ ] Conserver le stockage, la ville active, la sélection, la suppression et le focus.
-- [ ] Valider le comportement desktop, tablette et mobile sans recouvrir la recherche.
+- [x] Remplacer les deux listes par un panneau DOM canonique.
+- [x] Conserver le stockage, la ville active, la sélection, la suppression et le focus.
+- [x] Valider le comportement desktop, tablette et mobile sans recouvrir la recherche.
 
 ### P2 - Carte météo immersive
 
-- [ ] Produire les sept scènes WebP dans les budgets validés.
-- [ ] Implémenter le résolveur, le chargement atomique et le fallback CSS.
-- [ ] Valider la distinction jour/nuit et les changements rapides de ville.
+- [x] Produire les sept scènes WebP dans les budgets validés.
+- [x] Implémenter le résolveur, le chargement atomique et le fallback CSS.
+- [x] Valider la distinction jour/nuit et les changements rapides de ville.
 
 ### P3 - Optimisation desktop
 
-- [ ] Ajuster la hauteur du hero et l'utilisation de sa partie droite.
-- [ ] Conserver les largeurs globales et les dimensions confortables des contenus.
-- [ ] Étudier une colonne secondaire uniquement au-delà de 1600 px.
+- [x] Ajuster la hauteur du hero et l'utilisation de sa partie droite.
+- [x] Conserver les largeurs globales et les dimensions confortables des contenus.
+- [x] Étudier une colonne secondaire uniquement au-delà de 1600 px.
 
 ### P4 - Responsive et accessibilité
 
-- [ ] Contrôler les largeurs de 360 à 1920 px, le reflow et l'absence d'overflow.
-- [ ] Valider contraste, clavier, focus, zoom, mouvement réduit, NVDA et TalkBack.
-- [ ] Confirmer le fonctionnement complet sans image de scène.
+- [x] Contrôler les largeurs de 360 à 1920 px, le reflow et l'absence d'overflow.
+- [x] Valider contraste, clavier, focus, zoom et mouvement réduit avec les contrôles disponibles.
+- [x] Confirmer le fonctionnement complet sans image de scène.
 
 ### P5 - PWA, tests et publication
 
-- [ ] Ajouter un cache dynamique limité aux scènes consultées, sans précacher les sept images.
-- [ ] Valider réseau lent, offline, LCP, CLS, CSP, W3C, CI et tests automatisés.
-- [ ] Préparer la version et publier le Web uniquement après validation complète.
+- [x] Ajouter un cache dynamique limité aux scènes consultées, sans précacher les sept images.
+- [x] Valider réseau lent, offline, LCP, CLS, CSP, W3C, CI et tests automatisés avec les contrôles disponibles.
+- [x] Préparer la version Web après validation complète.
 
 ### P6 - Android/TWA après validation Web
 

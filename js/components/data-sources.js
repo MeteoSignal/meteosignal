@@ -1,5 +1,5 @@
-import { formatTime } from "../core/formatters.js?v=1.4.2-immersive-dashboard-p6f";
-import { weatherProviderRegistry } from "../services/weather-provider.js?v=1.4.2-immersive-dashboard-p6f";
+import { formatTime } from "../core/formatters.js?v=1.5.0-release";
+import { weatherProviderRegistry } from "../services/weather-provider.js?v=1.5.0-release";
 
 const SOURCE_TARGETS = {
     current: "[data-source-current]",

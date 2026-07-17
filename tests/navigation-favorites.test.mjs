@@ -191,12 +191,12 @@ test("le rendu cible une seule liste et conserve le stockage historique", () => 
     assert.equal(count(STORAGE_SOURCE, "meteosignal.favorites"), 1);
 });
 
-test("la version publique reste 1.4.2", () => {
+test("la version publique est 1.5.0", () => {
     const packageJson = JSON.parse(read("package.json"));
     const configSource = read("config/config.js");
 
-    assert.equal(packageJson.version, "1.4.2");
-    assert.match(configSource, /version:\s*"1\.4\.2"/);
+    assert.equal(packageJson.version, "1.5.0");
+    assert.match(configSource, /version:\s*"1\.5\.0"/);
 });
 
 class FakeNode {

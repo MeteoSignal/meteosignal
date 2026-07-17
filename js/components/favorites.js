@@ -4,7 +4,7 @@ import {
     readFavorites,
     removeFavoriteLocation,
     toggleFavoriteLocation
-} from "../core/storage.js?v=1.4.2-immersive-dashboard-p6f";
+} from "../core/storage.js?v=1.5.0-release";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";

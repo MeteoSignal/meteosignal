@@ -1,15 +1,15 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.2-immersive-dashboard-p6f";
+import { APP_CONFIG } from "../../config/config.js?v=1.5.0-release";
 import {
     createSourceMetadata,
     createWeatherSources,
     markSourceAsFallback,
     WEATHER_SOURCE_BLOCKS
-} from "../core/provenance.js?v=1.4.2-immersive-dashboard-p6f";
-import { createWeatherError, createWeatherState } from "../core/state.js?v=1.4.2-immersive-dashboard-p6f";
+} from "../core/provenance.js?v=1.5.0-release";
+import { createWeatherError, createWeatherState } from "../core/state.js?v=1.5.0-release";
 import {
     WEATHER_CAPABILITIES,
     weatherProviderRegistry
-} from "./weather-provider.js?v=1.4.2-immersive-dashboard-p6f";
+} from "./weather-provider.js?v=1.5.0-release";
 
 const WEATHER_ENDPOINT_CAPABILITIES = Object.freeze([
     "current",
