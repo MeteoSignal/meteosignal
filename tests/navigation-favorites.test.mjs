@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import {
     initNavigation,
     setFavoritesPanelExpanded
-} from "../js/components/navigation.js?v=1.5.0-quick-access-test";
+} from "../js/components/navigation.js?v=1.5.1-quick-access-test";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const INDEX_SOURCE = read("index.html");
@@ -218,12 +218,12 @@ test("le rendu cible une seule liste et conserve le stockage historique", () => 
     assert.equal(count(STORAGE_SOURCE, "meteosignal.favorites"), 1);
 });
 
-test("la version publique est 1.5.0", () => {
+test("la version publique est 1.5.1", () => {
     const packageJson = JSON.parse(read("package.json"));
     const configSource = read("config/config.js");
 
-    assert.equal(packageJson.version, "1.5.0");
-    assert.match(configSource, /version:\s*"1\.5\.0"/);
+    assert.equal(packageJson.version, "1.5.1");
+    assert.match(configSource, /version:\s*"1\.5\.1"/);
 });
 
 class FakeNode {

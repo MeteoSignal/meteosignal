@@ -1,7 +1,7 @@
-import { formatTemperature, formatTime } from "../core/formatters.js?v=1.5.0-release";
-import { renderWeatherIcon } from "../core/weather-icons.js?v=1.5.0-release";
-import { resolveWeatherScene } from "../core/weather-scenes.js?v=1.5.0-release";
-import { updateHeroWeatherScene } from "./weather-scene-loader.js?v=1.5.0-release";
+import { formatTemperature, formatTime } from "../core/formatters.js?v=1.5.1-release";
+import { renderWeatherIcon } from "../core/weather-icons.js?v=1.5.1-release";
+import { resolveWeatherScene } from "../core/weather-scenes.js?v=1.5.1-release";
+import { updateHeroWeatherScene } from "./weather-scene-loader.js?v=1.5.1-release";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";

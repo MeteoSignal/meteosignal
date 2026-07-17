@@ -4,7 +4,7 @@
 
 MeteoSignal est une Progressive Web App météo moderne, rapide et responsive. Elle fournit une expérience complète sur smartphone, tablette, ordinateur et grand écran, avec une interface conçue pour rester simple à utiliser.
 
-**Version publique : 1.5.0**
+**Version publique : 1.5.1**
 
 ## Accès officiels
 
@@ -36,7 +36,7 @@ Les alertes MeteoSignal sont locales et indicatives. Elles ne remplacent pas une
 
 ## Données météo
 
-MeteoSignal dispose depuis la v1.4.0 d'une fondation multi-fournisseur fondée sur les capacités et la provenance des données. **Open-Meteo reste l'unique fournisseur actif en v1.5.0** pour les prévisions et la qualité de l'air.
+MeteoSignal dispose depuis la v1.4.0 d'une fondation multi-fournisseur fondée sur les capacités et la provenance des données. **Open-Meteo reste l'unique fournisseur actif en v1.5.1** pour les prévisions et la qualité de l'air.
 
 Les réponses Forecast, Air Quality et Geocoding utilisent le réseau sans être stockées dans le Cache Storage de la PWA. L'architecture permet d'ajouter d'autres fournisseurs sans modifier les composants ni fusionner silencieusement leurs valeurs.
 
