@@ -1,4 +1,4 @@
-import { createWeatherSources } from "./provenance.js?v=1.4.2-w3c-feedback";
+import { createWeatherSources } from "./provenance.js?v=1.5.0-release";
 
 export function createWeatherState(overrides = {}) {
     const state = {

@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { createWeatherDashboardLoader } from "../js/app.js?v=1.4.2-w3c-feedback-test";
+import { createWeatherDashboardLoader } from "../js/app.js?v=1.5.0-release-test";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const INDEX_SOURCE = read("index.html");
@@ -56,11 +56,11 @@ test("les grands conteneurs meteo ne sont plus des regions live", () => {
     });
 });
 
-test("les deux representations de favoris ne sont plus des regions live", () => {
+test("la representation canonique des favoris n'est pas une region live", () => {
     const tags = getTagsByDataAttribute(INDEX_SOURCE, "favorites-list");
 
-    assert.equal(tags.length, 2);
-    tags.forEach((tag) => assert.doesNotMatch(tag, /aria-live=/));
+    assert.equal(tags.length, 1);
+    assert.doesNotMatch(tags[0], /aria-live=/);
 });
 
 test("aucun composant n'ajoute un role status ou alert pendant un rendu", () => {
@@ -150,19 +150,19 @@ test("la notification PWA utilise uniquement le statut global", () => {
 test("l'etat HTML initial des favoris vides ne declare aucune liste", () => {
     const tags = getTagsByDataAttribute(INDEX_SOURCE, "favorites-list");
 
-    assert.equal(tags.length, 2);
-    tags.forEach((tag) => assert.doesNotMatch(tag, /role="list"/));
+    assert.equal(tags.length, 1);
+    assert.doesNotMatch(tags[0], /role="list"/);
     assert.equal(countOccurrences(INDEX_SOURCE, "Aucune ville enregistrée pour le moment."), 1);
-    assert.equal(countOccurrences(INDEX_SOURCE, "Aucune ville enregistr&eacute;e pour le moment."), 1);
 });
 
 test("les revisions JavaScript, CSS et PWA restent coherentes", () => {
-    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.2-w3c-feedback/);
-    assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.4\.2-w3c-feedback/);
-    assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.4\.2-w3c-feedback/);
+    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.5\.0-release/);
+    assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.5\.0-release/);
+    assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.5\.0-release/);
     assert.match(SW_SOURCE, /const CACHE_PREFIX = "meteosignal-static"/);
-    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{APP_VERSION\}-w3c-feedback`/);
-    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.2-w3c-feedback/);
+    assert.match(SW_SOURCE, /const DEPLOYMENT_REVISION = `\$\{APP_VERSION\}-release`/);
+    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{DEPLOYMENT_REVISION\}`/);
+    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.5\.0-release/);
     assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-/);
 });
 

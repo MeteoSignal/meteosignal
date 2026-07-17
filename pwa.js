@@ -13,7 +13,7 @@
         }
 
         updateNoticeShown = true;
-        const message = "Nouvelle version disponible. Elle sera appliquée à la prochaine ouverture.";
+        const message = "Mise à jour installée. MeteoSignal va s’actualiser.";
         const liveStatus = document.querySelector("#app-status");
         const visibleStatus = document.querySelector("#project-status-updated");
 

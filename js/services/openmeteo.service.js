@@ -1,9 +1,9 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.2-w3c-feedback";
-import { getMoonPhase } from "../core/moon.js?v=1.4.2-w3c-feedback";
-import { createSourceMetadata } from "../core/provenance.js?v=1.4.2-w3c-feedback";
-import { createWeatherState } from "../core/state.js?v=1.4.2-w3c-feedback";
-import { getWeatherCondition } from "../core/weather-codes.js?v=1.4.2-w3c-feedback";
-import { fetchAirQuality } from "./air-quality.service.js?v=1.4.2-w3c-feedback";
+import { APP_CONFIG } from "../../config/config.js?v=1.5.0-release";
+import { getMoonPhase } from "../core/moon.js?v=1.5.0-release";
+import { createSourceMetadata } from "../core/provenance.js?v=1.5.0-release";
+import { createWeatherState } from "../core/state.js?v=1.5.0-release";
+import { getWeatherCondition } from "../core/weather-codes.js?v=1.5.0-release";
+import { fetchAirQuality } from "./air-quality.service.js?v=1.5.0-release";
 
 const CURRENT_VARIABLES = [
     "temperature_2m",
