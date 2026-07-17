@@ -6,8 +6,8 @@ import {
     getNextSuggestionIndex,
     LOCATION_SEARCH_LIMIT_MESSAGE,
     validateLocationSearchQuery
-} from "../core/location-search.js?v=1.5.0-release";
-import { searchLocations } from "../services/geocoding.service.js?v=1.5.0-release";
+} from "../core/location-search.js?v=1.5.1-release";
+import { searchLocations } from "../services/geocoding.service.js?v=1.5.1-release";
 
 const SEARCH_FORM_SELECTOR = "[data-search-form]";
 const SEARCH_INPUT_SELECTOR = "#city-search";

@@ -243,7 +243,7 @@ const {
     getFavoriteFocusIndex,
     initFavorites,
     restoreFavoriteFocus
-} = await import("../js/components/favorites.js?v=1.5.0-release-test");
+} = await import("../js/components/favorites.js?v=1.5.1-release-test");
 
 const TOULOUSE = createLocation("toulouse", "Toulouse", 43.6047, 1.4442);
 const PARIS = createLocation("paris", "Paris", 48.8566, 2.3522);
@@ -569,9 +569,9 @@ test("la revision JavaScript invalide toute la chaine menant au composant", () =
     const indexSource = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
     const appSource = fs.readFileSync(path.join(ROOT, "js", "app.js"), "utf8");
 
-    assert.match(indexSource, /js\/app\.js\?v=1\.5\.0-release/);
-    assert.match(appSource, /components\/favorites\.js\?v=1\.5\.0-release/);
-    assert.match(appSource, /core\/storage\.js\?v=1\.5\.0-release/);
+    assert.match(indexSource, /js\/app\.js\?v=1\.5\.1-release/);
+    assert.match(appSource, /components\/favorites\.js\?v=1\.5\.1-release/);
+    assert.match(appSource, /core\/storage\.js\?v=1\.5\.1-release/);
     assert.doesNotMatch(indexSource, /css\/[^"']+\?v=1\.4\.1-/);
 });
 

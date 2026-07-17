@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { createWeatherDashboardLoader } from "../js/app.js?v=1.5.0-release-test";
+import { createWeatherDashboardLoader } from "../js/app.js?v=1.5.1-release-test";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const INDEX_SOURCE = read("index.html");
@@ -156,13 +156,13 @@ test("l'etat HTML initial des favoris vides ne declare aucune liste", () => {
 });
 
 test("les revisions JavaScript, CSS et PWA restent coherentes", () => {
-    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.5\.0-release/);
-    assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.5\.0-release/);
-    assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.5\.0-release/);
+    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.5\.1-release/);
+    assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.5\.1-release/);
+    assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.5\.1-release/);
     assert.match(SW_SOURCE, /const CACHE_PREFIX = "meteosignal-static"/);
     assert.match(SW_SOURCE, /const DEPLOYMENT_REVISION = `\$\{APP_VERSION\}-release`/);
     assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{DEPLOYMENT_REVISION\}`/);
-    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.5\.0-release/);
+    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.5\.1-release/);
     assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-/);
 });
 

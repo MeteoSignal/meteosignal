@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DOCUMENTS = ["index.html", "confidentialite.html"];
-const DEPLOYMENT_REVISION = "1.5.0-release";
+const DEPLOYMENT_REVISION = "1.5.1-release";
 const EXPECTED_CSP = new Map([
     ["default-src", ["'self'"]],
     ["base-uri", ["'self'"]],
@@ -195,8 +195,8 @@ test("les parcours confidentialite et la version publique restent inchanges", ()
     assert.match(privacy, /href="https:\/\/open-meteo\.com\/en\/terms"[^>]*rel="noopener noreferrer"/);
     assert.match(index, new RegExp(`js/app\\.js\\?v=${DEPLOYMENT_REVISION}`));
     assert.equal((`${index}\n${privacy}`.match(new RegExp(`js/privacy-return\\.js\\?v=${DEPLOYMENT_REVISION}`, "g")) ?? []).length, 2);
-    assert.equal(JSON.parse(read("package.json")).version, "1.5.0");
-    assert.match(read("config/config.js"), /version:\s*"1\.5\.0"/);
+    assert.equal(JSON.parse(read("package.json")).version, "1.5.1");
+    assert.match(read("config/config.js"), /version:\s*"1\.5\.1"/);
 });
 
 function read(relativePath) {

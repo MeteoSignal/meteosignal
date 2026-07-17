@@ -1,5 +1,5 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.5.0-release";
-import { openMeteoProvider } from "./openmeteo.service.js?v=1.5.0-release";
+import { APP_CONFIG } from "../../config/config.js?v=1.5.1-release";
+import { openMeteoProvider } from "./openmeteo.service.js?v=1.5.1-release";
 
 export const WEATHER_CAPABILITIES = Object.freeze([
     "current",

@@ -10,6 +10,20 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.5.1] - 2026-07-17
+
+### Responsive
+
+- Séparation mobile renforcée entre le header et la carte météo immersive.
+- Navigation basse étendue aux tablettes jusqu'à 1179 px, avec bascule desktop à 1180 px.
+- Ordre du header harmonisé : logo, recherche, Accès rapide, géolocalisation et favori.
+
+### PWA
+
+- Version publique alignée sur `1.5.1` et révision technique sur `1.5.1-release`.
+
+---
+
 ## [1.5.0] - 2026-07-17
 
 ### Navigation et villes enregistrées
