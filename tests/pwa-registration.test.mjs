@@ -29,7 +29,7 @@ test("un worker deja en attente est annonce une seule fois et sans rechargement"
     await harness.registration.emit("updatefound");
 
     assert.equal(harness.liveStatus.textContent, harness.visibleStatus.textContent);
-    assert.match(harness.liveStatus.textContent, /Nouvelle version disponible/);
+    assert.equal(harness.liveStatus.textContent, "Mise à jour installée. MeteoSignal va s’actualiser.");
     assert.equal(harness.liveStatus.assignments, 1);
     assert.equal(harness.visibleStatus.assignments, 1);
     assert.equal(harness.reloadCalls.length, 0);
@@ -51,7 +51,8 @@ test("une mise a jour nouvellement installee est annoncee puis ne recharge qu'un
     nextWorker.state = "installed";
     await nextWorker.emit("statechange");
 
-    assert.match(harness.liveStatus.textContent, /prochaine ouverture/);
+    assert.equal(harness.liveStatus.textContent, "Mise à jour installée. MeteoSignal va s’actualiser.");
+    assert.doesNotMatch(harness.liveStatus.textContent, /prochaine ouverture/);
     assert.equal(harness.liveStatus.assignments, 1);
 
     await harness.serviceWorker.emit("controllerchange");

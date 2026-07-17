@@ -1,4 +1,4 @@
-import { createWeatherSources } from "./provenance.js?v=1.4.2-w3c-feedback";
+import { createWeatherSources } from "./provenance.js?v=1.4.2-immersive-dashboard-p6f";
 
 export function createWeatherState(overrides = {}) {
     const state = {

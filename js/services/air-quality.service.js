@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.2-w3c-feedback";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.2-immersive-dashboard-p6f";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",

@@ -1,5 +1,5 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.2-w3c-feedback";
-import { openMeteoProvider } from "./openmeteo.service.js?v=1.4.2-w3c-feedback";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.2-immersive-dashboard-p6f";
+import { openMeteoProvider } from "./openmeteo.service.js?v=1.4.2-immersive-dashboard-p6f";
 
 export const WEATHER_CAPABILITIES = Object.freeze([
     "current",

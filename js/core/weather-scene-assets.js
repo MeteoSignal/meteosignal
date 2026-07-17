@@ -1,4 +1,4 @@
-import { WEATHER_SCENES } from "./weather-scenes.js?v=1.4.2-w3c-feedback";
+import { WEATHER_SCENES } from "./weather-scenes.js?v=1.4.2-immersive-dashboard-p6f";
 
 const SCENE_ASSET_PATHS = Object.freeze({
     [WEATHER_SCENES.CLEAR_DAY]: "../../assets/backgrounds/hero/hero-clear-day.webp",

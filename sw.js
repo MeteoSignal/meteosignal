@@ -1,6 +1,7 @@
 const APP_VERSION = "1.4.2";
 const CACHE_PREFIX = "meteosignal-static";
-const CACHE_VERSION = `v${APP_VERSION}-w3c-feedback`;
+const DEPLOYMENT_REVISION = `${APP_VERSION}-immersive-dashboard-p6f`;
+const CACHE_VERSION = `v${DEPLOYMENT_REVISION}`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 const WEATHER_API_HOSTS = new Set([
@@ -9,7 +10,7 @@ const WEATHER_API_HOSTS = new Set([
     "air-quality-api.open-meteo.com"
 ]);
 
-// One canonical URL per file. Versioned requests are matched with ignoreSearch.
+// One canonical path per file. Precache requests receive their runtime revision below.
 const ESSENTIAL_ASSETS = [
     "./index.html",
     "./pwa.js",
@@ -118,14 +119,14 @@ async function installAppShell() {
     const cache = await caches.open(STATIC_CACHE);
 
     try {
-        await cache.addAll(ESSENTIAL_ASSETS);
+        await cache.addAll(ESSENTIAL_ASSETS.map(createPrecacheRequest));
     } catch (error) {
         await caches.delete(STATIC_CACHE);
         throw error;
     }
 
     const optionalResults = await Promise.allSettled(
-        OPTIONAL_ASSETS.map((asset) => cache.add(asset))
+        OPTIONAL_ASSETS.map((asset) => cache.add(createPrecacheRequest(asset)))
     );
 
     optionalResults.forEach((result, index) => {
@@ -134,10 +135,8 @@ async function installAppShell() {
         }
     });
 
-    // Take control immediately only on the first installation. Updates stay waiting.
-    if (!self.registration.active) {
-        await self.skipWaiting();
-    }
+    // Promote only after the complete app shell has been cached.
+    await self.skipWaiting();
 }
 
 async function handleNavigation(request) {
@@ -146,6 +145,7 @@ async function handleNavigation(request) {
         return await fetch(request);
     } catch (error) {
         const cache = await caches.open(STATIC_CACHE);
+        // Navigation only: normalize a document query to the current cache generation.
         const cachedPage = await cache.match(request, { ignoreSearch: true });
 
         if (cachedPage) {
@@ -159,7 +159,7 @@ async function handleNavigation(request) {
 
 async function handleStaticAsset(request) {
     const cache = await caches.open(STATIC_CACHE);
-    const cachedResponse = await cache.match(request, { ignoreSearch: true });
+    const cachedResponse = await cache.match(request);
 
     if (cachedResponse) {
         return cachedResponse;
@@ -173,6 +173,18 @@ async function handleStaticAsset(request) {
             statusText: "Ressource indisponible hors ligne"
         });
     }
+}
+
+function createPrecacheRequest(asset) {
+    const url = new URL(asset, self.location.href);
+
+    if (asset.endsWith(".js") || asset.endsWith(".css")) {
+        url.searchParams.set("v", DEPLOYMENT_REVISION);
+    } else if (asset.endsWith(".svg")) {
+        url.searchParams.set("v", `v${DEPLOYMENT_REVISION}`);
+    }
+
+    return new Request(url.href, { cache: "reload" });
 }
 
 function isWeatherApiRequest(url) {

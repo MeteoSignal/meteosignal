@@ -1,4 +1,4 @@
-import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.4.2-w3c-feedback";
+import { formatDuration, formatPercent, formatTime } from "../core/formatters.js?v=1.4.2-immersive-dashboard-p6f";
 
 const ASTRONOMY_SELECTOR = "[data-astronomy]";
 const DEFAULT_MOON_ICON = "☾";

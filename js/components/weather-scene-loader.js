@@ -1,4 +1,4 @@
-import { resolveWeatherSceneAsset } from "../core/weather-scene-assets.js?v=1.4.2-w3c-feedback";
+import { resolveWeatherSceneAsset } from "../core/weather-scene-assets.js?v=1.4.2-immersive-dashboard-p6f";
 
 const SCENE_IMAGE_SELECTOR = "[data-weather-scene-image]";
 const HERO_MEDIA_SELECTOR = ".hero-media";

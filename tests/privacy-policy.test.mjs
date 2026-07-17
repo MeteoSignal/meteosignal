@@ -71,11 +71,11 @@ test("les douze titres, les deux retours et le module partage sont preserves", (
     assert.equal((PRIVACY_SOURCE.match(/<h2\b/g) ?? []).length, 12);
     assert.equal((PRIVACY_SOURCE.match(/data-privacy-return/g) ?? []).length, 2);
     assert.match(INDEX_SOURCE, /id="privacy-footer-link"[^>]*href="confidentialite\.html"/);
-    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.4\.2-w3c-feedback/);
+    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.4\.2-immersive-dashboard-p6f/);
 });
 
 test("la revision P1D-4 invalide les entrees sans perdre la chaine P1D-3", () => {
-    const deploymentRevision = "1\\.4\\.2-w3c-feedback";
+    const deploymentRevision = "1\\.4\\.2-immersive-dashboard-p6f";
     const apiRevision = deploymentRevision;
 
     assert.match(INDEX_SOURCE, new RegExp(`js/app\\.js\\?v=${deploymentRevision}`));
@@ -86,7 +86,7 @@ test("la revision P1D-4 invalide les entrees sans perdre la chaine P1D-3", () =>
     assert.match(ORCHESTRATOR_SOURCE, new RegExp(`weather-provider\\.js\\?v=${apiRevision}`));
     assert.match(PROVIDER_SOURCE, new RegExp(`openmeteo\\.service\\.js\\?v=${apiRevision}`));
     assert.match(FORECAST_SOURCE, new RegExp(`air-quality\\.service\\.js\\?v=${apiRevision}`));
-    assert.match(SW_SOURCE, /w3c-feedback/);
+    assert.match(SW_SOURCE, /immersive-dashboard-p6f/);
 });
 
 function read(relativePath) {

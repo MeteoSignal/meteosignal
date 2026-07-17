@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SW_SOURCE = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
+const DEPLOYMENT_REVISION = "1.4.2-immersive-dashboard-p6f";
+const LEGACY_DEPLOYMENT_MARKERS = ["immersive-dashboard-p6d", "w3c-feedback"];
 const LEGACY_HERO_ASSETS = [
     "./assets/backgrounds/clear.jpg",
     "./assets/backgrounds/night.jpg"
@@ -58,6 +60,25 @@ test("le precache contient une seule URL canonique par fichier local", () => {
     }
 });
 
+test("le precache utilise les cles versionnees exactes et force le rechargement HTTP", async () => {
+    const harness = createServiceWorkerHarness({ active: true });
+
+    await harness.api.installAppShell();
+
+    assert.equal(harness.addAllCalls.length, 1);
+    assert.equal(harness.addAllCalls[0].length, harness.api.ESSENTIAL_ASSETS.length);
+    assert.equal(harness.addCalls.length, harness.api.OPTIONAL_ASSETS.length);
+
+    harness.addAllCalls[0].forEach((request, index) => {
+        assert.equal(request.cache, "reload");
+        assert.equal(request.url, expectedPrecacheUrl(harness.api.ESSENTIAL_ASSETS[index]));
+    });
+    harness.addCalls.forEach((request, index) => {
+        assert.equal(request.cache, "reload");
+        assert.equal(request.url, expectedPrecacheUrl(harness.api.OPTIONAL_ASSETS[index]));
+    });
+});
+
 test("chaque import JavaScript local du socle reste disponible hors ligne", () => {
     const { api } = createServiceWorkerHarness();
     const essentialAssets = new Set(api.ESSENTIAL_ASSETS);
@@ -101,12 +122,38 @@ test("la version applicative, le cache et tous les cache-busters restent coheren
 
     assert.equal(api.APP_VERSION, packageVersion);
     assert.equal(configVersion, packageVersion);
-    assert.equal(api.CACHE_VERSION, "v1.4.2-w3c-feedback");
-    assert.match(indexSource, /src="js\/clock\.js\?v=1\.4\.2-w3c-feedback"/);
-    assert.match(indexSource, /src="js\/app\.js\?v=1\.4\.2-w3c-feedback"/);
+    assert.equal(api.DEPLOYMENT_REVISION, DEPLOYMENT_REVISION);
+    assert.equal(api.CACHE_VERSION, `v${DEPLOYMENT_REVISION}`);
+    assert.match(indexSource, new RegExp(`src="js/clock\\.js\\?v=${escapeRegExp(DEPLOYMENT_REVISION)}"`));
+    assert.match(indexSource, new RegExp(`src="js/app\\.js\\?v=${escapeRegExp(DEPLOYMENT_REVISION)}"`));
     assert.match(api.CACHE_VERSION, new RegExp(`^v${escapeRegExp(packageVersion)}(?:-|$)`));
     assert.ok(cacheBusterVersions.length > 0);
     assert.deepEqual(new Set(cacheBusterVersions), new Set([packageVersion]));
+});
+
+test("la revision p6f est unique dans tous les fichiers servis", () => {
+    const servedFiles = [
+        path.join(ROOT, "index.html"),
+        path.join(ROOT, "confidentialite.html"),
+        path.join(ROOT, "pwa.js"),
+        path.join(ROOT, "sw.js"),
+        ...listFiles(path.join(ROOT, "css"), (file) => file.endsWith(".css")),
+        ...listFiles(path.join(ROOT, "js"), (file) => file.endsWith(".js"))
+    ];
+    const servedSource = servedFiles.map((file) => fs.readFileSync(file, "utf8")).join("\n");
+
+    for (const marker of LEGACY_DEPLOYMENT_MARKERS) {
+        assert.doesNotMatch(servedSource, new RegExp(escapeRegExp(marker)), marker);
+    }
+
+    for (const file of listFiles(path.join(ROOT, "js"), (target) => target.endsWith(".js"))) {
+        const source = fs.readFileSync(file, "utf8");
+        for (const specifier of readStaticModuleSpecifiers(source).filter((value) => value.startsWith("."))) {
+            assert.equal(specifier.match(/\?v=([^#]+)/)?.[1], DEPLOYMENT_REVISION, `${file}: ${specifier}`);
+        }
+    }
+
+    assert.match(servedSource, new RegExp(escapeRegExp(DEPLOYMENT_REVISION)));
 });
 
 test("une ressource essentielle manquante annule proprement l'installation", async () => {
@@ -122,25 +169,29 @@ test("une ressource facultative manquante n'annule pas une premiere installation
     const missingAsset = "./manifest.json";
     const harness = createServiceWorkerHarness({
         active: false,
-        optionalErrors: new Map([[missingAsset, new Error("facultatif indisponible")]])
+        optionalErrors: new Map([[expectedPrecacheUrl(missingAsset), new Error("facultatif indisponible")]])
     });
 
     await harness.api.installAppShell();
 
     assert.equal(harness.addAllCalls.length, 1);
-    assert.deepEqual(harness.addAllCalls[0], [...harness.api.ESSENTIAL_ASSETS]);
+    assert.deepEqual(
+        Array.from(harness.addAllCalls[0], (request) => request.url),
+        Array.from(harness.api.ESSENTIAL_ASSETS, expectedPrecacheUrl)
+    );
     assert.equal(harness.addCalls.length, harness.api.OPTIONAL_ASSETS.length);
     assert.equal(harness.skipWaitingCalls.length, 1);
     assert.equal(harness.warnings.length, 1);
     assert.match(harness.warnings[0][0], /manifest\.json/);
 });
 
-test("une mise a jour installee reste en attente", async () => {
+test("une mise a jour complete prend le relais sans conserver les anciens onglets", async () => {
     const harness = createServiceWorkerHarness({ active: true });
 
     await harness.api.installAppShell();
 
-    assert.equal(harness.skipWaitingCalls.length, 0);
+    assert.equal(harness.skipWaitingCalls.length, 1);
+    assert.ok(harness.operations.indexOf("precache-essential-complete") < harness.operations.indexOf("skip-waiting"));
 });
 
 test("la navigation conserve les reponses HTTP et ne replie qu'en erreur reseau", async () => {
@@ -184,17 +235,28 @@ test("une navigation hors ligne inconnue sert index.html depuis le cache courant
     assert.deepEqual(harness.matchRequests, ["https://example.test/app/route", "./index.html"]);
 });
 
-test("les ressources statiques ignorent le cache-buster et preservent les 404 en ligne", async () => {
+test("les ressources statiques respectent exactement la revision demandee", async () => {
     const cachedAsset = new Response("cache");
+    const p6fUrl = `https://example.test/app/app.js?v=${DEPLOYMENT_REVISION}`;
     const cachedHarness = createServiceWorkerHarness({
-        matches: new Map([["https://example.test/app/app.js?v=1.4.1", cachedAsset]])
+        matches: new Map([[p6fUrl, cachedAsset]])
     });
     const cachedResult = await cachedHarness.api.handleStaticAsset({
-        url: "https://example.test/app/app.js?v=1.4.1"
+        url: p6fUrl
     });
 
     assert.equal(cachedResult, cachedAsset);
-    assert.equal(cachedHarness.matchOptions[0].ignoreSearch, true);
+    assert.equal(cachedHarness.matchOptions[0], undefined);
+
+    const oldRevisionUrl = "https://example.test/app/app.js?v=1.4.2-immersive-dashboard-p6d";
+    const oldRevisionHarness = createServiceWorkerHarness({
+        matches: new Map([[p6fUrl, cachedAsset]]),
+        fetchImpl: async () => new Response("ancienne URL demandee au reseau")
+    });
+    const oldRevisionResult = await oldRevisionHarness.api.handleStaticAsset({ url: oldRevisionUrl });
+
+    assert.equal(await oldRevisionResult.text(), "ancienne URL demandee au reseau");
+    assert.deepEqual(oldRevisionHarness.matchRequests, [oldRevisionUrl]);
 
     const online404 = new Response("absent", { status: 404 });
     const onlineHarness = createServiceWorkerHarness({ fetchImpl: async () => online404 });
@@ -205,6 +267,12 @@ test("les ressources statiques ignorent le cache-buster et preservent les 404 en
     });
     const offlineResult = await offlineHarness.api.handleStaticAsset({ url: "https://example.test/absent.js" });
     assert.equal(offlineResult.status, 504);
+    assert.equal((SW_SOURCE.match(/ignoreSearch:\s*true/g) ?? []).length, 1);
+    assert.match(SW_SOURCE, /Navigation only:[^\n]+\n\s*const cachedPage = await cache\.match\(request, \{ ignoreSearch: true \}\);/);
+});
+
+test("le service worker ne supprime jamais les favoris ni le stockage local", () => {
+    assert.doesNotMatch(SW_SOURCE, /localStorage|sessionStorage|meteosignal\.favorites|indexedDB/);
 });
 
 test("les trois familles d'appels Open-Meteo restent network-only et hors Cache Storage", async () => {
@@ -297,6 +365,7 @@ function createServiceWorkerHarness({
     const events = new Map();
     const addAllCalls = [];
     const addCalls = [];
+    const operations = [];
     const deletedCaches = [];
     const skipWaitingCalls = [];
     const claimCalls = [];
@@ -310,11 +379,12 @@ function createServiceWorkerHarness({
             if (essentialError) {
                 throw essentialError;
             }
+            operations.push("precache-essential-complete");
         },
         async add(asset) {
             addCalls.push(asset);
-            if (optionalErrors.has(asset)) {
-                throw optionalErrors.get(asset);
+            if (optionalErrors.has(asset.url)) {
+                throw optionalErrors.get(asset.url);
             }
         },
         async match(request, options) {
@@ -330,13 +400,17 @@ function createServiceWorkerHarness({
         async keys() { return cacheNames; }
     };
     const self = {
-        location: { origin: "https://example.test" },
+        location: { origin: "https://example.test", href: "https://example.test/sw.js" },
         registration: { active: active ? {} : null },
         clients: { async claim() { claimCalls.push(true); } },
         addEventListener(type, listener) { events.set(type, listener); },
-        async skipWaiting() { skipWaitingCalls.push(true); }
+        async skipWaiting() {
+            operations.push("skip-waiting");
+            skipWaitingCalls.push(true);
+        }
     };
     const context = vm.createContext({
+        Request,
         URL,
         Response,
         Set,
@@ -346,13 +420,14 @@ function createServiceWorkerHarness({
         self,
         console: { warn: (...args) => warnings.push(args) }
     });
-    vm.runInContext(`${SW_SOURCE}\n;globalThis.__swTest = {\n        APP_VERSION, CACHE_VERSION, STATIC_CACHE, ESSENTIAL_ASSETS, OPTIONAL_ASSETS,\n        installAppShell, handleNavigation, handleStaticAsset, isWeatherApiRequest\n    };`, context);
+    vm.runInContext(`${SW_SOURCE}\n;globalThis.__swTest = {\n        APP_VERSION, DEPLOYMENT_REVISION, CACHE_VERSION, STATIC_CACHE, ESSENTIAL_ASSETS, OPTIONAL_ASSETS,\n        installAppShell, handleNavigation, handleStaticAsset, createPrecacheRequest, isWeatherApiRequest\n    };`, context);
 
     return {
         api: context.__swTest,
         events,
         addAllCalls,
         addCalls,
+        operations,
         deletedCaches,
         skipWaitingCalls,
         claimCalls,
@@ -372,6 +447,18 @@ function listFiles(directory, predicate) {
 
 function escapeRegExp(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function expectedPrecacheUrl(asset) {
+    const url = new URL(asset, "https://example.test/sw.js");
+
+    if (asset.endsWith(".js") || asset.endsWith(".css")) {
+        url.searchParams.set("v", DEPLOYMENT_REVISION);
+    } else if (asset.endsWith(".svg")) {
+        url.searchParams.set("v", `v${DEPLOYMENT_REVISION}`);
+    }
+
+    return url.href;
 }
 
 function readStaticModuleSpecifiers(source) {

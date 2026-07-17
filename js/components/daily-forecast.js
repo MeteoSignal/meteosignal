@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatTemperature,
     formatSpeed
-} from "../core/formatters.js?v=1.4.2-w3c-feedback";
+} from "../core/formatters.js?v=1.4.2-immersive-dashboard-p6f";
 
 const DAILY_SELECTOR = "[data-daily-forecast]";
 const DAILY_LIMIT = 7;

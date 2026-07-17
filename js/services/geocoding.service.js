@@ -1,9 +1,9 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.4.2-w3c-feedback";
+import { APP_CONFIG } from "../../config/config.js?v=1.4.2-immersive-dashboard-p6f";
 import {
     createLocationSearchPlan,
     rankLocationResults,
     shouldRequestSupplemental
-} from "../core/location-search.js?v=1.4.2-w3c-feedback";
+} from "../core/location-search.js?v=1.4.2-immersive-dashboard-p6f";
 
 export const GEOCODING_TIMEOUT_MS = 8000;
 

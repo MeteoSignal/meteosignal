@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { createWeatherDashboardLoader } from "../js/app.js?v=1.4.2-w3c-feedback-test";
+import { createWeatherDashboardLoader } from "../js/app.js?v=1.4.2-immersive-dashboard-p6f-test";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const INDEX_SOURCE = read("index.html");
@@ -156,12 +156,13 @@ test("l'etat HTML initial des favoris vides ne declare aucune liste", () => {
 });
 
 test("les revisions JavaScript, CSS et PWA restent coherentes", () => {
-    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.2-w3c-feedback/);
-    assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.4\.2-w3c-feedback/);
-    assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.4\.2-w3c-feedback/);
+    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.4\.2-immersive-dashboard-p6f/);
+    assert.match(APP_SOURCE, /components\/favorites\.js\?v=1\.4\.2-immersive-dashboard-p6f/);
+    assert.match(APP_SOURCE, /components\/hourly-forecast\.js\?v=1\.4\.2-immersive-dashboard-p6f/);
     assert.match(SW_SOURCE, /const CACHE_PREFIX = "meteosignal-static"/);
-    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{APP_VERSION\}-w3c-feedback`/);
-    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.2-w3c-feedback/);
+    assert.match(SW_SOURCE, /const DEPLOYMENT_REVISION = `\$\{APP_VERSION\}-immersive-dashboard-p6f`/);
+    assert.match(SW_SOURCE, /const CACHE_VERSION = `v\$\{DEPLOYMENT_REVISION\}`/);
+    assert.match(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.2-immersive-dashboard-p6f/);
     assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-/);
 });
 

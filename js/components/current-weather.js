@@ -1,7 +1,7 @@
-import { formatTemperature, formatTime } from "../core/formatters.js?v=1.4.2-w3c-feedback";
-import { renderWeatherIcon } from "../core/weather-icons.js?v=1.4.2-w3c-feedback";
-import { resolveWeatherScene } from "../core/weather-scenes.js?v=1.4.2-w3c-feedback";
-import { updateHeroWeatherScene } from "./weather-scene-loader.js?v=1.4.2-w3c-feedback";
+import { formatTemperature, formatTime } from "../core/formatters.js?v=1.4.2-immersive-dashboard-p6f";
+import { renderWeatherIcon } from "../core/weather-icons.js?v=1.4.2-immersive-dashboard-p6f";
+import { resolveWeatherScene } from "../core/weather-scenes.js?v=1.4.2-immersive-dashboard-p6f";
+import { updateHeroWeatherScene } from "./weather-scene-loader.js?v=1.4.2-immersive-dashboard-p6f";
 
 const HERO_SELECTOR = "[data-weather-hero]";
 const DEFAULT_TONE = "unknown";
