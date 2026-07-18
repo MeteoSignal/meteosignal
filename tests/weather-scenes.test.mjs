@@ -180,9 +180,10 @@ test("plusieurs rendus successifs conservent uniquement le dernier etat", () => 
     assertHeroState(harness.hero, "error", "unknown", "default", "false");
 });
 
-test("le HTML initialise une scene default unique sans changer le contrat du hero", () => {
+test("le HTML initialise une scene default unique avec une image de fallback valide", () => {
     const source = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
     const heroTags = source.match(/<section[^>]+data-weather-hero[^>]*>/g) ?? [];
+    const sceneImageTags = source.match(/<img[^>]+data-weather-scene-image[^>]*>/g) ?? [];
 
     assert.equal(heroTags.length, 1);
     assert.match(heroTags[0], /data-weather-state="loading"/);
@@ -190,9 +191,11 @@ test("le HTML initialise une scene default unique sans changer le contrat du her
     assert.match(heroTags[0], /data-weather-scene="default"/);
     assert.match(heroTags[0], /data-weather-scene-status="fallback"/);
     assert.equal((source.match(/data-weather-scene=/g) ?? []).length, 1);
-    assert.equal((source.match(/data-weather-scene-image/g) ?? []).length, 1);
-    assert.match(source, /data-weather-scene-image\s+alt=""\s+aria-hidden="true"\s+decoding="async"/);
-    assert.doesNotMatch(source, /data-weather-scene-image[^>]+\ssrc=/);
+    assert.equal(sceneImageTags.length, 1);
+    assert.match(sceneImageTags[0], /src="assets\/backgrounds\/meteosignal-lightning-bg\.webp"/);
+    assert.match(sceneImageTags[0], /alt=""/);
+    assert.match(sceneImageTags[0], /aria-hidden="true"/);
+    assert.match(sceneImageTags[0], /decoding="async"/);
 });
 
 function createWeather(code, isDay) {

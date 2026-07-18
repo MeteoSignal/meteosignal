@@ -1,9 +1,9 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.5.1-release";
+import { APP_CONFIG } from "../../config/config.js?v=1.5.2-release";
 import {
     createLocationSearchPlan,
     rankLocationResults,
     shouldRequestSupplemental
-} from "../core/location-search.js?v=1.5.1-release";
+} from "../core/location-search.js?v=1.5.2-release";
 
 export const GEOCODING_TIMEOUT_MS = 8000;
 

@@ -17,10 +17,10 @@ const PROVIDER_SOURCE = read("js/services/weather-provider.js");
 const ORCHESTRATOR_SOURCE = read("js/services/weather-orchestrator.service.js");
 const SW_SOURCE = read("sw.js");
 
-test("la politique conserve sa date et la version publique est 1.5.1", () => {
+test("la politique conserve sa date et la version publique est 1.5.2", () => {
     assert.match(PRIVACY_TEXT, /Dernière mise à jour : 14 juillet 2026/);
-    assert.equal(JSON.parse(read("package.json")).version, "1.5.1");
-    assert.match(read("config/config.js"), /version:\s*"1\.5\.1"/);
+    assert.equal(JSON.parse(read("package.json")).version, "1.5.2");
+    assert.match(read("config/config.js"), /version:\s*"1\.5\.2"/);
 });
 
 test("la recherche est decrite sans historique applicatif ni terme dans l'URL de secours", () => {
@@ -71,11 +71,11 @@ test("les douze titres, les deux retours et le module partage sont preserves", (
     assert.equal((PRIVACY_SOURCE.match(/<h2\b/g) ?? []).length, 12);
     assert.equal((PRIVACY_SOURCE.match(/data-privacy-return/g) ?? []).length, 2);
     assert.match(INDEX_SOURCE, /id="privacy-footer-link"[^>]*href="confidentialite\.html"/);
-    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.5\.1-release/);
+    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.5\.2-release/);
 });
 
 test("la revision de release invalide les entrees sans perdre la chaine applicative", () => {
-    const deploymentRevision = "1\\.5\\.1-release";
+    const deploymentRevision = "1\\.5\\.2-release";
     const apiRevision = deploymentRevision;
 
     assert.match(INDEX_SOURCE, new RegExp(`js/app\\.js\\?v=${deploymentRevision}`));

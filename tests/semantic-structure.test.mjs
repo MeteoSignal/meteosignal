@@ -28,7 +28,7 @@ const PRIVACY_HEADING_IDS = [
     "evolution"
 ];
 const EXPECTED_VISIBLE_HASHES = {
-    index: "f3901ae9f7c0648f43007af1817e5b948c6359ab89c0caf22db465dad7808fa7",
+    index: "303fc7fd411c250b68d5d0c0dd6cbe61650569a0e2f181a37104867b95076fa3",
     privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 
@@ -113,12 +113,12 @@ test("le footer affiche la version publique finale", () => {
     const status = elementByClass(INDEX_DOCUMENT, "development-status");
     const text = normalizeText(textContent(status));
 
-    assert.match(text, /Version : v1\.5\.1/);
-    assert.match(text, /Build : 2026-07-17/);
-    assert.match(text, /Dernière mise à jour : 17 juillet 2026/);
+    assert.match(text, /Version : v1\.5\.2/);
+    assert.match(text, /Build : 2026-07-18/);
+    assert.match(text, /Dernière mise à jour : 18 juillet 2026/);
     assert.match(text, /MeteoSignal © 2026/);
-    assert.equal((text.match(/v1\.5\.1/g) ?? []).length, 1);
-    assert.doesNotMatch(text, /Développement en cours|Version en préparation|Version publique : v1\.4\.2|1\.5\.1-release/);
+    assert.equal((text.match(/v1\.5\.2/g) ?? []).length, 1);
+    assert.doesNotMatch(text, /Développement en cours|Version en préparation|Version publique : v1\.4\.2|1\.5\.2-release/);
     assert.doesNotMatch(text, /14 juillet 2026|Version : --|Build : --|Dernière mise à jour : --/);
     assert.match(INDEX_SOURCE, /id="project-status-version"/);
 });
@@ -198,6 +198,18 @@ test("les deux documents ont une structure fermee et des identifiants uniques", 
         assert.equal(new Set(ids).size, ids.length);
         assert.equal(elementsByTag(document, "html").length, 1);
         assert.equal(elementsByTag(document, "body").length, 1);
+    });
+});
+
+test("toutes les images servies possedent une source valide", () => {
+    [INDEX_DOCUMENT, PRIVACY_DOCUMENT].forEach((document) => {
+        elementsByTag(document, "img").forEach((image) => {
+            const source = image.attributes.src?.trim();
+            const sourceSet = image.attributes.srcset?.trim();
+
+            assert.ok(source || sourceSet, "Une balise img doit posseder src ou srcset.");
+            assert.notEqual(source, "#", "Une balise img ne peut pas utiliser src=\"#\".");
+        });
     });
 });
 

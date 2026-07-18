@@ -10,6 +10,22 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.5.2] - 2026-07-18
+
+### Conformité et qualité
+
+- Correction de conformité W3C pour l'image décorative de scène météo, désormais livrée avec un attribut `src` valide.
+- Ajout du fond MeteoSignal existant comme fallback HTML initial, sans créer de nouvel asset.
+- Maintien du préchargement, du décodage et du remplacement atomique des scènes selon la météo.
+- Renforcement des tests de structure sémantique afin que toute balise `<img>` servie possède `src` ou `srcset`.
+- Aucun changement visuel ou fonctionnel attendu.
+
+### PWA
+
+- Version publique alignée sur `1.5.2` et révision technique sur `1.5.2-release`.
+
+---
+
 ## [1.5.1] - 2026-07-17
 
 ### Responsive
