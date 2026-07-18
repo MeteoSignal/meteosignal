@@ -8,15 +8,17 @@ Le projet est conçu comme un véritable produit logiciel : simple à utiliser, 
 
 ## État actuel
 
-MeteoSignal est publié en version **1.5.1**. Le produit propose la météo actuelle, les prévisions horaires sur 72 heures, les prévisions sur 7 jours, la recherche géographique, la géolocalisation, les favoris, l'astronomie, la qualité de l'air et des alertes locales indicatives.
+MeteoSignal est publié en version **1.5.2**. Le produit propose la météo actuelle, les prévisions horaires sur 72 heures, les prévisions sur 7 jours, la recherche géographique, la géolocalisation, les favoris, l'astronomie, la qualité de l'air et des alertes locales indicatives.
 
-La v1.4.0 a introduit une fondation multi-fournisseur avec registre par capacités, orchestration et provenance des données. Open-Meteo reste l'unique fournisseur actif en v1.5.1 ; aucun mélange automatique de données entre fournisseurs n'est réalisé.
+La v1.4.0 a introduit une fondation multi-fournisseur avec registre par capacités, orchestration et provenance des données. Open-Meteo reste l'unique fournisseur actif en v1.5.2 ; aucun mélange automatique de données entre fournisseurs n'est réalisé.
 
 Au 14 juillet 2026, la v1.4.2 officialise les corrections du socle v1.4.1 audité de bout en bout. Les protections suivantes sont intégrées et testées : données météo normalisées, appels annulables sans cache applicatif, stockage local validé, accessibilité structurelle et clavier, PWA statique versionnée, CSP, politique de référent, CI en lecture seule et association Digital Asset Links avec les certificats local et Google Play.
 
 MeteoSignal Android/TWA v1.4.2 (`versionCode 2`) a été acceptée sur la piste de test fermé Google Play. Cette validation ne signifie pas encore que l'application est disponible publiquement en production. Le test physique de la version distribuée, la demande d'accès à la production et la cohérence de la fiche « Sécurité des données » restent suivis séparément dans le [TODO](TODO.md).
 
 La version 1.5.0 unifie la navigation des villes, rend la carte météo principale immersive avec sept scènes contextuelles et optimise l'utilisation du desktop sans fragiliser le socle Web, PWA ou TWA. Sa [spécification officielle](docs/v1.5.0-specification.md) conserve le périmètre et les critères de validation appliqués.
+
+La v1.5.1 a publié les corrections responsive du header et de la navigation tablette. La v1.5.2 est une publication corrective de conformité W3C : l'image décorative de scène possède désormais un fallback HTML valide, sans modifier le chargement atomique des scènes ni le rendu attendu.
 
 ## Référence officielle
 
@@ -60,7 +62,7 @@ Une fonctionnalité est ajoutée uniquement si elle améliore clairement l'expé
 
 ## Technologies
 
-Socle actuel en v1.5.1 :
+Socle actuel en v1.5.2 :
 
 - HTML5 ;
 - CSS3 ;
@@ -91,7 +93,7 @@ La version 1.0 a établi une expérience complète, stable et simple :
 
 ## Évolutions futures
 
-Les fonctionnalités suivantes restent prévues au-delà de la v1.5.1 :
+Les fonctionnalités suivantes restent prévues au-delà de la v1.5.2 :
 
 - mode Expert ;
 - radar météo ;

@@ -4,7 +4,7 @@ import {
     readFavorites,
     removeFavoriteLocation,
     toggleFavoriteLocation
-} from "../core/storage.js?v=1.5.1-release";
+} from "../core/storage.js?v=1.5.2-release";
 
 const FAVORITE_BUTTON_SELECTOR = "#favorite-button";
 const FAVORITES_LIST_SELECTOR = "[data-favorites-list]";

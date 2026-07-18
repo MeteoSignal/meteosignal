@@ -1,5 +1,5 @@
 const WEATHER_ICON_BASE_PATH = "assets/weather-icons/conditions/";
-const WEATHER_ICON_VERSION = "v1.5.1-release";
+const WEATHER_ICON_VERSION = "v1.5.2-release";
 
 const WEATHER_ICONS = new Map([
     ["clear-day", icon("clear-day.svg", "Ciel degage")],

@@ -54,15 +54,31 @@
 - [x] Valider réseau lent, offline, LCP, CLS, CSP, W3C, CI et tests automatisés avec les contrôles disponibles.
 - [x] Préparer la version Web après validation complète.
 
-### P6 - Android/TWA après validation Web
+## Version 1.5.1 - Correctif responsive publié
 
-- [ ] Préparer une mise à jour Android/TWA seulement après publication et validation Web.
-- [ ] Vérifier l'installation distribuée, Digital Asset Links et l'absence de barre navigateur.
+- [x] Corriger la séparation mobile entre le header et la carte météo immersive.
+- [x] Étendre la navigation basse aux tablettes jusqu'à 1179 px.
+- [x] Publier la version Web avec la révision `1.5.1-release`.
 
-## Distribution Android et validations externes
+## Version 1.5.2 - Correctif de conformité W3C
 
+- [x] Ajouter une source de fallback HTML valide à l'image décorative de scène météo.
+- [x] Conserver `alt=""`, `aria-hidden="true"` et le remplacement atomique par JavaScript.
+- [x] Vérifier le chemin local, la CSP et la présence de l'asset dans le cache du service worker.
+- [x] Ajouter un test générique imposant `src` ou `srcset` à toutes les balises `<img>` servies.
+- [x] Aligner la version publique et la révision de déploiement sur `1.5.2-release`.
+- [x] Valider les tests ciblés et la suite automatisée complète.
+
+## Widgets Android - travaux futurs
+
+- [ ] Concevoir et planifier les widgets Android dans une version fonctionnelle dédiée.
+- [ ] Définir les données, fréquences de rafraîchissement et contraintes énergétiques avant implémentation.
+
+## Publication Play Store et distribution Android/TWA
+
+- [ ] Préparer une mise à jour Android/TWA séparément de la publication Web v1.5.2.
 - [x] Android/TWA v1.4.2 (`versionName 1.4.2`, `versionCode 2`) acceptée sur la piste de test fermé Google Play.
-- [ ] Installer la version distribuée par Google Play et confirmer que la TWA s'ouvre sans barre de navigateur.
+- [ ] Installer la version distribuée par Google Play et confirmer Digital Asset Links ainsi que l'absence de barre navigateur.
 - [ ] Demander l'accès à la production séparément lorsque les conditions sont réunies.
 - [ ] Vérifier une dernière fois, puis maintenir cohérente, la fiche « Sécurité des données » dans Play Console.
 

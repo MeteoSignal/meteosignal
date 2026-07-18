@@ -54,7 +54,7 @@ Statut : terminée.
 
 ### Version 1.5.0 - Navigation unifiée et carte météo immersive
 
-Statut : terminée, publication Web préparée.
+Statut : terminée et publiée.
 
 - [x] Spécification de la version.
 - [x] Navigation unifiée.
@@ -67,7 +67,26 @@ Statut : terminée, publication Web préparée.
 - [x] Performance.
 - [x] Cache PWA dynamique et prudent.
 - [x] Tests automatiques et manuels.
-- [x] Publication Web préparée ; mise à jour Android maintenue dans une étape séparée après validation.
+- [x] Publication Web réalisée ; mise à jour Android maintenue dans une étape séparée après validation.
+
+### Version 1.5.1 - Correctif responsive
+
+Statut : terminée et publiée.
+
+- [x] Séparation mobile renforcée entre le header et la carte météo immersive.
+- [x] Navigation basse étendue aux tablettes jusqu'à 1179 px.
+- [x] Bascule desktop harmonisée à partir de 1180 px.
+- [x] Version Web et cache PWA publiés avec la révision `1.5.1-release`.
+
+### Version 1.5.2 - Correctif de conformité W3C
+
+Statut : version corrective terminée, publication préparée.
+
+- [x] Ajouter un `src` de fallback valide à l'image décorative de scène météo.
+- [x] Conserver le chargement atomique et le remplacement dynamique des scènes.
+- [x] Garantir par test que toutes les balises `<img>` servies possèdent `src` ou `srcset`.
+- [x] Aligner la version Web et le cache PWA sur `1.5.2-release`.
+- [x] Valider la suite automatisée complète sans changement visuel ou fonctionnel attendu.
 
 ### Publication Reliability & Documentation
 
@@ -87,7 +106,11 @@ Statut : clôture technique validée avec réserves de validation physique.
 
 Les phases P0 à P1E ont couvert l'exactitude du modèle météo, la PWA, les performances, l'accessibilité, la sécurité, la confidentialité, la CI et Android/TWA. Le [rapport officiel](docs/audit-final-v1.4.1.md) distingue les contrôles automatiques, les contrôles publics et les essais restant à réaliser sur appareils ou services externes.
 
-## Publication et validations externes ouvertes
+## Widgets Android futurs
+
+Les widgets Android restent un chantier fonctionnel futur, indépendant de la publication corrective Web v1.5.2 et de la distribution de la TWA sur Google Play.
+
+## Publication Play Store et validations externes ouvertes
 
 MeteoSignal Android/TWA v1.4.2, `versionName 1.4.2` et `versionCode 2`, a été acceptée sur la piste de test fermé Google Play. Cette acceptation reste distincte d'une publication publique en production.
 

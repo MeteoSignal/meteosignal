@@ -1,5 +1,5 @@
-import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.5.1-release";
-import { createWeatherIconElement } from "../core/weather-icons.js?v=1.5.1-release";
+import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.5.2-release";
+import { createWeatherIconElement } from "../core/weather-icons.js?v=1.5.2-release";
 
 const HOURLY_SELECTOR = "[data-hourly-forecast]";
 const HOURLY_RANGE_SELECTOR = "button[data-hourly-range]";
