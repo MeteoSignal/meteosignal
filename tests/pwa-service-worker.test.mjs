@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SW_SOURCE = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-const DEPLOYMENT_REVISION = "1.5.2-release";
+const DEPLOYMENT_REVISION = "1.5.2-location-sync";
 const LEGACY_DEPLOYMENT_MARKERS = ["immersive-dashboard-p6d", "immersive-dashboard-p6f", "w3c-feedback"];
 const LEGACY_HERO_ASSETS = [
     "./assets/backgrounds/clear.jpg",
@@ -28,9 +28,9 @@ test("le precache contient une seule URL canonique par fichier local", () => {
     const assets = [...api.ESSENTIAL_ASSETS, ...api.OPTIONAL_ASSETS];
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
 
-    assert.equal(api.ESSENTIAL_ASSETS.length, 39);
+    assert.equal(api.ESSENTIAL_ASSETS.length, 40);
     assert.equal(api.OPTIONAL_ASSETS.length, 18);
-    assert.equal(assets.length, 57);
+    assert.equal(assets.length, 58);
     assert.equal(new Set(assets).size, assets.length);
     assert.equal(assets.some((asset) => asset.includes("open-meteo.com")), false);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.webp"), true);

@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatPressure,
     formatSpeed
-} from "../core/formatters.js?v=1.5.2-release";
+} from "../core/formatters.js?v=1.5.2-location-sync";
 
 const WEATHER_CARDS_SELECTOR = "[data-weather-cards]";
 

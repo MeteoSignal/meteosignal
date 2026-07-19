@@ -71,11 +71,11 @@ test("les douze titres, les deux retours et le module partage sont preserves", (
     assert.equal((PRIVACY_SOURCE.match(/<h2\b/g) ?? []).length, 12);
     assert.equal((PRIVACY_SOURCE.match(/data-privacy-return/g) ?? []).length, 2);
     assert.match(INDEX_SOURCE, /id="privacy-footer-link"[^>]*href="confidentialite\.html"/);
-    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.5\.2-release/);
+    assert.match(PRIVACY_SOURCE, /js\/privacy-return\.js\?v=1\.5\.2-location-sync/);
 });
 
 test("la revision de release invalide les entrees sans perdre la chaine applicative", () => {
-    const deploymentRevision = "1\\.5\\.2-release";
+    const deploymentRevision = "1\\.5\\.2-location-sync";
     const apiRevision = deploymentRevision;
 
     assert.match(INDEX_SOURCE, new RegExp(`js/app\\.js\\?v=${deploymentRevision}`));
@@ -86,7 +86,7 @@ test("la revision de release invalide les entrees sans perdre la chaine applicat
     assert.match(ORCHESTRATOR_SOURCE, new RegExp(`weather-provider\\.js\\?v=${apiRevision}`));
     assert.match(PROVIDER_SOURCE, new RegExp(`openmeteo\\.service\\.js\\?v=${apiRevision}`));
     assert.match(FORECAST_SOURCE, new RegExp(`air-quality\\.service\\.js\\?v=${apiRevision}`));
-    assert.match(SW_SOURCE, /\$\{APP_VERSION\}-release/);
+    assert.match(SW_SOURCE, /\$\{APP_VERSION\}-location-sync/);
 });
 
 function read(relativePath) {

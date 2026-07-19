@@ -1,6 +1,6 @@
 const APP_VERSION = "1.5.2";
 const CACHE_PREFIX = "meteosignal-static";
-const DEPLOYMENT_REVISION = `${APP_VERSION}-release`;
+const DEPLOYMENT_REVISION = `${APP_VERSION}-location-sync`;
 const CACHE_VERSION = `v${DEPLOYMENT_REVISION}`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
@@ -46,6 +46,7 @@ const ESSENTIAL_ASSETS = [
     "./js/core/weather-scene-assets.js",
     "./js/core/weather-scenes.js",
     "./js/services/air-quality.service.js",
+    "./js/services/android-location-sync.service.js",
     "./js/services/geocoding.service.js",
     "./js/services/geolocation.service.js",
     "./js/services/openmeteo.service.js",

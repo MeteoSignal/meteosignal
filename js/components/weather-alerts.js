@@ -1,4 +1,4 @@
-import { analyzeWeatherAlerts, createCalmWeatherAlert } from "../core/weather-alerts.js?v=1.5.2-release";
+import { analyzeWeatherAlerts, createCalmWeatherAlert } from "../core/weather-alerts.js?v=1.5.2-location-sync";
 
 const ALERTS_PANEL_SELECTOR = "[data-alerts]";
 const ALERTS_LIST_SELECTOR = "[data-alerts-list]";

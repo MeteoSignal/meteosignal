@@ -118,7 +118,7 @@ test("le footer affiche la version publique finale", () => {
     assert.match(text, /Dernière mise à jour : 18 juillet 2026/);
     assert.match(text, /MeteoSignal © 2026/);
     assert.equal((text.match(/v1\.5\.2/g) ?? []).length, 1);
-    assert.doesNotMatch(text, /Développement en cours|Version en préparation|Version publique : v1\.4\.2|1\.5\.2-release/);
+    assert.doesNotMatch(text, /Développement en cours|Version en préparation|Version publique : v1\.4\.2|1\.5\.2-location-sync/);
     assert.doesNotMatch(text, /14 juillet 2026|Version : --|Build : --|Dernière mise à jour : --/);
     assert.match(INDEX_SOURCE, /id="project-status-version"/);
 });
