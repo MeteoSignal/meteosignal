@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DOCUMENTS = ["index.html", "confidentialite.html"];
-const DEPLOYMENT_REVISION = "1.5.2-release";
+const DEPLOYMENT_REVISION = "1.5.2-location-sync";
 const EXPECTED_CSP = new Map([
     ["default-src", ["'self'"]],
     ["base-uri", ["'self'"]],
@@ -160,7 +160,7 @@ test("la page et sa feuille sont precachees ensemble sans API ni doublon", () =>
     const assets = [...essential, ...optional];
     const privacyPageIndex = optional.indexOf("./confidentialite.html");
 
-    assert.match(sw, /const DEPLOYMENT_REVISION = `\$\{APP_VERSION\}-release`/);
+    assert.match(sw, /const DEPLOYMENT_REVISION = `\$\{APP_VERSION\}-location-sync`/);
     assert.match(sw, /const CACHE_VERSION = `v\$\{DEPLOYMENT_REVISION\}`/);
     assert.ok(privacyPageIndex >= 0);
     assert.equal(optional[privacyPageIndex + 1], "./css/privacy.css");

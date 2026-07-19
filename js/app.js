@@ -1,17 +1,18 @@
-import { APP_CONFIG } from "../config/config.js?v=1.5.2-release";
-import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.5.2-release";
-import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.5.2-release";
-import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.5.2-release";
-import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.5.2-release";
-import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.5.2-release";
-import { initHourlyForecast, renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.5.2-release";
-import { initNavigation } from "./components/navigation.js?v=1.5.2-release";
-import { initSearch, updateSearchInput } from "./components/search.js?v=1.5.2-release";
-import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.5.2-release";
-import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.5.2-release";
-import { renderDataSources, renderDataSourcesEmpty } from "./components/data-sources.js?v=1.5.2-release";
-import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.5.2-release";
-import { weatherOrchestrator } from "./services/weather-orchestrator.service.js?v=1.5.2-release";
+import { APP_CONFIG } from "../config/config.js?v=1.5.2-location-sync";
+import { readActiveLocation, saveActiveLocation } from "./core/storage.js?v=1.5.2-location-sync";
+import { renderAstronomy, renderAstronomyError, renderAstronomyLoading } from "./components/astronomy.js?v=1.5.2-location-sync";
+import { renderDailyForecast, renderDailyForecastError, renderDailyForecastLoading } from "./components/daily-forecast.js?v=1.5.2-location-sync";
+import { initFavorites, renderFavoriteButton, renderFavoritesList } from "./components/favorites.js?v=1.5.2-location-sync";
+import { renderCurrentWeather, renderCurrentWeatherError, renderCurrentWeatherLoading } from "./components/current-weather.js?v=1.5.2-location-sync";
+import { initHourlyForecast, renderHourlyForecast, renderHourlyForecastError, renderHourlyForecastLoading } from "./components/hourly-forecast.js?v=1.5.2-location-sync";
+import { initNavigation } from "./components/navigation.js?v=1.5.2-location-sync";
+import { initSearch, updateSearchInput } from "./components/search.js?v=1.5.2-location-sync";
+import { renderWeatherAlerts, renderWeatherAlertsError, renderWeatherAlertsLoading } from "./components/weather-alerts.js?v=1.5.2-location-sync";
+import { renderWeatherCards, renderWeatherCardsError, renderWeatherCardsLoading } from "./components/weather-cards.js?v=1.5.2-location-sync";
+import { renderDataSources, renderDataSourcesEmpty } from "./components/data-sources.js?v=1.5.2-location-sync";
+import { getCurrentPositionLocation } from "./services/geolocation.service.js?v=1.5.2-location-sync";
+import { weatherOrchestrator } from "./services/weather-orchestrator.service.js?v=1.5.2-location-sync";
+import { syncActiveLocationWithAndroid } from "./services/android-location-sync.service.js?v=1.5.2-location-sync";
 
 const DASHBOARD_SELECTOR = "[data-dashboard]";
 let activeLocation = readActiveLocation(APP_CONFIG.defaultLocation);
@@ -271,7 +272,13 @@ function handleHourlyRangeChange({ label }) {
 }
 
 function setActiveLocation(location) {
-    activeLocation = saveActiveLocation(location) ?? location;
+    const savedLocation = saveActiveLocation(location);
+    activeLocation = savedLocation ?? location;
+
+    if (savedLocation) {
+        syncActiveLocationWithAndroid(savedLocation);
+    }
+
     updateSearchInput(activeLocation);
     renderFavoriteButton(activeLocation);
     renderFavoritesList(activeLocation);

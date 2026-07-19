@@ -1,5 +1,5 @@
-import { formatTime } from "../core/formatters.js?v=1.5.2-release";
-import { weatherProviderRegistry } from "../services/weather-provider.js?v=1.5.2-release";
+import { formatTime } from "../core/formatters.js?v=1.5.2-location-sync";
+import { weatherProviderRegistry } from "../services/weather-provider.js?v=1.5.2-location-sync";
 
 const SOURCE_TARGETS = {
     current: "[data-source-current]",

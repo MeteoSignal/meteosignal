@@ -4,7 +4,7 @@ import {
     formatPrecipitation,
     formatTemperature,
     formatSpeed
-} from "../core/formatters.js?v=1.5.2-release";
+} from "../core/formatters.js?v=1.5.2-location-sync";
 
 const DAILY_SELECTOR = "[data-daily-forecast]";
 const DAILY_LIMIT = 7;
