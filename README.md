@@ -11,6 +11,7 @@ MeteoSignal est une Progressive Web App météo moderne, rapide et responsive. E
 - Application HTTPS : [https://meteosignal.fr](https://meteosignal.fr)
 - Code source : [https://github.com/MeteoSignal/meteosignal](https://github.com/MeteoSignal/meteosignal)
 - Politique de confidentialité : [https://meteosignal.fr/confidentialite.html](https://meteosignal.fr/confidentialite.html)
+- À propos et identité officielle : [https://meteosignal.fr/a-propos.html](https://meteosignal.fr/a-propos.html)
 - Formulaire de retour : [Votre avis compte](https://docs.google.com/forms/d/e/1FAIpQLSfOQypJBgcKy1KcQ187O_vd8rf65cAhotRveU4s7kMgogfQVw/viewform)
 
 Le domaine personnalisé est servi directement en HTTPS par GitHub Pages. Le site, le manifeste, le service worker et le fichier Digital Asset Links sont disponibles sans redirection.
@@ -34,6 +35,15 @@ Le domaine personnalisé est servi directement en HTTPS par GitHub Pages. Le sit
 
 Les alertes MeteoSignal sont locales et indicatives. Elles ne remplacent pas une vigilance officielle émise par une autorité météorologique.
 
+## Identité visuelle
+
+Le symbole officiel MeteoSignal — globe, soleil, nuage, éclairs et ondes — est
+partagé sans recoloration ni redessin entre le Web, la PWA, Android, Windows et
+Linux. Les neuf tailles standard et maskable, les favicons, l’icône Windows et
+les ressources Linux hicolor sont régénérables avec
+`python scripts/generate-brand-assets.py`. Le détail du pack se trouve dans
+[`assets/brand/README.md`](assets/brand/README.md).
+
 ## Données météo
 
 MeteoSignal dispose depuis la v1.4.0 d'une fondation multi-fournisseur fondée sur les capacités et la provenance des données. **Open-Meteo reste l'unique fournisseur actif en v1.5.2** pour les prévisions et la qualité de l'air.
@@ -46,7 +56,7 @@ La v1.4.2 officialise les corrections issues de l'audit technique v1.4.1 couvran
 
 - tests automatisés natifs Node.js, sans requête météo réelle dans la suite ;
 - workflow GitHub Actions en lecture seule, avec actions épinglées par SHA ;
-- CSP et politique de référent sur les deux pages ;
+- CSP et politique de référent sur les pages servies ;
 - validation et réparation défensives du stockage local ;
 - limites, timeout et annulation des recherches ;
 - deux certificats publics déclarés pour l'application Android `fr.meteosignal.app`.
