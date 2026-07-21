@@ -27,7 +27,8 @@ const HOURLY_VARIABLES = [
     "precipitation",
     "weather_code",
     "uv_index",
-    "wind_speed_10m"
+    "wind_speed_10m",
+    "wind_direction_10m"
 ];
 
 const DAILY_VARIABLES = [
@@ -261,6 +262,7 @@ function normalizeHourlyEntry(hourly, time, index, daily) {
         precipitation: numberOrNull(hourly.precipitation?.[index]),
         uvIndex: numberOrNull(hourly.uv_index?.[index]),
         windSpeed: numberOrNull(hourly.wind_speed_10m?.[index]),
+        windDirection: numberOrNull(hourly.wind_direction_10m?.[index]),
         weatherCode,
         condition: getWeatherCondition(weatherCode, isDay),
         isDay

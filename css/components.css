@@ -1126,6 +1126,51 @@
     text-shadow: 0 0 12px rgba(47, 247, 255, 0.22);
 }
 
+.wind-indicator {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.28rem;
+    color: inherit;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.wind-indicator__arrow {
+    width: 1.05em;
+    height: 1.05em;
+    flex: 0 0 auto;
+    overflow: visible;
+    color: var(--color-cyan-300);
+    filter: drop-shadow(0 0 5px rgba(47, 247, 255, 0.34));
+}
+
+.wind-indicator__abbreviation {
+    color: var(--color-cyan-100);
+    font-weight: 750;
+}
+
+.wind-indicator__separator {
+    color: var(--color-silver);
+}
+
+.wind-indicator__speed {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.metric-card > .wind-indicator {
+    margin: var(--space-2) 0;
+    color: var(--color-white);
+    font-size: 1.52rem;
+    font-weight: 750;
+    text-shadow: 0 0 12px rgba(47, 247, 255, 0.22);
+}
+
+.forecast-meta > .wind-indicator {
+    max-width: 100%;
+}
+
 .metric-card small {
     display: block;
     color: var(--color-muted);

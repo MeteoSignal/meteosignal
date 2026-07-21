@@ -32,6 +32,7 @@ test("Open-Meteo conserve le modele interne et ajoute sa provenance", async () =
     assert.equal(weather.provider, "openmeteo");
     assert.equal(weather.current.temperature, 22.4);
     assert.equal(weather.hourly.length, 4);
+    assert.deepEqual(weather.hourly.map(({ windDirection }) => windDirection), [280, 285, 290, 295]);
     assert.equal(weather.daily.length, 2);
     assert.equal(weather.astronomy.sun.sunrise, "2026-07-10T06:23");
     assert.equal(weather.sources.current.type, "forecast");
@@ -193,8 +194,10 @@ test("Air Quality respecte les changements d'heure et les bornes disponibles", a
 
 test("les URL Open-Meteo refusent les coordonnees invalides et Air Quality demande current", () => {
     const airUrl = buildAirQualityUrl(validLocation());
+    const forecastUrl = buildForecastUrl(validLocation());
 
     assert.equal(airUrl.searchParams.get("current"), "european_aqi,pm10,pm2_5,ozone,nitrogen_dioxide");
+    assert.ok(forecastUrl.searchParams.get("hourly").split(",").includes("wind_direction_10m"));
     assert.throws(() => buildAirQualityUrl({ latitude: 91, longitude: 1 }), /coordonnées/);
     assert.throws(() => buildForecastUrl({ latitude: 43, longitude: "1" }), /coordonnées/);
 });
@@ -252,6 +255,18 @@ test("des tableaux de longueurs differentes conservent uniquement les lignes exp
     assert.equal(weather.hourly[0].isCurrent, true);
     assert.equal(weather.daily.length, 1);
     assert.ok(weather.astronomy);
+});
+
+test("une direction horaire non numerique reste indisponible sans invalider l'heure", async () => {
+    const fixture = JSON.parse(await readFile(forecastFixtureUrl, "utf8"));
+    fixture.hourly.wind_direction_10m[1] = "285";
+    fixture.hourly.wind_direction_10m[2] = null;
+    const weather = normalizeOpenMeteoForecast(fixture, validLocation());
+
+    assert.equal(weather.hourly[0].windDirection, 280);
+    assert.equal(weather.hourly[1].windDirection, null);
+    assert.equal(weather.hourly[2].windDirection, null);
+    assert.equal(weather.hourly.length, 4);
 });
 
 test("une metrique Air Quality partielle reste exploitable sans convertir les chaines", () => {
@@ -323,7 +338,8 @@ function createForecastForTimes(fixture, currentTime, times) {
         precipitation: times.map(() => 0),
         weather_code: times.map(() => 0),
         uv_index: times.map(() => 0),
-        wind_speed_10m: times.map(() => 5)
+        wind_speed_10m: times.map(() => 5),
+        wind_direction_10m: times.map(() => 270)
     };
     return forecast;
 }

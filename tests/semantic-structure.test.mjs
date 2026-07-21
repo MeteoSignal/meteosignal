@@ -28,7 +28,7 @@ const PRIVACY_HEADING_IDS = [
     "evolution"
 ];
 const EXPECTED_VISIBLE_HASHES = {
-    index: "303fc7fd411c250b68d5d0c0dd6cbe61650569a0e2f181a37104867b95076fa3",
+    index: "62fd2736c338192cc193fe75c8606f97d31eb7678d885066f5ca2fffc6b2ad48",
     privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 

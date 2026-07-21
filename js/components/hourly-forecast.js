@@ -1,5 +1,6 @@
 import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.5.2-location-sync";
 import { createWeatherIconElement } from "../core/weather-icons.js?v=1.5.2-location-sync";
+import { createWindIndicator } from "./wind-indicator.js?v=1.5.2-location-sync";
 
 const HOURLY_SELECTOR = "[data-hourly-forecast]";
 const HOURLY_RANGE_SELECTOR = "button[data-hourly-range]";
@@ -31,7 +32,7 @@ export function renderHourlyForecastLoading() {
         iconId: null,
         temperature: "--",
         precipitation: "Pluie --",
-        wind: "Vent --",
+        wind: { direction: null, speed: null, speedText: "-- km/h" },
         state: "loading"
     }));
 
@@ -77,7 +78,11 @@ function renderActiveHourlyRange(isLoading) {
         tone: hour.condition?.tone ?? "unknown",
         temperature: formatTemperature(hour.temperature),
         precipitation: `Pluie ${formatPercent(hour.precipitationProbability)}`,
-        wind: `Vent ${formatSpeed(hour.windSpeed)}`
+        wind: {
+            direction: hour.windDirection,
+            speed: hour.windSpeed,
+            speedText: formatSpeed(hour.windSpeed)
+        }
     }));
 
     syncHourlyRangeControls(isLoading);
@@ -123,13 +128,6 @@ function buildHourlyCard(item) {
         card.dataset.forecastState = item.state;
     }
 
-    if (item.label) {
-        card.setAttribute(
-            "aria-label",
-            `${item.time} : ${item.label}, ${item.temperature}, ${item.precipitation}, ${item.wind}`
-        );
-    }
-
     const time = document.createElement("span");
     time.className = "hourly-time";
     time.textContent = item.time;
@@ -148,7 +146,15 @@ function buildHourlyCard(item) {
     const meta = document.createElement("div");
     meta.className = "forecast-meta";
     meta.appendChild(createMetaItem(item.precipitation));
-    meta.appendChild(createMetaItem(item.wind));
+    const windIndicator = createWindIndicator(item.wind);
+    meta.appendChild(windIndicator.element);
+
+    if (item.label) {
+        card.setAttribute(
+            "aria-label",
+            `${item.time} : ${item.label}, ${item.temperature}, ${item.precipitation}. ${windIndicator.accessibleLabel}`
+        );
+    }
 
     card.appendChild(time);
     card.appendChild(icon);

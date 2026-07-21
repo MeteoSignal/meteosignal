@@ -5,7 +5,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const DOCUMENTS = ["index.html", "confidentialite.html"];
+const DOCUMENTS = ["index.html", "confidentialite.html", "a-propos.html"];
 const DEPLOYMENT_REVISION = "1.5.2-location-sync";
 const EXPECTED_CSP = new Map([
     ["default-src", ["'self'"]],
@@ -127,6 +127,21 @@ test("le CSS de confidentialite est externe, versionne et complet", () => {
     assert.match(css, /^:root\s*\{/);
     assert.match(css, /\.privacy-card\s*\{[^}]*backdrop-filter:\s*blur\(18px\);/s);
     assert.match(css, /@media \(max-width: 600px\)/);
+    assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+    assert.equal((css.match(/{/g) ?? []).length, (css.match(/}/g) ?? []).length);
+});
+
+test("la page a propos utilise uniquement sa feuille externe versionnee", () => {
+    const source = read("a-propos.html");
+    const css = read("css/about.css");
+    const stylesheets = [...source.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="([^"]+)"[^>]*>/gi)];
+
+    assert.deepEqual(stylesheets.map((match) => match[1]), [
+        `css/about.css?v=${DEPLOYMENT_REVISION}`
+    ]);
+    assert.doesNotMatch(css, /@import\b/i);
+    assert.match(css, /^:root\s*\{/);
+    assert.match(css, /@media \(max-width: 760px\)/);
     assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
     assert.equal((css.match(/{/g) ?? []).length, (css.match(/}/g) ?? []).length);
 });

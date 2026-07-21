@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://api.open-meteo.com https://geocoding-api.open-meteo.com https://air-quality-api.open-meteo.com; manifest-src 'self'; worker-src 'self'; frame-src 'none'; media-src 'none'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta
+        name="description"
+        content="À propos de MeteoSignal, application de prévisions et d’alertes météo.">
+    <meta name="theme-color" content="#07182c">
+    <meta name="application-name" content="MeteoSignal">
+
+    <title>À propos - MeteoSignal</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="assets/logo/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/logo/favicon-48.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/apple-touch-icon-180.png">
+    <link rel="stylesheet" href="css/about.css?v=1.5.2-location-sync">
+</head>
+
+<body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="about-header">
+        <a class="back-link" href="./">← Retour à MeteoSignal</a>
+    </header>
+
+    <main id="contenu" class="about-main">
+        <article class="about-card">
+            <div class="brand-stage" aria-labelledby="about-title">
+                <span class="brand-halo" aria-hidden="true"></span>
+                <img
+                    class="brand-logo"
+                    src="assets/logo/logo-meteosignal-complet.webp"
+                    alt="MeteoSignal — Prévisions et alertes météo"
+                    width="561"
+                    height="701">
+            </div>
+
+            <div class="about-copy">
+                <p class="eyebrow">Identité officielle</p>
+                <h1 id="about-title">À propos de MeteoSignal</h1>
+                <p class="lead">
+                    MeteoSignal réunit les conditions actuelles, les prévisions,
+                    l’astronomie, la qualité de l’air et des signaux météo locaux
+                    dans une expérience rapide et lisible.
+                </p>
+
+                <dl class="about-facts">
+                    <div>
+                        <dt>Version publique</dt>
+                        <dd>1.5.2</dd>
+                    </div>
+                    <div>
+                        <dt>Application Android</dt>
+                        <dd>fr.meteosignal.app</dd>
+                    </div>
+                    <div>
+                        <dt>Plateformes</dt>
+                        <dd>Android, Web, PWA, Windows et Linux</dd>
+                    </div>
+                </dl>
+
+                <section>
+                    <h2>Une identité commune</h2>
+                    <p>
+                        Le globe, le soleil, le nuage, les éclairs et les ondes
+                        composent le symbole officiel de MeteoSignal. Cette identité
+                        est conservée sur l’icône, l’écran de lancement et les
+                        applications installées, sans recoloration ni réinterprétation.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Données météo</h2>
+                    <p>
+                        Les prévisions et la recherche géographique s’appuient sur
+                        Open-Meteo. Les alertes locales affichées par MeteoSignal sont
+                        indicatives et ne remplacent pas les vigilances officielles.
+                    </p>
+                </section>
+
+                <nav class="about-links" aria-label="Informations MeteoSignal">
+                    <a href="confidentialite.html">Règles de confidentialité</a>
+                    <a href="./">Ouvrir MeteoSignal</a>
+                </nav>
+            </div>
+        </article>
+    </main>
+
+    <footer class="about-footer">
+        MeteoSignal © 2026 — Prévisions et alertes météo
+    </footer>
+
+    <script type="module" src="js/privacy-return.js?v=1.5.2-location-sync"></script>
+</body>
+</html>

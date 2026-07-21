@@ -43,6 +43,7 @@ test("style.css n'est plus reference a l'execution et la confidentialite charge 
     const runtimeFiles = [
         "index.html",
         "confidentialite.html",
+        "a-propos.html",
         "manifest.json",
         "pwa.js",
         "sw.js",
@@ -61,6 +62,12 @@ test("style.css n'est plus reference a l'execution et la confidentialite charge 
         revision: PRIVACY_CSS_REVISION
     }]);
     assert.doesNotMatch(fs.readFileSync(path.join(ROOT, "confidentialite.html"), "utf8"), /<style\b/i);
+    assert.deepEqual(readStylesheetLinks("a-propos.html"), [{
+        href: `css/about.css?v=${PRIVACY_CSS_REVISION}`,
+        pathname: "css/about.css",
+        revision: PRIVACY_CSS_REVISION
+    }]);
+    assert.doesNotMatch(fs.readFileSync(path.join(ROOT, "a-propos.html"), "utf8"), /<style\b/i);
 });
 
 test("l'accueil préconnecte uniquement les deux API météo initiales avant les styles", () => {

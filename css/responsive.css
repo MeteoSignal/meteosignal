@@ -564,6 +564,11 @@
         font-size: 1.25rem;
     }
 
+    .metric-card > .wind-indicator {
+        margin: var(--space-1) 0;
+        font-size: 1.25rem;
+    }
+
     .metric-card small {
         font-size: 0.72rem;
         line-height: 1.2;
@@ -764,6 +769,10 @@
         font-size: 1.12rem;
     }
 
+    .metric-card > .wind-indicator {
+        font-size: 1.12rem;
+    }
+
     .metric-card small,
     .metric-label {
         font-size: 0.68rem;
@@ -793,6 +802,11 @@
 
     .forecast-meta {
         font-size: 0.66rem;
+    }
+
+    .forecast-meta .wind-indicator__abbreviation,
+    .forecast-meta .wind-indicator__separator {
+        display: none;
     }
 
     .development-status {

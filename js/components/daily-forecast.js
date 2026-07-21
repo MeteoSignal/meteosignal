@@ -5,6 +5,7 @@ import {
     formatTemperature,
     formatSpeed
 } from "../core/formatters.js?v=1.5.2-location-sync";
+import { createWindIndicator } from "./wind-indicator.js?v=1.5.2-location-sync";
 
 const DAILY_SELECTOR = "[data-daily-forecast]";
 const DAILY_LIMIT = 7;
@@ -17,7 +18,7 @@ export function renderDailyForecastLoading() {
         temperatureMax: "--",
         temperatureMin: "--",
         precipitation: "Pluie --",
-        wind: "Vent --",
+        wind: { direction: null, speed: null, speedText: "-- km/h" },
         state: "loading"
     }));
 
@@ -40,7 +41,11 @@ export function renderDailyForecast(daily = []) {
         temperatureMax: formatTemperature(day.temperatureMax),
         temperatureMin: formatTemperature(day.temperatureMin),
         precipitation: formatDailyRain(day),
-        wind: `Vent ${formatSpeed(day.windSpeedMax)}`
+        wind: {
+            direction: day.windDirectionDominant,
+            speed: day.windSpeedMax,
+            speedText: formatSpeed(day.windSpeedMax)
+        }
     }));
 
     renderDailyItems(items, false);
@@ -74,13 +79,6 @@ function buildDailyCard(item) {
         article.dataset.forecastState = item.state;
     }
 
-    if (item.label) {
-        article.setAttribute(
-            "aria-label",
-            `${item.day} : ${item.label}, maximum ${item.temperatureMax}, minimum ${item.temperatureMin}, ${item.precipitation}`
-        );
-    }
-
     const header = document.createElement("header");
     header.className = "forecast-day-header";
 
@@ -111,7 +109,15 @@ function buildDailyCard(item) {
     const meta = document.createElement("div");
     meta.className = "forecast-meta";
     meta.appendChild(createMetaItem(item.precipitation));
-    meta.appendChild(createMetaItem(item.wind));
+    const windIndicator = createWindIndicator(item.wind);
+    meta.appendChild(windIndicator.element);
+
+    if (item.label) {
+        article.setAttribute(
+            "aria-label",
+            `${item.day} : ${item.label}, maximum ${item.temperatureMax}, minimum ${item.temperatureMin}, ${item.precipitation}. ${windIndicator.accessibleLabel}`
+        );
+    }
 
     article.appendChild(header);
     article.appendChild(temperatures);
