@@ -5,6 +5,7 @@ import {
     formatPressure,
     formatSpeed
 } from "../core/formatters.js?v=1.5.2-location-sync";
+import { createWindIndicator } from "./wind-indicator.js?v=1.5.2-location-sync";
 
 const WEATHER_CARDS_SELECTOR = "[data-weather-cards]";
 
@@ -31,7 +32,9 @@ export function renderWeatherCards(weather) {
             "Vent",
             formatSpeed(current.wind.speed),
             formatWindDetails(current.wind),
-            "wind"
+            "wind",
+            null,
+            current.wind
         ),
         createCard(
             "Humidité",
@@ -114,8 +117,23 @@ function buildCardElement(card) {
     label.className = "metric-label";
     label.textContent = card.label;
 
-    const value = document.createElement("strong");
-    value.textContent = card.value;
+    let value;
+
+    if (card.wind) {
+        const windIndicator = createWindIndicator({
+            direction: card.wind.direction,
+            speed: card.wind.speed,
+            speedText: card.value
+        });
+        value = windIndicator.element;
+        element.setAttribute(
+            "aria-label",
+            `${card.label}. ${windIndicator.accessibleLabel} ${card.detail}`
+        );
+    } else {
+        value = document.createElement("strong");
+        value.textContent = card.value;
+    }
 
     const detail = document.createElement("small");
     detail.textContent = card.detail;
@@ -126,33 +144,25 @@ function buildCardElement(card) {
     return element;
 }
 
-function createCard(label, value, detail, tone, state = null) {
+function createCard(label, value, detail, tone, state = null, wind = null) {
     return {
         label,
         value,
         detail,
         tone,
-        state
+        state,
+        wind
     };
 }
 
 function formatWindDetails(wind) {
-    const parts = [
-        wind.gusts ? `Rafales ${formatSpeed(wind.gusts)}` : null,
-        formatWindDirection(wind.direction)
-    ].filter(Boolean);
-
-    return parts.length > 0 ? parts.join(" • ") : "Vent calme";
-}
-
-function formatWindDirection(direction) {
-    if (!Number.isFinite(Number(direction))) {
-        return null;
+    if (typeof wind.gusts === "number" && Number.isFinite(wind.gusts) && wind.gusts > 0) {
+        return `Rafales ${formatSpeed(wind.gusts)}`;
     }
 
-    const directions = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
-    const index = Math.round(Number(direction) / 45) % directions.length;
-    return directions[index];
+    return typeof wind.speed === "number" && Number.isFinite(wind.speed) && wind.speed < 0.5
+        ? "Vent calme"
+        : "Vitesse moyenne";
 }
 
 function getHumidityLabel(value) {

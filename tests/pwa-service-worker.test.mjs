@@ -28,17 +28,22 @@ test("le precache contient une seule URL canonique par fichier local", () => {
     const assets = [...api.ESSENTIAL_ASSETS, ...api.OPTIONAL_ASSETS];
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "manifest.json"), "utf8"));
 
-    assert.equal(api.ESSENTIAL_ASSETS.length, 40);
-    assert.equal(api.OPTIONAL_ASSETS.length, 18);
-    assert.equal(assets.length, 58);
+    assert.equal(api.ESSENTIAL_ASSETS.length, 42);
+    assert.equal(api.OPTIONAL_ASSETS.length, 26);
+    assert.equal(assets.length, 68);
     assert.equal(new Set(assets).size, assets.length);
     assert.equal(assets.some((asset) => asset.includes("open-meteo.com")), false);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.webp"), true);
+    assert.equal(assets.includes("./assets/logo/logo-meteosignal-complet.webp"), true);
+    assert.equal(assets.includes("./assets/logo/icon-maskable-192.png"), true);
+    assert.equal(assets.includes("./a-propos.html"), true);
     assert.equal(assets.includes("./assets/logo/logo-meteosignal-sans-slogan.png"), false);
     assert.equal(assets.includes("./css/style.css"), false);
     assert.equal(assets.includes("./css/privacy.css"), true);
     assert.equal(api.ESSENTIAL_ASSETS.includes("./js/components/current-weather.js"), true);
     assert.equal(api.ESSENTIAL_ASSETS.includes("./js/components/weather-scene-loader.js"), true);
+    assert.equal(api.ESSENTIAL_ASSETS.includes("./js/components/wind-indicator.js"), true);
+    assert.equal(api.ESSENTIAL_ASSETS.includes("./js/core/wind-direction.js"), true);
     assert.equal(api.ESSENTIAL_ASSETS.includes("./js/core/weather-scene-assets.js"), true);
     assert.equal(api.ESSENTIAL_ASSETS.includes("./js/core/weather-scenes.js"), true);
     assert.equal(manifest.start_url, "./");
@@ -135,6 +140,7 @@ test("la revision de release est unique dans tous les fichiers servis", () => {
     const servedFiles = [
         path.join(ROOT, "index.html"),
         path.join(ROOT, "confidentialite.html"),
+        path.join(ROOT, "a-propos.html"),
         path.join(ROOT, "pwa.js"),
         path.join(ROOT, "sw.js"),
         ...listFiles(path.join(ROOT, "css"), (file) => file.endsWith(".css")),
