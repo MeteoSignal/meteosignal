@@ -13,7 +13,7 @@ test("les trois vues reutilisent le composant graphique partage", () => {
     const daily = read("js/components/daily-forecast.js");
 
     for (const source of [current, hourly, daily]) {
-        assert.match(source, /components?\/wind-indicator\.js\?v=1\.5\.2-location-sync|\.\/wind-indicator\.js\?v=1\.5\.2-location-sync/);
+        assert.match(source, /components?\/wind-indicator\.js\?v=1\.5\.5-release|\.\/wind-indicator\.js\?v=1\.5\.5-release/);
         assert.match(source, /createWindIndicator/);
     }
     assert.match(current, /direction:\s*card\.wind\.direction/);

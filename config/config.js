@@ -1,8 +1,8 @@
 export const APP_CONFIG = {
     appName: "MeteoSignal",
-    version: "1.5.2",
-    build: "2026-07-18",
-    lastUpdated: "18 juillet 2026",
+    version: "1.5.5",
+    build: "2026-07-22",
+    lastUpdated: "22 juillet 2026",
     copyright: "© 2026",
     refresh: 600000,
     theme: "auto",

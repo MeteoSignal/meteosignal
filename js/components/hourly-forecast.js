@@ -1,6 +1,6 @@
-import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.5.2-location-sync";
-import { createWeatherIconElement } from "../core/weather-icons.js?v=1.5.2-location-sync";
-import { createWindIndicator } from "./wind-indicator.js?v=1.5.2-location-sync";
+import { formatPercent, formatSpeed, formatTemperature, formatTime } from "../core/formatters.js?v=1.5.5-release";
+import { createWeatherIconElement } from "../core/weather-icons.js?v=1.5.5-release";
+import { createWindIndicator } from "./wind-indicator.js?v=1.5.5-release";
 
 const HOURLY_SELECTOR = "[data-hourly-forecast]";
 const HOURLY_RANGE_SELECTOR = "button[data-hourly-range]";

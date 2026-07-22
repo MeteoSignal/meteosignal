@@ -73,7 +73,7 @@ test("l'ecran a propos et les nouvelles icones utiles restent disponibles hors l
 
     const about = read("a-propos.html");
     assert.match(about, /MeteoSignal — Prévisions et alertes météo/);
-    assert.match(about, /Version publique[\s\S]*1\.5\.2/);
+    assert.match(about, /Version publique[\s\S]*1\.5\.5/);
     assert.match(read("index.html"), /href="a-propos\.html">À propos<\/a>/);
 });
 

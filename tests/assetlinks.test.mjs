@@ -100,8 +100,8 @@ test("assetlinks reste hors precache et les API meteo restent network-only", () 
     assert.equal(assets.some((asset) => /open-meteo\.com/i.test(asset)), false);
     assert.match(sw, /if \(isWeatherApiRequest\(requestUrl\)\)\s*\{\s*event\.respondWith\(fetch\(request\)\);/s);
     assert.doesNotMatch(sw, /\bcache\.put\s*\(/);
-    assert.equal(JSON.parse(read("package.json")).version, "1.5.2");
-    assert.match(read("config/config.js"), /version:\s*"1\.5\.2"/);
+    assert.equal(JSON.parse(read("package.json")).version, "1.5.5");
+    assert.match(read("config/config.js"), /version:\s*"1\.5\.5"/);
 });
 
 function parseAssetLinks() {

@@ -10,6 +10,31 @@ Le projet suit le versionnement sémantique.
 
 ---
 
+## [1.5.5] - 2026-07-22
+
+### Identité visuelle
+
+- Harmonisation du symbole, des icônes, des ressources adaptatives et maskable, des favicons et des écrans de lancement MeteoSignal sur le Web, la PWA et Android.
+
+### Web et PWA
+
+- Ajout d'une flèche SVG partagée pour représenter le déplacement de l'air dans les conditions actuelles et les prévisions horaires et quotidiennes.
+- Conservation accessible de la provenance météorologique du vent, avec normalisation sur 16 secteurs et masquage lorsque la direction est invalide ou le vent quasi nul.
+- Cache PWA et révisions des ressources servis alignés sur `1.5.5-release`.
+
+### Android
+
+- Ajout et amélioration des trois widgets MeteoSignal compact, principal et complet, fondés sur une chaîne météo native partagée.
+- Compatibilité Android 16 avec `compileSdk 36`, `targetSdk 36` et `minSdk 21` conservé.
+- Ajout d'un écran natif accessible lorsqu'aucun navigateur compatible TWA ou Custom Tabs n'est disponible.
+- Correction du lancement TWA depuis le splash et depuis l'action « Réessayer » grâce au lancement direct dans une nouvelle tâche, sans relance interne d'Android Browser Helper.
+
+### Publication
+
+- Version publique Web/PWA et Android alignée sur `1.5.5`, build du 22 juillet 2026 ; Android utilise `versionCode 3`.
+
+---
+
 ## [1.5.2] - 2026-07-18
 
 ### Conformité et qualité

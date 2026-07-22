@@ -69,14 +69,18 @@
 - [x] Aligner la version publique et la révision de déploiement sur `1.5.2-release`.
 - [x] Valider les tests ciblés et la suite automatisée complète.
 
-## Widgets Android - travaux futurs
+## Version 1.5.5 - Identité, vent et application Android
 
-- [ ] Concevoir et planifier les widgets Android dans une version fonctionnelle dédiée.
-- [ ] Définir les données, fréquences de rafraîchissement et contraintes énergétiques avant implémentation.
+- [x] Harmoniser l'identité visuelle Web, PWA et Android à partir du symbole officiel MeteoSignal.
+- [x] Ajouter les flèches accessibles de direction du vent aux conditions et prévisions Web/PWA.
+- [x] Finaliser les widgets Android compact, principal et complet sur une chaîne météo partagée.
+- [x] Aligner Android sur `compileSdk 36`, `targetSdk 36`, `minSdk 21`, `versionName 1.5.5` et `versionCode 3`.
+- [x] Gérer l'absence de navigateur compatible et fiabiliser le lancement TWA.
+- [x] Aligner la version publique et le cache PWA sur `1.5.5-release`.
 
 ## Publication Play Store et distribution Android/TWA
 
-- [ ] Préparer une mise à jour Android/TWA séparément de la publication Web v1.5.2.
+- [ ] Publier manuellement la mise à jour Android/TWA v1.5.5 après validation de l'AAB signé.
 - [x] Android/TWA v1.4.2 (`versionName 1.4.2`, `versionCode 2`) acceptée sur la piste de test fermé Google Play.
 - [ ] Installer la version distribuée par Google Play et confirmer Digital Asset Links ainsi que l'absence de barre navigateur.
 - [ ] Demander l'accès à la production séparément lorsque les conditions sont réunies.

@@ -4,8 +4,8 @@ import {
     formatPrecipitation,
     formatTemperature,
     formatSpeed
-} from "../core/formatters.js?v=1.5.2-location-sync";
-import { createWindIndicator } from "./wind-indicator.js?v=1.5.2-location-sync";
+} from "../core/formatters.js?v=1.5.5-release";
+import { createWindIndicator } from "./wind-indicator.js?v=1.5.5-release";
 
 const DAILY_SELECTOR = "[data-daily-forecast]";
 const DAILY_LIMIT = 7;

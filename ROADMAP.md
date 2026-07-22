@@ -88,6 +88,17 @@ Statut : version corrective terminée, publication préparée.
 - [x] Aligner la version Web et le cache PWA sur `1.5.2-release`.
 - [x] Valider la suite automatisée complète sans changement visuel ou fonctionnel attendu.
 
+### Version 1.5.5 - Identité, vent et application Android
+
+Statut : préparation technique terminée, publication manuelle en attente.
+
+- [x] Identité visuelle officielle harmonisée entre le Web, la PWA et Android.
+- [x] Flèches de direction du vent partagées entre les conditions actuelles et les prévisions Web/PWA.
+- [x] Trois widgets Android natifs partageant DataStore, cache, repository et WorkManager.
+- [x] Compatibilité Android 16 avec `compileSdk 36`, `targetSdk 36` et `minSdk 21`.
+- [x] Écran natif en l'absence de navigateur compatible et lancement TWA corrigé.
+- [x] Version publique et cache PWA alignés sur `1.5.5-release`.
+
 ### Publication Reliability & Documentation
 
 Statut : terminée pour le socle Web v1.4.2.
@@ -106,9 +117,9 @@ Statut : clôture technique validée avec réserves de validation physique.
 
 Les phases P0 à P1E ont couvert l'exactitude du modèle météo, la PWA, les performances, l'accessibilité, la sécurité, la confidentialité, la CI et Android/TWA. Le [rapport officiel](docs/audit-final-v1.4.1.md) distingue les contrôles automatiques, les contrôles publics et les essais restant à réaliser sur appareils ou services externes.
 
-## Widgets Android futurs
+## Widgets Android
 
-Les widgets Android restent un chantier fonctionnel futur, indépendant de la publication corrective Web v1.5.2 et de la distribution de la TWA sur Google Play.
+La gamme v1.5.5 comprend les widgets compact, principal et complet. Ils réutilisent une chaîne météo native commune et restent indépendants du cycle de publication Web/PWA.
 
 ## Publication Play Store et validations externes ouvertes
 
