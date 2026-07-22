@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../../config/config.js?v=1.5.2-location-sync";
+import { APP_CONFIG } from "../../config/config.js?v=1.5.5-release";
 
 const AIR_QUALITY_VARIABLES = [
     "european_aqi",

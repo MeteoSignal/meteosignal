@@ -1,6 +1,6 @@
-const APP_VERSION = "1.5.2";
+const APP_VERSION = "1.5.5";
 const CACHE_PREFIX = "meteosignal-static";
-const DEPLOYMENT_REVISION = `${APP_VERSION}-location-sync`;
+const DEPLOYMENT_REVISION = `${APP_VERSION}-release`;
 const CACHE_VERSION = `v${DEPLOYMENT_REVISION}`;
 const STATIC_CACHE = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 

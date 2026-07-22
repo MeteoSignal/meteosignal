@@ -194,13 +194,13 @@ test("la combobox et les deux regions live P1C sont conservees", () => {
 });
 
 test("la revision P1D invalide toute la chaine de recherche sans toucher au CSS", () => {
-    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.5\.2-location-sync/);
-    assert.match(APP_SOURCE, /components\/search\.js\?v=1\.5\.2-location-sync/);
-    assert.match(SEARCH_SOURCE, /core\/location-search\.js\?v=1\.5\.2-location-sync/);
-    assert.match(SEARCH_SOURCE, /services\/geocoding\.service\.js\?v=1\.5\.2-location-sync/);
-    assert.match(GEOCODING_SOURCE, /core\/location-search\.js\?v=1\.5\.2-location-sync/);
+    assert.match(INDEX_SOURCE, /js\/app\.js\?v=1\.5\.5-release/);
+    assert.match(APP_SOURCE, /components\/search\.js\?v=1\.5\.5-release/);
+    assert.match(SEARCH_SOURCE, /core\/location-search\.js\?v=1\.5\.5-release/);
+    assert.match(SEARCH_SOURCE, /services\/geocoding\.service\.js\?v=1\.5\.5-release/);
+    assert.match(GEOCODING_SOURCE, /core\/location-search\.js\?v=1\.5\.5-release/);
     assert.equal(
-        (INDEX_SOURCE.match(/css\/[^"']+\?v=1\.5\.2-location-sync/g) ?? []).length,
+        (INDEX_SOURCE.match(/css\/[^"']+\?v=1\.5\.5-release/g) ?? []).length,
         5
     );
     assert.doesNotMatch(INDEX_SOURCE, /css\/[^"']+\?v=1\.4\.1-/);

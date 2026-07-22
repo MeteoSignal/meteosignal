@@ -1,4 +1,4 @@
-import { resolveWeatherSceneAsset } from "../core/weather-scene-assets.js?v=1.5.2-location-sync";
+import { resolveWeatherSceneAsset } from "../core/weather-scene-assets.js?v=1.5.5-release";
 
 const SCENE_IMAGE_SELECTOR = "[data-weather-scene-image]";
 const HERO_MEDIA_SELECTOR = ".hero-media";

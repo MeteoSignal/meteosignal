@@ -1,4 +1,4 @@
-import { WEATHER_SCENES } from "./weather-scenes.js?v=1.5.2-location-sync";
+import { WEATHER_SCENES } from "./weather-scenes.js?v=1.5.5-release";
 
 const SCENE_ASSET_PATHS = Object.freeze({
     [WEATHER_SCENES.CLEAR_DAY]: "../../assets/backgrounds/hero/hero-clear-day.webp",

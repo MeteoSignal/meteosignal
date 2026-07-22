@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SW_SOURCE = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8");
-const DEPLOYMENT_REVISION = "1.5.2-location-sync";
+const DEPLOYMENT_REVISION = "1.5.5-release";
 const LEGACY_DEPLOYMENT_MARKERS = ["immersive-dashboard-p6d", "immersive-dashboard-p6f", "w3c-feedback"];
 const LEGACY_HERO_ASSETS = [
     "./assets/backgrounds/clear.jpg",

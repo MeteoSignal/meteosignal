@@ -28,7 +28,7 @@ const PRIVACY_HEADING_IDS = [
     "evolution"
 ];
 const EXPECTED_VISIBLE_HASHES = {
-    index: "62fd2736c338192cc193fe75c8606f97d31eb7678d885066f5ca2fffc6b2ad48",
+    index: "f096eb9830113e29dd3d38e5c5efcd2b1212ec3e78dc2ad824c49ba0a2b4a69a",
     privacy: "b9b661fdd6ba52b54a4972768744eefeef4cdf1c7683e9e5a4fb07c4001f9b86"
 };
 
@@ -113,13 +113,13 @@ test("le footer affiche la version publique finale", () => {
     const status = elementByClass(INDEX_DOCUMENT, "development-status");
     const text = normalizeText(textContent(status));
 
-    assert.match(text, /Version : v1\.5\.2/);
-    assert.match(text, /Build : 2026-07-18/);
-    assert.match(text, /Dernière mise à jour : 18 juillet 2026/);
+    assert.match(text, /Version : v1\.5\.5/);
+    assert.match(text, /Build : 2026-07-22/);
+    assert.match(text, /Dernière mise à jour : 22 juillet 2026/);
     assert.match(text, /MeteoSignal © 2026/);
-    assert.equal((text.match(/v1\.5\.2/g) ?? []).length, 1);
-    assert.doesNotMatch(text, /Développement en cours|Version en préparation|Version publique : v1\.4\.2|1\.5\.2-location-sync/);
-    assert.doesNotMatch(text, /14 juillet 2026|Version : --|Build : --|Dernière mise à jour : --/);
+    assert.equal((text.match(/v1\.5\.5/g) ?? []).length, 1);
+    assert.doesNotMatch(text, /Développement en cours|Version en préparation|Version publique : v1\.4\.2|1\.5\.5-release/);
+    assert.doesNotMatch(text, /18 juillet 2026|Version : --|Build : --|Dernière mise à jour : --/);
     assert.match(INDEX_SOURCE, /id="project-status-version"/);
 });
 

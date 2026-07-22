@@ -1,4 +1,4 @@
-import { resolveWindDirection } from "../core/wind-direction.js?v=1.5.2-location-sync";
+import { resolveWindDirection } from "../core/wind-direction.js?v=1.5.5-release";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
